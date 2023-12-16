@@ -22,7 +22,7 @@ import wave.domain.user.User;
 @DiscriminatorColumn
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity(name = "Posts")
-public class Post {
+public abstract class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
