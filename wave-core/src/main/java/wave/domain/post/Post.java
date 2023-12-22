@@ -14,7 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import wave.domain.user.User;
+import wave.domain.user.domain.User;
 
 @Slf4j
 @Getter
@@ -34,4 +34,11 @@ public abstract class Post {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	User user;
+
+	public Post(String title, String contents, int waves, User user) {
+		this.title = title;
+		this.contents = contents;
+		this.waves = waves;
+		this.user = user;
+	}
 }

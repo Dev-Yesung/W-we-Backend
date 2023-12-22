@@ -1,4 +1,4 @@
-package wave.domain.user;
+package wave.domain.user.domain;
 
 import jakarta.persistence.Embeddable;
 

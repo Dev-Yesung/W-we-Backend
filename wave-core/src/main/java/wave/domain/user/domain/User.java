@@ -1,4 +1,4 @@
-package wave.domain.user;
+package wave.domain.user.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -18,11 +18,13 @@ import lombok.extern.slf4j.Slf4j;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 
 	@Column(unique = true)
-	String email;
-	String nickname;
+	private String email;
+	private String nickname;
 	@Embedded
-	Profile profile;
+	private Profile profile;
+
+	private Role role;
 }

@@ -30,6 +30,8 @@ subprojects {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
 
         annotationProcessor 'org.projectlombok:lombok'
@@ -37,6 +39,7 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.security:spring-security-test'
     }
 
     test {
@@ -49,8 +52,6 @@ project(':wave-core') {
     jar { enabled = true }
 
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
         runtimeOnly 'com.h2database:h2'
         runtimeOnly 'com.mysql:mysql-connector-j'
     }
@@ -62,5 +63,8 @@ project(':wave-api') {
 
     dependencies {
         implementation project(':wave-core')
+        implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+        implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+        implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
     }
 }

@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wave.domain.post.Post;
-import wave.domain.user.User;
+import wave.domain.user.domain.User;
 
 @Slf4j
 @Getter
