@@ -8,7 +8,8 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,9 +24,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import wave.domain.auth.application.AjaxAuthenticationProvider;
 import wave.domain.auth.application.JwtAuthenticationProvider;
-import wave.domain.auth.controller.RestAuthenticationEntryPoint;
 import wave.domain.auth.application.JwtExtractor;
 import wave.domain.auth.application.SkipPathRequestMatcher;
+import wave.domain.auth.controller.RestAuthenticationEntryPoint;
 import wave.global.filter.AjaxLoginProcessingFilter;
 import wave.global.filter.JwtAuthenticationProcessingFilter;
 
@@ -33,10 +34,12 @@ import wave.global.filter.JwtAuthenticationProcessingFilter;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration {
-	private static final String AUTHENTICATION_URL = "/api/auth/login";
+	private static final String SIGN_UP_URL = "/api/auth/signup";
+	private static final String LOG_IN_URL = "/api/auth/login";
 	private static final String REFRESH_TOKEN_URL = "/api/auth/token";
 	private static final String API_ROOT_URL = "/api/**";
 
+	private final AuthenticationConfiguration authenticationConfiguration;
 	private final CorsConfigurationSource corsConfigurationSource;
 	private final RestAuthenticationEntryPoint authenticationEntryPoint;
 	private final AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -48,10 +51,11 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		List<String> permitAllEndpoints = getPermitAllEndpoints();
-		AuthenticationManager authenticationManager = getAuthenticationManager(http);
+		AuthenticationManager authenticationManager
+			= new ProviderManager(ajaxAuthenticationProvider, jwtAuthenticationProvider);
 		AjaxLoginProcessingFilter ajaxLoginProcessingFilter =
 			buildAjaxLoginProcessingFilter(authenticationManager);
+		List<String> permitAllEndpoints = getPermitAllEndpoints();
 		JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter =
 			buildJwtAuthenticationProcessingFilter(permitAllEndpoints, authenticationManager);
 
@@ -63,32 +67,25 @@ public class SecurityConfiguration {
 			.rememberMe(AbstractHttpConfigurer::disable)
 			.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
 			.exceptionHandling(configurer -> configurer.authenticationEntryPoint(authenticationEntryPoint))
-			.authorizeHttpRequests(request -> {
-				request.requestMatchers(AUTHENTICATION_URL).permitAll()
-					.anyRequest().authenticated();
-			})
+			.authorizeHttpRequests(request -> request
+				.requestMatchers(SIGN_UP_URL, LOG_IN_URL).permitAll()
+				.anyRequest().authenticated())
 			.cors(configurer -> configurer.configurationSource(corsConfigurationSource))
 			.addFilterBefore(ajaxLoginProcessingFilter, UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(jwtAuthenticationProcessingFilter, UsernamePasswordAuthenticationFilter.class)
+			.authenticationManager(authenticationManager)
 			.build();
 	}
 
 	private List<String> getPermitAllEndpoints() {
 		return Arrays.asList(
-			AUTHENTICATION_URL
+			SIGN_UP_URL, LOG_IN_URL
 		);
-	}
-
-	private AuthenticationManager getAuthenticationManager(HttpSecurity http) throws Exception {
-		return http.getSharedObject(AuthenticationManagerBuilder.class)
-			.authenticationProvider(ajaxAuthenticationProvider)
-			.authenticationProvider(jwtAuthenticationProvider)
-			.build();
 	}
 
 	private AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter(AuthenticationManager authenticationManager) {
 		AjaxLoginProcessingFilter ajaxLoginProcessingFilter =
-			new AjaxLoginProcessingFilter(AUTHENTICATION_URL, authenticationSuccessHandler,
+			new AjaxLoginProcessingFilter(LOG_IN_URL, authenticationSuccessHandler,
 				authenticationFailureHandler, objectMapper);
 		ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManager);
 

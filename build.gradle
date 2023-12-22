@@ -52,6 +52,7 @@ project(':wave-core') {
     jar { enabled = true }
 
     dependencies {
+        implementation 'org.apache.commons:commons-lang3:3.12.0'
         runtimeOnly 'com.h2database:h2'
         runtimeOnly 'com.mysql:mysql-connector-j'
     }

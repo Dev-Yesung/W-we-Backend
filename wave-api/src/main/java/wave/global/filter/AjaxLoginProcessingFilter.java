@@ -20,7 +20,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import wave.domain.auth.dto.UserLoginRequest;
+import wave.domain.auth.dto.request.LoginRequest;
 
 @Slf4j
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -52,7 +52,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 			throw new AuthenticationServiceException("지원하지 않는 Authentication method 입니다.");
 		}
 
-		UserLoginRequest loginRequest = objectMapper.readValue(request.getReader(), UserLoginRequest.class);
+		LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
 		if (!isValidLoginRequest(loginRequest)) {
 			throw new AuthenticationServiceException("이메일이나 패스워드가 입력되지 않았습니다.");
 		}
@@ -94,7 +94,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 	}
 
 	private boolean isValidLoginRequest(
-		UserLoginRequest loginRequest
+		LoginRequest loginRequest
 	) {
 		String email = loginRequest.email();
 		String certificationNumber = loginRequest.certificationNumber();
