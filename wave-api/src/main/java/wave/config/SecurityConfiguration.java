@@ -26,7 +26,7 @@ import wave.domain.auth.application.AjaxAuthenticationProvider;
 import wave.domain.auth.application.JwtAuthenticationProvider;
 import wave.domain.auth.application.JwtExtractor;
 import wave.domain.auth.application.SkipPathRequestMatcher;
-import wave.domain.auth.controller.RestAuthenticationEntryPoint;
+import wave.domain.auth.presentation.RestAuthenticationEntryPoint;
 import wave.global.filter.AjaxLoginProcessingFilter;
 import wave.global.filter.JwtAuthenticationProcessingFilter;
 

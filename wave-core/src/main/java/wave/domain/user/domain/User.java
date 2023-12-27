@@ -27,4 +27,16 @@ public class User {
 	private Profile profile;
 
 	private Role role;
+
+	public User(
+		String email,
+		String nickname,
+		Profile profile,
+		Role role
+	) {
+		this.email = email;
+		this.nickname = nickname;
+		this.profile = profile;
+		this.role = role;
+	}
 }

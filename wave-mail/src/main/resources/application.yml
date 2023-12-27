@@ -2,5 +2,5 @@ spring:
   config:
     import:
       - classpath:application-server.yml
-      - classpath:application-jwt.yml
+      - classpath:application-mail.yml
       - classpath:application-db.yml

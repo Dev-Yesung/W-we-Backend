@@ -58,7 +58,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 		}
 
 		String email = loginRequest.email();
-		String certificationNumber = loginRequest.certificationNumber();
+		String certificationNumber = loginRequest.certificationCode();
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, certificationNumber);
 		AuthenticationManager authenticationManager = getAuthenticationManager();
 
@@ -97,7 +97,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 		LoginRequest loginRequest
 	) {
 		String email = loginRequest.email();
-		String certificationNumber = loginRequest.certificationNumber();
+		String certificationNumber = loginRequest.certificationCode();
 
 		return StringUtils.hasText(email) && StringUtils.hasText(certificationNumber);
 	}

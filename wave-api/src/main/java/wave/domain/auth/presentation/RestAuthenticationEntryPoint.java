@@ -1,4 +1,4 @@
-package wave.domain.auth.controller;
+package wave.domain.auth.presentation;
 
 import java.io.IOException;
 

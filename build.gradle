@@ -31,6 +31,7 @@ subprojects {
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
         implementation 'org.springframework.boot:spring-boot-starter-security'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
 
@@ -67,5 +68,16 @@ project(':wave-api') {
         implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
         implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
         implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+    }
+}
+
+project(':wave-mail') {
+    bootJar { enabled = true }
+    jar { enabled = false }
+
+    dependencies {
+        implementation project(':wave-core')
+        implementation 'org.springframework.boot:spring-boot-starter-mail'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     }
 }

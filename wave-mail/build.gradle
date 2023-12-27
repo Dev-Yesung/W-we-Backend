@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'wave-api'
+group = 'wave-mail'
 
 repositories {
     mavenCentral()
