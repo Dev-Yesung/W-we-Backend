@@ -45,7 +45,7 @@ public class PostController {
 			.body(response);
 	}
 
-	@PostMapping(value = "/other-music", consumes = MULTIPART_FORM_DATA_VALUE, produces = APPLICATION_JSON_VALUE)
+	@PostMapping("/other-music")
 	public ResponseEntity<OtherMusicPostCreateResponse> createOwnMusicPost(
 		@RequestBody @Validated OtherMusicPostCreateRequest request,
 		@AuthenticationUser User user
