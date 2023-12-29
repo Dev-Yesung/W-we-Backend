@@ -1,4 +1,4 @@
-package wave.domain.post;
+package wave.domain.post.domain;
 
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;

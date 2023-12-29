@@ -12,7 +12,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import wave.domain.post.Post;
+import wave.domain.post.domain.Post;
 import wave.domain.user.domain.User;
 
 @Slf4j
