@@ -25,7 +25,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 		super(authorities);
 		this.eraseCredentials();
 		this.principal = principal;
-		this.setAuthenticated(true);
+		super.setAuthenticated(true);
 	}
 
 	@Override

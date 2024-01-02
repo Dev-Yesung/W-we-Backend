@@ -11,6 +11,7 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "configuration.upload.music")
 @Configuration
 public class MusicUploadConfiguration {
+	private String host;
 	private String rootPath;
 	private String fileNameSeparator;
 	private long maxFileSize;

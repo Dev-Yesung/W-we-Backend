@@ -12,6 +12,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -39,7 +40,6 @@ public class SecurityConfiguration {
 	private static final String REFRESH_TOKEN_URL = "/api/auth/token";
 	private static final String API_ROOT_URL = "/api/**";
 
-	private final AuthenticationConfiguration authenticationConfiguration;
 	private final CorsConfigurationSource corsConfigurationSource;
 	private final RestAuthenticationEntryPoint authenticationEntryPoint;
 	private final AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -48,6 +48,12 @@ public class SecurityConfiguration {
 	private final JwtAuthenticationProvider jwtAuthenticationProvider;
 	private final JwtExtractor jwtExtractor;
 	private final ObjectMapper objectMapper;
+
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return web -> web.ignoring()
+			.requestMatchers("/h2-console/**");
+	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -68,8 +74,9 @@ public class SecurityConfiguration {
 			.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
 			.exceptionHandling(configurer -> configurer.authenticationEntryPoint(authenticationEntryPoint))
 			.authorizeHttpRequests(request -> request
-				.requestMatchers(SIGN_UP_URL, LOG_IN_URL).permitAll()
-				.anyRequest().authenticated())
+				.requestMatchers("/api/post/**", SIGN_UP_URL, LOG_IN_URL).permitAll()
+				.anyRequest().authenticated()
+			)
 			.cors(configurer -> configurer.configurationSource(corsConfigurationSource))
 			.addFilterBefore(ajaxLoginProcessingFilter, UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(jwtAuthenticationProcessingFilter, UsernamePasswordAuthenticationFilter.class)

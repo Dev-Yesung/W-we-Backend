@@ -27,7 +27,9 @@ public enum ErrorCode {
 	EXCEED_MAX_FILE_SIZE("-F004", "음원 파일의 최대 업로드 사이즈를 초과했습니다."),
 	INVALID_FILE_EXTENSION("-F005", "지원하지 않는 음원 파일 형식입니다."),
 	UNABLE_TO_UPLOAD("-F006", "음원 파일을 업로드 하던 중 오류가 발생했습니다."),
-	INVALID_FILE_PATH("-F007", "올바르지 않은 음원 파일 경로입니다.");
+
+	INVALID_URL("-P001", "올바르지 않은 URL입니다."),
+	;
 
 	private final String code;
 	private final String message;

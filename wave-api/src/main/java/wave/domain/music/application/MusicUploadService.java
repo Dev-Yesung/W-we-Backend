@@ -18,6 +18,7 @@ import wave.domain.music.dto.response.UploadMusicResponse;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 
+// File을 객체화 시키면 좋을듯..?
 @Transactional
 @Service
 public class MusicUploadService {
@@ -29,29 +30,22 @@ public class MusicUploadService {
 	}
 
 	public UploadMusicResponse uploadMusic(UploadMusicDto uploadMusicDto) {
-		validateFile(uploadMusicDto);
-		String directoryPath = getDirectoryPath(uploadMusicDto);
-		makeDirectory(directoryPath);
-		String fileName = getFileName(uploadMusicDto);
-		saveMusicFile(uploadMusicDto, directoryPath, fileName);
+		Long postId = uploadMusicDto.postId();
+		Long userId = uploadMusicDto.userId();
+		MultipartFile ownMusicFile = uploadMusicDto.ownMusicFile();
 
-		return getUploadMusicResponse(uploadMusicDto, fileName, directoryPath);
+		validateFile(ownMusicFile);
+		String path = getDirectoryPath(userId, postId);
+		makeDirectory(path);
+
+		String fileName = getConvertedFileName(postId, ownMusicFile);
+		saveMusicFile(ownMusicFile, path, fileName);
+
+		return getUploadMusicResponse(path, fileName);
 	}
 
-	private UploadMusicResponse getUploadMusicResponse(
-		UploadMusicDto uploadMusicDto,
-		String fileName,
-		String directoryPath
-	) {
-		MultipartFile ownMusicFile = uploadMusicDto.ownMusicFile();
-		String fileExtension = getFileExtension(ownMusicFile);
-
-		return new UploadMusicResponse(fileName, fileExtension, directoryPath);
-	}
-
-	private void saveMusicFile(UploadMusicDto uploadMusicDto, String directoryPath, String fileName) {
-		MultipartFile ownMusicFile = uploadMusicDto.ownMusicFile();
-		Path uploadPath = Paths.get(directoryPath + File.separator + fileName);
+	private void saveMusicFile(MultipartFile ownMusicFile, String path, String fileName) {
+		Path uploadPath = Paths.get(path + File.separator + fileName);
 		try {
 			InputStream inputStream = ownMusicFile.getInputStream();
 			Files.copy(inputStream, uploadPath);
@@ -60,21 +54,25 @@ public class MusicUploadService {
 		}
 	}
 
-	private String getDirectoryPath(UploadMusicDto uploadMusicDto) {
+	private String getDirectoryPath(Long userId, Long postId) {
 		String rootPath = musicUploadConfiguration.getRootPath();
-		Long userId = uploadMusicDto.userId();
-		Long postId = uploadMusicDto.postId();
 
 		return rootPath + File.separator + userId + File.separator + postId;
 	}
 
-	private String getFileName(UploadMusicDto uploadMusicDto) {
-		Long postId = uploadMusicDto.postId();
+	private String getConvertedFileName(long postId, MultipartFile ownMusicFile) {
 		String fileNameSeparator = musicUploadConfiguration.getFileNameSeparator();
-		MultipartFile ownMusicFile = uploadMusicDto.ownMusicFile();
-		String originalFileName = ownMusicFile.getName();
+		String convertedFileName = covertWhiteSpaceToDash(ownMusicFile);
 
-		return postId + fileNameSeparator + originalFileName;
+		return postId + fileNameSeparator + convertedFileName;
+	}
+
+	private String covertWhiteSpaceToDash(MultipartFile ownMusicFile) {
+		String originalFilename = ownMusicFile.getOriginalFilename();
+
+		return originalFilename
+			.trim()
+			.replaceAll(" ", "-");
 	}
 
 	private void makeDirectory(String path) {
@@ -99,16 +97,15 @@ public class MusicUploadService {
 		}
 	}
 
-	private void validateFile(UploadMusicDto uploadMusicDto) {
-		MultipartFile ownMusicFile = uploadMusicDto.ownMusicFile();
+	private void validateFile(MultipartFile ownMusicFile) {
 		isValidFileName(ownMusicFile);
 		isValidFileSize(ownMusicFile);
 		isValidFileExtension(ownMusicFile);
 	}
 
 	private void isValidFileName(MultipartFile ownMusicFile) {
-		String fileName = ownMusicFile.getName();
-		if (fileName.isEmpty()) {
+		String fileName = ownMusicFile.getOriginalFilename();
+		if (fileName == null || fileName.isEmpty()) {
 			throw new BusinessException(ErrorCode.INVALID_FILE_NAME);
 		}
 	}
@@ -125,14 +122,23 @@ public class MusicUploadService {
 		String uploadFileExtension = getFileExtension(ownMusicFile);
 		List<String> fileExtensions = musicUploadConfiguration.getFileExtensions();
 		fileExtensions.stream()
-			.filter(fileExtension -> fileExtension.equals(uploadFileExtension))
+			.filter(uploadFileExtension::equals)
 			.findAny()
 			.orElseThrow(() -> new BusinessException(ErrorCode.INVALID_FILE_EXTENSION));
 	}
 
 	private String getFileExtension(MultipartFile ownMusicFile) {
-		String[] splitName = ownMusicFile.getName()
-			.split("\\.");
-		return splitName[1];
+		String fileName = ownMusicFile.getOriginalFilename();
+		int length = fileName.length();
+
+		return fileName.substring(length - 3);
 	}
+
+	private UploadMusicResponse getUploadMusicResponse(String path, String fileName) {
+		String host = musicUploadConfiguration.getHost();
+		String url = host + path + "/" + fileName;
+
+		return new UploadMusicResponse(url);
+	}
+
 }

@@ -1,25 +1,18 @@
 package wave.domain.post.dto.response;
 
-import wave.domain.music.dto.response.UploadMusicResponse;
-import wave.domain.post.domain.OwnMusicPost;
-import wave.domain.user.domain.User;
+import wave.domain.post.domain.Post;
 
 public record OwnMusicPostCreateResponse(
 	Long postId,
 	Long userId,
-	String fileName,
-	String extension
+	String url
 ) {
-	public static OwnMusicPostCreateResponse of(
-		OwnMusicPost savedOwnMusicPost,
-		UploadMusicResponse uploadMusicResponse
-	) {
-		Long postId = savedOwnMusicPost.getId();
-		User user = savedOwnMusicPost.getUser();
-		Long userId = user.getId();
-		String fileName = uploadMusicResponse.fileName();
-		String extension = uploadMusicResponse.extension();
 
-		return new OwnMusicPostCreateResponse(postId, userId, fileName, extension);
+	public static OwnMusicPostCreateResponse of(Post post) {
+		Long postId = post.getId();
+		Long userId = post.getUser().getId();
+		String url = post.getUrl();
+
+		return new OwnMusicPostCreateResponse(postId, userId, url);
 	}
 }

@@ -1,6 +1,6 @@
 package wave.domain.post.dto;
 
-import wave.domain.post.domain.OtherMusicPost;
+import wave.domain.post.domain.Post;
 import wave.domain.post.dto.request.OtherMusicPostCreateRequest;
 import wave.domain.user.domain.User;
 
@@ -18,7 +18,7 @@ public record OtherMusicDto(
 		return new OtherMusicDto(title, content, link, user);
 	}
 
-	public OtherMusicPost toEntity() {
-		return new OtherMusicPost(title, content, 0, user, url);
+	public Post toEntity() {
+		return new Post(title, content, 0, url, user);
 	}
 }

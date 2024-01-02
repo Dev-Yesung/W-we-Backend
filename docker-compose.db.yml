@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: wave-mysql
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    ports:
+      - '3306:3306'
+
+  redis:
+    container_name: wave-redis
+    image: redis:latest
+    ports:
+      - '6379:6379'

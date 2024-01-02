@@ -29,7 +29,7 @@ public class JwtExtractor {
 	private final JwtConfiguration jwtConfiguration;
 
 	public String extractFromHeader(String payload) {
-		if (StringUtils.hasText(payload)) {
+		if (!StringUtils.hasText(payload)) {
 			throw new AuthenticationServiceException("Authorization Header는 비어있을 수 없습니다.");
 		}
 		if (payload.length() < HEADER_PREFIX.length()) {

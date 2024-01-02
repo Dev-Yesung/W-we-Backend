@@ -3,6 +3,8 @@ package wave.domain.user.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +28,7 @@ public class User {
 	@Embedded
 	private Profile profile;
 
+	@Enumerated(EnumType.STRING)
 	private Role role;
 
 	public User(
