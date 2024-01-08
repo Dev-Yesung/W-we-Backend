@@ -30,10 +30,10 @@ public class JwtCreator {
 
 	public AccessToken createAccessToken(User user) {
 		if (StringUtils.isBlank(user.getEmail())) {
-			throw new EntityException(ErrorCode.NOT_FOUND_EMAIL);
+			throw new EntityException(ErrorCode.NOT_FOUND_USER_EMAIL);
 		}
 		if (user.getRole() == null) {
-			throw new EntityException(ErrorCode.NOT_FOUND_ROLL);
+			throw new EntityException(ErrorCode.NOT_FOUND_USER_ROLL);
 		}
 
 		String issuer = jwtConfiguration.getIssuer();
@@ -61,7 +61,7 @@ public class JwtCreator {
 
 	public RefreshToken createRefreshToken(User user) {
 		if (StringUtils.isBlank(user.getEmail())) {
-			throw new EntityException(ErrorCode.NOT_FOUND_EMAIL);
+			throw new EntityException(ErrorCode.NOT_FOUND_USER_EMAIL);
 		}
 
 		String issuer = jwtConfiguration.getIssuer();

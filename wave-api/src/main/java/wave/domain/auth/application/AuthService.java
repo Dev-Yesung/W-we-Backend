@@ -31,7 +31,7 @@ public class AuthService {
 	public void checkDuplicateEmail(String email) {
 		userRepository.findByEmail(email)
 			.ifPresent(user -> {
-				throw new BusinessException(ErrorCode.ALREADY_EXIST_EMAIL);
+				throw new BusinessException(ErrorCode.ALREADY_EXIST_USER_EMAIL);
 			});
 	}
 

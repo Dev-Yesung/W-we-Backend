@@ -1,0 +1,6 @@
+spring:
+  config:
+    import:
+      - classpath:application-db.yml
+      - classpath:application-server.yml
+      - classpath:application-upload.yml

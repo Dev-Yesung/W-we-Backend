@@ -41,7 +41,7 @@ public class MusicUploadService {
 		String fileName = getConvertedFileName(postId, ownMusicFile);
 		saveMusicFile(ownMusicFile, path, fileName);
 
-		return getUploadMusicResponse(path, fileName);
+		return getUploadMusicResponse(userId, postId);
 	}
 
 	private void saveMusicFile(MultipartFile ownMusicFile, String path, String fileName) {
@@ -50,7 +50,7 @@ public class MusicUploadService {
 			InputStream inputStream = ownMusicFile.getInputStream();
 			Files.copy(inputStream, uploadPath);
 		} catch (IOException e) {
-			throw new BusinessException(ErrorCode.UNABLE_TO_UPLOAD);
+			throw new BusinessException(ErrorCode.UNABLE_TO_UPLOAD_MUSIC);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class MusicUploadService {
 
 		boolean isSuccessToMake = directory.mkdirs();
 		if (!isSuccessToMake) {
-			throw new BusinessException(ErrorCode.UNABLE_TO_MAKE_DIRECTORY);
+			throw new BusinessException(ErrorCode.UNABLE_TO_MAKE_MUSIC_FILE_DIRECTORY);
 		}
 
 	}
@@ -93,7 +93,7 @@ public class MusicUploadService {
 	private void validatePath(String path) {
 		String trimmedPath = path.trim();
 		if (trimmedPath.isEmpty()) {
-			throw new BusinessException(ErrorCode.INVALID_UPLOAD_PATH);
+			throw new BusinessException(ErrorCode.INVALID_MUSIC_UPLOAD_PATH);
 		}
 	}
 
@@ -106,7 +106,7 @@ public class MusicUploadService {
 	private void isValidFileName(MultipartFile ownMusicFile) {
 		String fileName = ownMusicFile.getOriginalFilename();
 		if (fileName == null || fileName.isEmpty()) {
-			throw new BusinessException(ErrorCode.INVALID_FILE_NAME);
+			throw new BusinessException(ErrorCode.INVALID_MUSIC_FILE_NAME);
 		}
 	}
 
@@ -114,7 +114,7 @@ public class MusicUploadService {
 		long fileSize = ownMusicFile.getSize();
 		long maxFileSize = musicUploadConfiguration.getMaxFileSize();
 		if (fileSize > maxFileSize) {
-			throw new BusinessException(ErrorCode.EXCEED_MAX_FILE_SIZE);
+			throw new BusinessException(ErrorCode.EXCEED_MAX_MUSIC_FILE_SIZE);
 		}
 	}
 
@@ -124,7 +124,7 @@ public class MusicUploadService {
 		fileExtensions.stream()
 			.filter(uploadFileExtension::equals)
 			.findAny()
-			.orElseThrow(() -> new BusinessException(ErrorCode.INVALID_FILE_EXTENSION));
+			.orElseThrow(() -> new BusinessException(ErrorCode.INVALID_MUSIC_FILE_EXTENSION));
 	}
 
 	private String getFileExtension(MultipartFile ownMusicFile) {
@@ -134,11 +134,10 @@ public class MusicUploadService {
 		return fileName.substring(length - 3);
 	}
 
-	private UploadMusicResponse getUploadMusicResponse(String path, String fileName) {
+	private UploadMusicResponse getUploadMusicResponse(long userId, long postId) {
 		String host = musicUploadConfiguration.getHost();
-		String url = host + path + "/" + fileName;
+		String url = host + "/" + "api/music/" + userId + "/" + postId;
 
 		return new UploadMusicResponse(url);
 	}
-
 }

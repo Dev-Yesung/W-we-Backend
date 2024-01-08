@@ -69,8 +69,8 @@ public class PostService {
 		return new UploadMusicDto(userId, postId, ownMusicFile);
 	}
 
-	private void updatePostUrl(UploadMusicResponse response, Post savedPost) {
+	private void updatePostUrl(UploadMusicResponse response, Post post) {
 		String url = response.url();
-		savedPost.updateUrl(url);
+		post.updateUrl(url);
 	}
 }
