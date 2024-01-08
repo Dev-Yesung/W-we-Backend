@@ -20,7 +20,7 @@ public record PostResponse(
 		String nickname = user.getNickname();
 		String contents = post.getContents();
 		String url = post.getUrl();
-		int waves = post.getWaves();
+		int waves = post.getLikesSize();
 
 		return new PostResponse(
 			postId, userId,

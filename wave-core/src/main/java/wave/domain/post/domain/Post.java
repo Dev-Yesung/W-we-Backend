@@ -1,5 +1,11 @@
 package wave.domain.post.domain;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,31 +24,31 @@ import wave.global.error.exception.BusinessException;
 @Slf4j
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "Posts")
+@Entity(name = "posts")
 public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 
-	String title;
-	String contents;
-	int waves;
-	String url;
+	private String title;
+	private String contents;
+	private String url;
+
+	@ElementCollection(fetch = FetchType.LAZY)
+	private final Map<String, String> likes = new ConcurrentHashMap<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	User user;
+	private User user;
 
 	public Post(
 		String title,
 		String contents,
-		int waves,
 		String url,
 		User user
 	) {
 		this.title = title;
 		this.contents = contents;
-		this.waves = waves;
 		this.url = url;
 		this.user = user;
 	}
@@ -50,6 +56,22 @@ public class Post {
 	public void updateUrl(String url) {
 		validateUrl(url);
 		this.url = url;
+	}
+
+	public void updateLikes(User user) {
+		String email = user.getEmail();
+		String nickname = user.getNickname();
+
+		boolean isAlreadyExisted = likes.containsKey(email);
+		if (isAlreadyExisted) {
+			likes.remove(email);
+			return;
+		}
+		likes.put(email, nickname);
+	}
+
+	public int getLikesSize() {
+		return likes.size();
 	}
 
 	private void validateUrl(String url) {

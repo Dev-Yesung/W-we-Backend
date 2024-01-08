@@ -14,13 +14,17 @@ import wave.domain.post.domain.Post;
 import wave.domain.post.dto.OtherMusicDto;
 import wave.domain.post.dto.OwnMusicDto;
 import wave.domain.post.dto.request.GetPostsByEmailRequest;
+import wave.domain.post.dto.request.LikeUpdateRequest;
 import wave.domain.post.dto.response.GetPostsByEmailResponse;
+import wave.domain.post.dto.response.LikeUpdateResponse;
 import wave.domain.post.dto.response.OtherMusicPostCreateResponse;
 import wave.domain.post.dto.response.OwnMusicPostCreateResponse;
 import wave.domain.post.dto.response.PostSliceResponse;
 import wave.domain.post.infra.PostQueryRepository;
 import wave.domain.post.infra.PostRepository;
 import wave.domain.user.domain.User;
+import wave.global.error.ErrorCode;
+import wave.global.error.exception.EntityException;
 
 @RequiredArgsConstructor
 @Transactional
@@ -58,6 +62,19 @@ public class PostService {
 		Post savedPost = postRepository.save(newPost);
 
 		return OtherMusicPostCreateResponse.of(savedPost);
+	}
+
+	public LikeUpdateResponse updateLikes(LikeUpdateRequest request) {
+		long postId = request.postId();
+		Post post = postRepository.findById(postId)
+			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_POST));
+		User user = request.user();
+		post.updateLikes(user);
+
+		String email = user.getEmail();
+		String nickname = user.getNickname();
+
+		return new LikeUpdateResponse(postId, email, nickname);
 	}
 
 	private UploadMusicDto getUploadMusicDto(OwnMusicDto ownMusicDto, Post post) {

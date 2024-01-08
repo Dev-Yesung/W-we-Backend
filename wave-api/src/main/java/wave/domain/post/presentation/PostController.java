@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -23,9 +24,11 @@ import wave.domain.post.application.PostService;
 import wave.domain.post.dto.OtherMusicDto;
 import wave.domain.post.dto.OwnMusicDto;
 import wave.domain.post.dto.request.GetPostsByEmailRequest;
+import wave.domain.post.dto.request.LikeUpdateRequest;
 import wave.domain.post.dto.request.OtherMusicPostCreateRequest;
 import wave.domain.post.dto.request.OwnMusicPostCreateRequest;
 import wave.domain.post.dto.response.GetPostsByEmailResponse;
+import wave.domain.post.dto.response.LikeUpdateResponse;
 import wave.domain.post.dto.response.OtherMusicPostCreateResponse;
 import wave.domain.post.dto.response.OwnMusicPostCreateResponse;
 import wave.domain.post.dto.response.PostSliceResponse;
@@ -82,5 +85,16 @@ public class PostController {
 		return ResponseEntity
 			.created(URI.create("/other-music" + "/" + response.postId()))
 			.body(response);
+	}
+
+	@PutMapping("/{postId}/likes")
+	public ResponseEntity<LikeUpdateResponse> updateLikes(
+		@PathVariable long postId,
+		@AuthenticationUser User user
+	) {
+		LikeUpdateRequest likeUpdateRequest = new LikeUpdateRequest(postId, user);
+		LikeUpdateResponse response = postService.updateLikes(likeUpdateRequest);
+
+		return ResponseEntity.ok(response);
 	}
 }

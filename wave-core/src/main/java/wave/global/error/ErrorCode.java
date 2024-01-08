@@ -31,7 +31,8 @@ public enum ErrorCode {
 	NOT_FOUND_MUSIC_FILE("-MF008", "음원 파일을 찾을 수 없습니다."),
 	UNABLE_TO_GET_FILE_INFO("-MF009", "음원 파일의 정보를 가져올 수 없습니다."),
 
-	INVALID_URL("-P001", "올바르지 않은 URL입니다."),
+	INVALID_URL("-P001", "올바르지 않은 포스트 조회입니다."),
+	NOT_FOUND_POST("-P002", "포스트를 찾을 수 없습니다."),
 
 	INVALID_PARTIAL_RANGE("-SM001", "스트리밍 요청범위가 올바르지 않습니다."),
 	UNABLE_TO_OUTPUT("-SM002", "스트리밍할 파일을 가져올 수 없습니다.");

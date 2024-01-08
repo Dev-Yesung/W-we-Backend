@@ -19,6 +19,6 @@ public record OtherMusicDto(
 	}
 
 	public Post toEntity() {
-		return new Post(title, content, 0, url, user);
+		return new Post(title, content, url, user);
 	}
 }

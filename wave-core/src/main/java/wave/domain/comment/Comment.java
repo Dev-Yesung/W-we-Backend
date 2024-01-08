@@ -18,7 +18,7 @@ import wave.domain.user.domain.User;
 @Slf4j
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "Comments")
+@Entity(name = "comments")
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
