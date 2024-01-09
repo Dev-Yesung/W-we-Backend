@@ -94,7 +94,7 @@ public class PostController {
 			.body(response);
 	}
 
-	@DeleteMapping("{postId}")
+	@DeleteMapping("/{postId}")
 	public ResponseEntity<PostDeleteDto> deletePost(
 		@PathVariable long postId,
 		@AuthenticationUser User user

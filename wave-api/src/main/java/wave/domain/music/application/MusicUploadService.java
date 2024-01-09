@@ -7,11 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
 import wave.config.MusicUploadConfiguration;
 import wave.domain.music.dto.UploadMusicDto;
 import wave.domain.music.dto.response.UploadMusicResponse;
@@ -20,6 +22,7 @@ import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 
 // File을 객체화 시키면 좋을듯..?
+@Slf4j
 @Transactional
 @Service
 public class MusicUploadService {
@@ -49,15 +52,24 @@ public class MusicUploadService {
 		Long userId = musicDeleteDto.userId();
 		Long postId = musicDeleteDto.postId();
 		String path = getDirectoryPath(userId, postId);
-		removeDirectory(path);
+		removeFiles(path);
 	}
 
-	private void removeDirectory(String path) {
+	private void removeFiles(String path) {
 		Path directoryPath = Paths.get(path);
-		try {
+		try (Stream<Path> fileList = Files.list(directoryPath)) {
+			fileList.forEach(file -> {
+				String fileDirectory = path + "/" + file.getFileName().toString();
+				Path filePath = Paths.get(fileDirectory);
+				try {
+					Files.delete(filePath);
+				} catch (IOException e) {
+					throw new BusinessException(ErrorCode.NOT_FOUND_MUSIC_FILE, e);
+				}
+			});
 			Files.delete(directoryPath);
 		} catch (IOException e) {
-			throw new BusinessException(ErrorCode.NOT_FOUND_MUSIC_FILE_DIRECTORY);
+			throw new BusinessException(ErrorCode.NOT_FOUND_MUSIC_FILE_DIRECTORY, e);
 		}
 	}
 
@@ -74,7 +86,7 @@ public class MusicUploadService {
 	private String getDirectoryPath(Long userId, Long postId) {
 		String rootPath = musicUploadConfiguration.getRootPath();
 
-		return rootPath + File.separator + userId + File.separator + postId;
+		return rootPath + "/" + userId + "/" + postId;
 	}
 
 	private String getConvertedFileName(long postId, MultipartFile ownMusicFile) {

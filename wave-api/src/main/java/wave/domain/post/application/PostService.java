@@ -89,7 +89,7 @@ public class PostService {
 			MusicDeleteDto musicDeleteDto = new MusicDeleteDto(userId, postId);
 			musicUploadService.deleteMusic(musicDeleteDto);
 		}
-
+		commentRepository.deleteAllCommentsByPostId(postId);
 		postRepository.delete(post);
 
 		return new PostDeleteDto(postId, userId);
