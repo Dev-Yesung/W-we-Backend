@@ -1,8 +1,6 @@
 package wave.domain.post.domain;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.persistence.ElementCollection;
@@ -18,14 +16,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wave.domain.user.domain.User;
+import wave.global.BaseEntity;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
+import wave.global.error.exception.EntityException;
 
 @Slf4j
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "posts")
-public class Post {
+public class Post extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -78,5 +78,15 @@ public class Post {
 		if (url.isEmpty()) {
 			throw new BusinessException(ErrorCode.INVALID_URL);
 		}
+	}
+
+	public void validateAuthority(User user) {
+		if (!this.user.equals(user)) {
+			throw new EntityException(ErrorCode.NO_AUTHORITY_TO_POST);
+		}
+	}
+
+	public boolean isOwnMusic() {
+		return url.contains("http://localhost:6060");
 	}
 }

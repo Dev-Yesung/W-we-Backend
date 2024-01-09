@@ -16,11 +16,9 @@ import wave.domain.post.domain.Post;
 
 @Repository
 public class QueryDslPostQueryRepository implements PostQueryRepository {
-	// private final EntityManager entityManager;
 	private final JPAQueryFactory queryFactory;
 
 	public QueryDslPostQueryRepository(EntityManager entityManager) {
-		// this.entityManager = entityManager;
 		this.queryFactory = new JPAQueryFactory(entityManager);
 	}
 

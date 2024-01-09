@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import wave.config.MusicUploadConfiguration;
 import wave.domain.music.dto.UploadMusicDto;
 import wave.domain.music.dto.response.UploadMusicResponse;
+import wave.domain.post.dto.MusicDeleteDto;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 
@@ -42,6 +43,22 @@ public class MusicUploadService {
 		saveMusicFile(ownMusicFile, path, fileName);
 
 		return getUploadMusicResponse(userId, postId);
+	}
+
+	public void deleteMusic(MusicDeleteDto musicDeleteDto) {
+		Long userId = musicDeleteDto.userId();
+		Long postId = musicDeleteDto.postId();
+		String path = getDirectoryPath(userId, postId);
+		removeDirectory(path);
+	}
+
+	private void removeDirectory(String path) {
+		Path directoryPath = Paths.get(path);
+		try {
+			Files.delete(directoryPath);
+		} catch (IOException e) {
+			throw new BusinessException(ErrorCode.NOT_FOUND_MUSIC_FILE_DIRECTORY);
+		}
 	}
 
 	private void saveMusicFile(MultipartFile ownMusicFile, String path, String fileName) {

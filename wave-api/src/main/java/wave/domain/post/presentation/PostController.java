@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +22,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.post.application.PostService;
+import wave.domain.post.dto.CommentAddDto;
 import wave.domain.post.dto.OtherMusicDto;
 import wave.domain.post.dto.OwnMusicDto;
+import wave.domain.post.dto.PostDeleteDto;
+import wave.domain.post.dto.request.CommentAddRequest;
+import wave.domain.post.dto.CommentDeleteDto;
 import wave.domain.post.dto.request.GetPostsByEmailRequest;
 import wave.domain.post.dto.request.LikeUpdateRequest;
 import wave.domain.post.dto.request.OtherMusicPostCreateRequest;
 import wave.domain.post.dto.request.OwnMusicPostCreateRequest;
+import wave.domain.post.dto.response.CommentAddResponse;
+import wave.domain.post.dto.response.CommentsSliceResponse;
 import wave.domain.post.dto.response.GetPostsByEmailResponse;
 import wave.domain.post.dto.response.LikeUpdateResponse;
 import wave.domain.post.dto.response.OtherMusicPostCreateResponse;
@@ -87,6 +94,18 @@ public class PostController {
 			.body(response);
 	}
 
+	@DeleteMapping("{postId}")
+	public ResponseEntity<PostDeleteDto> deletePost(
+		@PathVariable long postId,
+		@AuthenticationUser User user
+	) {
+		PostDeleteDto request = PostDeleteDto.of(postId, user);
+		PostDeleteDto response = postService.deletePost(request);
+
+		return ResponseEntity
+			.ok(response);
+	}
+
 	@PutMapping("/{postId}/likes")
 	public ResponseEntity<LikeUpdateResponse> updateLikes(
 		@PathVariable long postId,
@@ -94,6 +113,42 @@ public class PostController {
 	) {
 		LikeUpdateRequest likeUpdateRequest = new LikeUpdateRequest(postId, user);
 		LikeUpdateResponse response = postService.updateLikes(likeUpdateRequest);
+
+		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping("/{postId}/comments")
+	public ResponseEntity<CommentAddResponse> addComment(
+		@PathVariable long postId,
+		@RequestBody CommentAddRequest addRequest,
+		@AuthenticationUser User user
+	) {
+		CommentAddDto commentAddDto = CommentAddDto.of(postId, addRequest, user);
+		CommentAddResponse response = postService.addComment(commentAddDto);
+
+		return ResponseEntity
+			.created(URI.create("/" + postId + "/comments" + "/" + response.commentId()))
+			.body(response);
+	}
+
+	@GetMapping("/{postId}/comments")
+	public ResponseEntity<CommentsSliceResponse> getCommentsByCreatedDateDesc(
+		@PathVariable long postId,
+		@PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable
+	) {
+		CommentsSliceResponse response = postService.getCommentsByCreatedDateDesc(postId, pageable);
+
+		return ResponseEntity.ok(response);
+	}
+
+	@DeleteMapping("/{postId}/comments/{commentId}")
+	public ResponseEntity<CommentDeleteDto> deleteComment(
+		@PathVariable long postId,
+		@PathVariable long commentId,
+		@AuthenticationUser User user
+	) {
+		CommentDeleteDto request = CommentDeleteDto.of(postId, commentId, user);
+		CommentDeleteDto response = postService.deleteComment(request);
 
 		return ResponseEntity.ok(response);
 	}

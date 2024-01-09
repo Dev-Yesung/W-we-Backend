@@ -30,12 +30,18 @@ public enum ErrorCode {
 	INVALID_MUSIC_FILE_PATH("-MF007", "입력된 음원 파일의 경로가 올바르지 않습니다."),
 	NOT_FOUND_MUSIC_FILE("-MF008", "음원 파일을 찾을 수 없습니다."),
 	UNABLE_TO_GET_FILE_INFO("-MF009", "음원 파일의 정보를 가져올 수 없습니다."),
+	NOT_FOUND_MUSIC_FILE_DIRECTORY("-MF010", "음원의 디렉토리를 찾을 수 없습니다."),
 
 	INVALID_URL("-P001", "올바르지 않은 포스트 조회입니다."),
 	NOT_FOUND_POST("-P002", "포스트를 찾을 수 없습니다."),
+	NO_AUTHORITY_TO_POST("-P003", "포스트에 권한이 없습니다."),
 
 	INVALID_PARTIAL_RANGE("-SM001", "스트리밍 요청범위가 올바르지 않습니다."),
-	UNABLE_TO_OUTPUT("-SM002", "스트리밍할 파일을 가져올 수 없습니다.");
+	UNABLE_TO_OUTPUT("-SM002", "스트리밍할 파일을 가져올 수 없습니다."),
+
+	NOT_FOUND_COMMENT("-C001", "댓글을 찾을 수 없습니다."),
+	NOT_INCLUDED_COMMENT_TO_POST("-C002", "해당 댓글과 일치하지 않는 포스트입니다."),
+	NO_AUTHORITY_TO_COMMENT("-C003", "해당 댓글에 권한이 없습니다.");
 
 	private final String code;
 	private final String message;
