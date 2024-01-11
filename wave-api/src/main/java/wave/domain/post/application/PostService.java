@@ -126,7 +126,7 @@ public class PostService {
 
 	@Transactional(readOnly = true)
 	public CommentsSliceResponse getCommentsByCreatedDateDesc(long postId, Pageable pageable) {
-		Slice<Comment> comments = commentRepository.findAllByPostIdByCreatedDateAtDesc(postId, pageable);
+		Slice<Comment> comments = commentRepository.findAllByPostIdOrderByCreatedDateAtDesc(postId, pageable);
 
 		return CommentsSliceResponse.of(comments);
 	}

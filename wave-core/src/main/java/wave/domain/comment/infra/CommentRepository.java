@@ -10,10 +10,10 @@ import org.springframework.data.repository.query.Param;
 import wave.domain.comment.domain.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-	@Query("select c from comments as c where c.postId = :postId")
-	Slice<Comment> findAllByPostIdByCreatedDateAtDesc(@Param("postId") long postId, Pageable pageable);
+	@Query("SELECT c FROM comments AS c WHERE c.postId = :postId")
+	Slice<Comment> findAllByPostIdOrderByCreatedDateAtDesc(@Param("postId") long postId, Pageable pageable);
 
 	@Modifying(clearAutomatically = true)
-	@Query("delete from comments as c where c.postId = :postId")
+	@Query("DELETE FROM comments AS c WHERE c.postId = :postId")
 	void deleteAllCommentsByPostId(@Param("postId") Long postId);
 }

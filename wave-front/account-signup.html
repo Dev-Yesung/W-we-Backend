@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>가입하기﹒Wavve</title>
+    <script src="/script/account.js" defer></script>
+  </head>
+  <body>
+    <header><h1>Wavve</h1></header>
+    <main>
+      <div>
+        <!-- 로그인 -->
+        <div class="form-signup">
+          <form onsubmit="return submitSignupForm()">
+            <input
+              type="email"
+              id="signup-email"
+              placeholder="이메일 주소"
+              required
+            />
+            <button
+              type="button"
+              id="email-duplicate-btn"
+              onclick="checkDuplicateEmail()"
+            >
+              중복확인
+            </button>
+            <input
+              type="email"
+              id="signup-nickname"
+              placeholder="사용자 이름"
+              required
+            />
+            <input
+              type="password"
+              id="signup-certification"
+              placeholder="인증번호"
+              required
+            />
+            <button
+              type="button"
+              id="certfication-code-btn"
+              onclick="requestSignupCertificationCode()"
+            >
+              인증번호 전송
+            </button>
+            <!-- 로그인 버튼 -->
+            <input type="submit" value="가입" />
+          </form>
+        </div>
+        <!-- 계정찾기 -->
+        <div><a href="account.html">계정이 있으신가요?</a></div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
