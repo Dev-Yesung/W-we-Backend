@@ -35,7 +35,7 @@ public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHa
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
 		if (exception instanceof BadCredentialsException) {
-			objectMapper.writeValue(response.getWriter(), ErrorResponse.of(ErrorCode.INVALID_CERTIFICATION_NUMBER));
+			objectMapper.writeValue(response.getWriter(), ErrorResponse.of(ErrorCode.INVALID_CERTIFICATION_CODE));
 		} else if (exception instanceof JwtExpiredTokenException) {
 			objectMapper.writeValue(response.getWriter(), ErrorResponse.of(ErrorCode.EXPIRED_JWT));
 		} else if (exception instanceof AuthMethodNotSupportedException) {

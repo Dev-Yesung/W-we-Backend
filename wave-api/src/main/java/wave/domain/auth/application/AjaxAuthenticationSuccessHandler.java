@@ -18,15 +18,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import wave.domain.auth.dto.AccessToken;
-import wave.domain.auth.dto.RefreshToken;
+import wave.domain.account.dto.AccessToken;
+import wave.domain.account.dto.RefreshToken;
 import wave.domain.user.domain.User;
 
 @RequiredArgsConstructor
 @Component
 public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	private final ObjectMapper objectMapper;
-	private final JwtCreator jwtTokenFactory;
+	private final JwtFactory jwtTokenFactory;
 
 	@Override
 	public void onAuthenticationSuccess(

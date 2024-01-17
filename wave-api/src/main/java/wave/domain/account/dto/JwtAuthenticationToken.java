@@ -1,4 +1,4 @@
-package wave.domain.auth.dto;
+package wave.domain.account.dto;
 
 import java.util.Collection;
 

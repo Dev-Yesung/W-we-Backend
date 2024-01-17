@@ -15,11 +15,12 @@ public enum ErrorCode {
 
 	AUTHENTICATION_FAIL("-A001", "인증에 실패했습니다."),
 	NOT_FOUND_CERTIFICATION_CODE("-A002", "인증코드를 찾을 수 없습니다."),
-	INVALID_CERTIFICATION_NUMBER("-A003", "잘못된 인증코드를 입력했습니다."),
-	EXPIRED_JWT("-A004", "토큰이 만료됐습니다."),
-	AUTH_METHOD_NOT_SUPPORTED("-A005", "잘못된 방식의 인증입니다."),
+	INVALID_CERTIFICATION_CODE("-A003", "잘못된 인증코드를 입력했습니다."),
+	NOT_VERIFIED_CERTIFICATION_CODE("-A004", "완료되지 않은 인증입니다."),
+	EXPIRED_JWT("-A005", "토큰이 만료됐습니다."),
+	AUTH_METHOD_NOT_SUPPORTED("-A006", "잘못된 방식의 인증입니다."),
 
-	INVALID_CERTIFICATION_MAIL_TYPE("-M001", "잘못된 인증메일요청 타입입니다."),
+	INVALID_MAIL_TYPE("-M001", "잘못된 메일 타입입니다."),
 
 	INVALID_MUSIC_UPLOAD_PATH("-MF001", "잘못된 음원 파일 업로드 경로입니다."),
 	INVALID_MUSIC_FILE_NAME("-MF002", "올바르지 않은 음원 파일 이름입니다."),

@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Jwts;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
-import wave.config.JwtConfiguration;
-import wave.domain.auth.dto.AccessToken;
-import wave.domain.auth.dto.RefreshToken;
+import wave.config.JwtConfig;
+import wave.domain.account.dto.AccessToken;
+import wave.domain.account.dto.RefreshToken;
 import wave.domain.auth.domain.Scope;
 import wave.domain.user.domain.User;
 import wave.global.error.ErrorCode;
@@ -25,8 +25,9 @@ import wave.global.error.exception.EntityException;
 
 @RequiredArgsConstructor
 @Component
-public class JwtCreator {
-	private final JwtConfiguration jwtConfiguration;
+public class JwtFactory {
+
+	private final JwtConfig jwtConfiguration;
 
 	public AccessToken createAccessToken(User user) {
 		if (StringUtils.isBlank(user.getEmail())) {

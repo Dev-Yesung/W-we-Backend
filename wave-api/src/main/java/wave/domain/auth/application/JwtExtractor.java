@@ -19,14 +19,14 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
-import wave.config.JwtConfiguration;
+import wave.config.JwtConfig;
 import wave.domain.auth.exception.JwtExpiredTokenException;
 
 @RequiredArgsConstructor
 @Component
 public class JwtExtractor {
 	public static String HEADER_PREFIX = "Bearer ";
-	private final JwtConfiguration jwtConfiguration;
+	private final JwtConfig jwtConfiguration;
 
 	public String extractFromHeader(String payload) {
 		if (!StringUtils.hasText(payload)) {

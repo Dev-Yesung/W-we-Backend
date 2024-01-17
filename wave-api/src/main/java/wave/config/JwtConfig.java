@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @ConfigurationProperties(prefix = "configuration.jwt")
 @Configuration
-public class JwtConfiguration {
+public class JwtConfig {
 	private String issuer;
 	private String algorithmType;
 	private String tokenSecret;

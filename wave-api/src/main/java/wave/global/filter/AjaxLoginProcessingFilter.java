@@ -20,7 +20,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import wave.domain.auth.dto.request.LoginRequest;
+import wave.domain.account.dto.request.LoginRequest;
 
 @Slf4j
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {

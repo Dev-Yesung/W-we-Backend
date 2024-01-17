@@ -1,21 +1,19 @@
 package wave.domain.auth.application;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.auth.dto.JwtAuthenticationToken;
+import wave.domain.account.dto.JwtAuthenticationToken;
 
 @RequiredArgsConstructor
 @Component

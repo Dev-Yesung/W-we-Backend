@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.auth.dto.AccessToken;
-import wave.domain.auth.dto.RefreshToken;
-import wave.domain.auth.dto.request.CheckCertificationCodeRequest;
-import wave.domain.auth.dto.request.SignupRequest;
-import wave.domain.auth.dto.response.SignupResponse;
+import wave.domain.account.dto.AccessToken;
+import wave.domain.account.dto.RefreshToken;
+import wave.domain.account.dto.request.CertificationRequest;
+import wave.domain.account.dto.request.SignupRequest;
+import wave.domain.account.dto.response.AccountResponse;
 import wave.domain.auth.infra.UserCertificationRepository;
 import wave.domain.mail.CertificationType;
 import wave.domain.user.domain.Profile;
@@ -22,21 +22,19 @@ import wave.global.error.exception.BusinessException;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class AuthService {
+public class AccountService {
 	private final UserRepository userRepository;
 	private final UserCertificationRepository userCertificationRepository;
-	private final JwtCreator jwtCreator;
+	private final JwtFactory jwtCreator;
 
 	@Transactional(readOnly = true)
 	public void checkDuplicateEmail(String email) {
-		userRepository.findByEmail(email)
-			.ifPresent(user -> {
-				throw new BusinessException(ErrorCode.ALREADY_EXIST_USER_EMAIL);
-			});
+
 	}
 
+
 	@Transactional(readOnly = true)
-	public void checkCertificationCode(CheckCertificationCodeRequest request) {
+	public void checkCertificationCode(CertificationRequest request) {
 		String email = request.email();
 		CertificationType certificationType = getCertificationType(request);
 		boolean isExist = userCertificationRepository
@@ -47,7 +45,7 @@ public class AuthService {
 		}
 	}
 
-	public SignupResponse signup(SignupRequest request) {
+	public AccountResponse signup(SignupRequest request) {
 		String foundCertificationCode = getCertificationCode(request);
 		validateCertificationCode(request, foundCertificationCode);
 		User newUser = getNewUser(request);
@@ -57,7 +55,7 @@ public class AuthService {
 		return getSignupResponse(newUser, tokens);
 	}
 
-	private CertificationType getCertificationType(CheckCertificationCodeRequest request) {
+	private CertificationType getCertificationType(CertificationRequest request) {
 		String type = request.type();
 
 		return CertificationType.getCertificationType(type);
@@ -73,7 +71,7 @@ public class AuthService {
 	private void validateCertificationCode(SignupRequest request, String foundCertificationCode) {
 		String certificationCode = request.certificationCode();
 		if (!certificationCode.equals(foundCertificationCode)) {
-			throw new BusinessException(ErrorCode.INVALID_CERTIFICATION_NUMBER);
+			throw new BusinessException(ErrorCode.INVALID_CERTIFICATION_CODE);
 		}
 	}
 
@@ -92,14 +90,14 @@ public class AuthService {
 		return new Token(accessToken, refreshToken);
 	}
 
-	private SignupResponse getSignupResponse(User newUser, Token tokens) {
+	private AccountResponse getSignupResponse(User newUser, Token tokens) {
 		String email = newUser.getEmail();
 		AccessToken accessToken = tokens.accessToken();
 		String rawAccessToken = accessToken.rawAccessToken();
 		RefreshToken refreshToken = tokens.refreshToken();
 		String rawRefreshToken = refreshToken.rawRefreshToken();
 
-		return new SignupResponse(email, rawAccessToken, rawRefreshToken);
+		return new AccountResponse(email, rawAccessToken, rawRefreshToken);
 	}
 
 	private record Token(

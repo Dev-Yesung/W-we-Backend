@@ -1,4 +1,4 @@
-package wave.domain.auth.dto.request;
+package wave.domain.account.dto.request;
 
 public record LoginRequest(
 	String email,
