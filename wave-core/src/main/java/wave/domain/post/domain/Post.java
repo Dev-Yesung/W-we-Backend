@@ -15,7 +15,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import wave.domain.user.domain.User;
+import wave.domain.account.domain.entity.User;
 import wave.global.BaseEntity;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;

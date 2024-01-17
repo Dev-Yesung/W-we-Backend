@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -23,11 +22,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.auth.application.AjaxAuthenticationProvider;
-import wave.domain.auth.application.JwtAuthenticationProvider;
-import wave.domain.auth.application.JwtExtractor;
-import wave.domain.auth.application.SkipPathRequestMatcher;
-import wave.domain.auth.presentation.RestAuthenticationEntryPoint;
+import wave.domain.account.application.authentication.AjaxAuthenticationProvider;
+import wave.domain.account.application.jwt.JwtAuthenticationProvider;
+import wave.domain.account.application.jwt.JwtExtractor;
+import wave.domain.account.application.authentication.SkipPathRequestMatcher;
+import wave.domain.account.presentation.RestAuthenticationEntryPoint;
 import wave.global.filter.AjaxLoginProcessingFilter;
 import wave.global.filter.JwtAuthenticationProcessingFilter;
 
@@ -35,9 +34,9 @@ import wave.global.filter.JwtAuthenticationProcessingFilter;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration {
-	private static final String SIGN_UP_URL = "/api/auth/signup";
-	private static final String LOG_IN_URL = "/api/auth/login";
-	private static final String REFRESH_TOKEN_URL = "/api/auth/token";
+	private static final String SIGN_UP_URL = "/api/accounts/signup";
+	private static final String LOG_IN_URL = "/api/accounts/login";
+	private static final String REFRESH_TOKEN_URL = "/api/accounts/token";
 	private static final String API_ROOT_URL = "/api/**";
 
 	private final CorsConfigurationSource corsConfigurationSource;

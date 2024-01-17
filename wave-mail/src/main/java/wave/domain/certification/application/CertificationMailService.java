@@ -12,7 +12,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import wave.domain.auth.infra.UserCertificationRepository;
+import wave.domain.account.infra.AccountCache;
 import wave.domain.certification.domain.RandomCodeCreator;
 import wave.domain.certification.dto.CertificationRequest;
 import wave.domain.certification.dto.CertificationResponse;
@@ -25,7 +25,7 @@ public class CertificationMailService {
 	private final RandomCodeCreator randomCodeCreator;
 	private final JavaMailSender javaMailSender;
 	private final SpringTemplateEngine templateEngine;
-	private final UserCertificationRepository userCertificationRepository;
+	private final AccountCache userCertificationRepository;
 
 	public CertificationResponse sendCertificationMailByCertificationType(final CertificationRequest request) {
 		String certificationCode = randomCodeCreator.createRandomCode();

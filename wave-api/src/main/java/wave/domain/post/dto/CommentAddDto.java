@@ -1,7 +1,7 @@
 package wave.domain.post.dto;
 
 import wave.domain.post.dto.request.CommentAddRequest;
-import wave.domain.user.domain.User;
+import wave.domain.account.domain.entity.User;
 
 public record CommentAddDto(
 	long postId,

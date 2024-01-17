@@ -1,6 +1,6 @@
 package wave.domain.post.dto;
 
-import wave.domain.user.domain.User;
+import wave.domain.account.domain.entity.User;
 
 public record PostDeleteDto(
 	Long postId,

@@ -39,7 +39,7 @@ import wave.domain.post.dto.response.LikeUpdateResponse;
 import wave.domain.post.dto.response.OtherMusicPostCreateResponse;
 import wave.domain.post.dto.response.OwnMusicPostCreateResponse;
 import wave.domain.post.dto.response.PostSliceResponse;
-import wave.domain.user.domain.User;
+import wave.domain.account.domain.entity.User;
 import wave.global.aop.AuthenticationUser;
 
 @RequiredArgsConstructor

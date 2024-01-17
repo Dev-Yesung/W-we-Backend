@@ -15,8 +15,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import wave.domain.account.dto.JwtAuthenticationToken;
-import wave.domain.auth.application.JwtExtractor;
+import wave.domain.account.domain.vo.JwtAuthenticationToken;
+import wave.domain.account.application.jwt.JwtExtractor;
 
 public class JwtAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
 	private final AuthenticationFailureHandler authenticationFailureHandler;

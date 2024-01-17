@@ -6,4 +6,3 @@ spring:
       - classpath:application-db.yml
       - classpath:application-upload.yml
       - classpath:application-producer.yml
-      - classpath:application-cache.yml

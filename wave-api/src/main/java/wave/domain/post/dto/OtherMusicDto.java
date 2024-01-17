@@ -2,7 +2,7 @@ package wave.domain.post.dto;
 
 import wave.domain.post.domain.Post;
 import wave.domain.post.dto.request.OtherMusicPostCreateRequest;
-import wave.domain.user.domain.User;
+import wave.domain.account.domain.entity.User;
 
 public record OtherMusicDto(
 	String title,

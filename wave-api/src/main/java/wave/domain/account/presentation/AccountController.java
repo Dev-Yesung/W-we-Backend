@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.application.AccountService;
 import wave.domain.account.dto.request.CertificationRequest;
@@ -41,20 +40,18 @@ public class AccountController {
 
 	@PostMapping("/certification")
 	public ResponseEntity<CertificationResponse> requestCertification(
-		HttpSession session,
 		@RequestBody CertificationRequest request
 	) {
-		CertificationResponse response = accountService.requestCertificationCode(session, request);
+		CertificationResponse response = accountService.requestCertificationCode(request);
 
 		return ResponseEntity.ok(response);
 	}
 
 	@PostMapping("/certification/verification")
 	public ResponseEntity<Void> verifyCertification(
-		HttpSession session,
 		@RequestBody CertificationVerifyRequest request
 	) {
-		accountService.verifyCertificationCode(session, request);
+		accountService.verifyCertificationCode(request);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
@@ -63,16 +60,13 @@ public class AccountController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<AccountResponse> signup(
-		HttpSession session,
 		@RequestBody SignupRequest request
 	) {
-		AccountResponse response = accountService.signup(session, request);
+		AccountResponse response = accountService.signup(request);
 		URI uri = UriUtils.createUri("http", "localhost:8080", "/api/accounts");
 
 		return ResponseEntity
 			.created(uri)
 			.body(response);
 	}
-
-
 }

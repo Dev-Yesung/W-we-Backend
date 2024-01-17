@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import wave.domain.account.domain.entity.User;
 import wave.domain.comment.domain.Comment;
 import wave.domain.comment.infra.CommentRepository;
 import wave.domain.music.application.MusicUploadService;
@@ -30,7 +31,6 @@ import wave.domain.post.dto.response.OwnMusicPostCreateResponse;
 import wave.domain.post.dto.response.PostSliceResponse;
 import wave.domain.post.infra.PostQueryRepository;
 import wave.domain.post.infra.PostRepository;
-import wave.domain.user.domain.User;
 import wave.domain.user.infra.UserRepository;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;

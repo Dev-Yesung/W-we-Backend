@@ -1,7 +1,7 @@
 package wave.domain.post.dto.response;
 
 import wave.domain.post.domain.Post;
-import wave.domain.user.domain.User;
+import wave.domain.account.domain.entity.User;
 
 public record PostResponse(
 	Long postId,

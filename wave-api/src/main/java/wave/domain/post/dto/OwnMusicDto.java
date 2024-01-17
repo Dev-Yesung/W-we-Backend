@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import wave.domain.post.domain.Post;
 import wave.domain.post.dto.request.OwnMusicPostCreateRequest;
-import wave.domain.user.domain.User;
+import wave.domain.account.domain.entity.User;
 
 public record OwnMusicDto(
 	String title,

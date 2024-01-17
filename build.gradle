@@ -38,6 +38,9 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+        // Spring Kafka Dependencies
+        implementation 'org.springframework.kafka:spring-kafka'
+
         // QueryDsl Dependencies
         implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
         annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
@@ -86,9 +89,6 @@ project(':wave-api') {
 
     dependencies {
         implementation project(':wave-core')
-
-        implementation 'org.springframework.kafka:spring-kafka'
-
         implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
         implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
         implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'

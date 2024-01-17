@@ -10,10 +10,11 @@ import wave.global.error.exception.BusinessException;
 @Getter
 @RequiredArgsConstructor
 public enum CertificationType {
-	SIGNUP("signup_certification"),
-	LOGIN("login_certification");
+	SIGNUP("signup_certification", 300),
+	LOGIN("login_certification", 180);
 
 	private final String name;
+	private final int ttl;
 
 	public static CertificationType getCertificationType(String typeName) {
 		return Arrays.stream(values())
