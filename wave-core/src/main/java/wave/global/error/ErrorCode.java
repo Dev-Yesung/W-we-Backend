@@ -21,6 +21,7 @@ public enum ErrorCode {
 	AUTH_METHOD_NOT_SUPPORTED("-A006", "잘못된 방식의 인증입니다."),
 
 	INVALID_MAIL_TYPE("-M001", "잘못된 메일 타입입니다."),
+	FAIL_TO_SEND_EMAIL("-M002", "메일을 전송하는데 실패했습니다."),
 
 	INVALID_MUSIC_UPLOAD_PATH("-MF001", "잘못된 음원 파일 업로드 경로입니다."),
 	INVALID_MUSIC_FILE_NAME("-MF002", "올바르지 않은 음원 파일 이름입니다."),
@@ -42,7 +43,9 @@ public enum ErrorCode {
 
 	NOT_FOUND_COMMENT("-C001", "댓글을 찾을 수 없습니다."),
 	NOT_INCLUDED_COMMENT_TO_POST("-C002", "해당 댓글과 일치하지 않는 포스트입니다."),
-	NO_AUTHORITY_TO_COMMENT("-C003", "해당 댓글에 권한이 없습니다.");
+	NO_AUTHORITY_TO_COMMENT("-C003", "해당 댓글에 권한이 없습니다."),
+
+	INVALID_MESSAGE_CASTING("-EVT001", "메시지 객체의 캐스팅 타입이 잘못되었습니다.");
 
 	private final String code;
 	private final String message;

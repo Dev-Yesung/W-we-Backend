@@ -1,7 +1,7 @@
 package wave.domain.account.dto.request;
 
 import wave.domain.account.domain.vo.Certification;
-import wave.domain.mail.CertificationType;
+import wave.domain.account.domain.vo.CertificationType;
 import wave.global.utils.RandomCodeCreator;
 
 public record NewCertificationRequest(

@@ -14,9 +14,9 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.account.domain.AccountLoadPort;
-import wave.domain.account.infra.AccountCache;
-import wave.domain.mail.CertificationType;
+import wave.domain.account.domain.port.out.LoadAccountPort;
+import wave.domain.account.infra.persistence.AccountCache;
+import wave.domain.account.domain.vo.CertificationType;
 import wave.domain.account.domain.vo.Role;
 import wave.domain.account.domain.entity.User;
 import wave.global.error.ErrorCode;
@@ -27,7 +27,7 @@ import wave.global.error.exception.EntityException;
 @Component
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
 	private final AccountCache accountCache;
-	private final AccountLoadPort accountLoadPort;
+	private final LoadAccountPort accountLoadPort;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {

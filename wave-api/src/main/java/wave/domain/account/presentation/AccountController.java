@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import wave.global.common.WebAdapter;
 import wave.domain.account.application.AccountService;
 import wave.domain.account.dto.request.NewCertificationRequest;
 import wave.domain.account.dto.request.CertificationVerifyRequest;
@@ -23,6 +24,7 @@ import wave.global.utils.UriUtils;
 @RequiredArgsConstructor
 @RequestMapping("/api/accounts")
 @RestController
+@WebAdapter
 public class AccountController {
 
 	private final AccountService accountService;

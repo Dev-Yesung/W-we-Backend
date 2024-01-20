@@ -1,6 +1,11 @@
 rootProject.name = 'wave'
+// 공통 의존성을 가진 클래스를 모아둔 모듈
 include 'wave-core'
+// API의 진입점 & 인증/인가, 회원, 포스트 서버
 include 'wave-api'
-include 'wave-mail'
-include 'wave-music'
-
+// 인증&소식지& 알림 기능 추가 예정
+include 'wave-message'
+// 음원 파일 업로드&스트리밍, 음원 이미지 업로드, 사용자 프로필 이미지 업로드 서버
+include 'wave-media'
+// include 'wave-batch' 추가 예정
+// 음악 관련 소식을 한 번에 조회할 수 있는 종합 뉴스 조회 기능을 만들어도 될듯

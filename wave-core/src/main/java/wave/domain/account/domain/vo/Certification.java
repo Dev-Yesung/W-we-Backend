@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import wave.domain.mail.CertificationType;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 
@@ -13,10 +12,14 @@ import wave.global.error.exception.BusinessException;
 public class Certification {
 	private final CertificationType type;
 	private final String email;
-	private final String randomCode;
+	private final String certificationCode;
+
+	public Certification(CertificationType type, String email) {
+		this(type, email, "");
+	}
 
 	public void validateCode(String certificationCode) {
-		if (!randomCode.equals(certificationCode)) {
+		if (!this.certificationCode.equals(certificationCode)) {
 			throw new BusinessException(ErrorCode.INVALID_CERTIFICATION_CODE);
 		}
 	}
@@ -28,12 +31,12 @@ public class Certification {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Certification that = (Certification)o;
-		return type == that.type && Objects.equals(email, that.email) && Objects.equals(randomCode,
-			that.randomCode);
+		return type == that.type && Objects.equals(email, that.email) && Objects.equals(certificationCode,
+			that.certificationCode);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(type, email, randomCode);
+		return Objects.hash(type, email, certificationCode);
 	}
 }

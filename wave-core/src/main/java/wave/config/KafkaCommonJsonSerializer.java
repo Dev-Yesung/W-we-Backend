@@ -18,4 +18,5 @@ public class KafkaCommonJsonSerializer {
 
 		return configurations;
 	}
+
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>WAVE 로그인 인증코드</title>
+</head>
+<body style="background-color: #f2f2f2; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; height: 100vh;">
+<div style="background-color: #ffffff; padding: 30px 50px 10px 50px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center; border-radius: 10px;">
+    <h1 style="color: #1565c0; margin: 0;">안녕하세요.</h1>
+    <h1 style="color: #1565c0; margin: 0;">세상을 뒤집을 당신의 소리</h1>
+    <h1 style="color: #1565c0; margin: 0;">WAVE 입니다.</h1>
+    <p style="color: #616161;">로그인 페이지에 인증코드를 입력해주세요.</p>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+        <h3 style="color: #1565c0;">인증 코드</h3>
+        <div th:text="${certificationCode}"
+             style="font-size: 24px;
+             font-weight: bold;
+             color: #000000;
+             padding: 10px 30px 10px 30px;
+             background-color: #eeeeee;
+             border-radius: 5px;
+             margin-bottom: 10px;">
+            certification-code
+        </div>
+    </div>
+    <br/>
+</div>
+</body>
+</html>
