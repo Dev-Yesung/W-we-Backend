@@ -1,4 +1,4 @@
-package wave.domain.account.domain.vo;
+package wave.domain.account.domain.vo.jwt;
 
 import java.util.Collection;
 

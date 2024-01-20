@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.mail.CertificationType;
+import wave.global.error.ErrorCode;
+import wave.global.error.exception.EntityException;
 
 public interface AccountCache {
 
@@ -15,5 +17,5 @@ public interface AccountCache {
 
 	Optional<String> removeCertificationCode(Certification certification);
 
-	boolean isExistCertificationCode(CertificationType certificationType, String email);
+	boolean existCertificationCode(CertificationType certificationType, String email);
 }

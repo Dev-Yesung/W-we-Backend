@@ -13,7 +13,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.infra.AccountCache;
-import wave.domain.certification.domain.RandomCodeCreator;
+import wave.global.utils.RandomCodeCreator;
 import wave.domain.certification.dto.CertificationRequest;
 import wave.domain.certification.dto.CertificationResponse;
 import wave.domain.mail.CertificationType;

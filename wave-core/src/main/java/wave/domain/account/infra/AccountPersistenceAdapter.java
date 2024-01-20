@@ -5,13 +5,13 @@ import java.util.Optional;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.account.domain.vo.AccountEventType;
 import wave.domain.account.domain.AccountLoadPort;
 import wave.domain.account.domain.AccountUpdatePort;
 import wave.domain.account.domain.PersistenceAdapter;
+import wave.domain.account.domain.entity.User;
+import wave.domain.account.domain.vo.AccountEventType;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.mail.CertificationType;
-import wave.domain.account.domain.entity.User;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;
 
@@ -44,8 +44,11 @@ public class AccountPersistenceAdapter
 	}
 
 	@Override
-	public boolean isExistCertificationCode(CertificationType certificationType, String email) {
-		return accountCache.isExistCertificationCode(certificationType, email);
+	public void existCertificationCode(CertificationType certificationType, String email) {
+		boolean isExist = accountCache.existCertificationCode(certificationType, email);
+		if (!isExist) {
+			throw new EntityException(ErrorCode.NOT_FOUND_CERTIFICATION_CODE);
+		}
 	}
 
 	@Override

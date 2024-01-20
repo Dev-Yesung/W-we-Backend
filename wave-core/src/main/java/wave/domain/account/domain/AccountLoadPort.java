@@ -2,9 +2,9 @@ package wave.domain.account.domain;
 
 import java.util.Optional;
 
+import wave.domain.account.domain.entity.User;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.mail.CertificationType;
-import wave.domain.account.domain.entity.User;
 
 public interface AccountLoadPort {
 
@@ -14,5 +14,5 @@ public interface AccountLoadPort {
 
 	String getCertificationCode(Certification certification);
 
-	boolean isExistCertificationCode(CertificationType certificationType, String email);
+	void existCertificationCode(CertificationType certificationType, String email);
 }

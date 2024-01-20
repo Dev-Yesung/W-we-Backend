@@ -16,16 +16,16 @@ import io.jsonwebtoken.Jwts;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import wave.config.JwtConfig;
-import wave.domain.account.dto.AccessToken;
-import wave.domain.account.dto.RefreshToken;
-import wave.domain.account.domain.vo.TokenScope;
+import wave.domain.account.domain.vo.jwt.AccessToken;
+import wave.domain.account.domain.vo.jwt.RefreshToken;
+import wave.domain.account.domain.vo.jwt.TokenType;
 import wave.domain.account.domain.entity.User;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;
 
 @RequiredArgsConstructor
 @Component
-public class JwtFactory {
+public class JwtUtils {
 
 	private final JwtConfig jwtConfiguration;
 
@@ -38,7 +38,7 @@ public class JwtFactory {
 		}
 
 		String issuer = jwtConfiguration.getIssuer();
-		Map<String, String> claims = getClaims(user, TokenScope.ACCESS_TOKEN);
+		Map<String, String> claims = getClaims(user, TokenType.ACCESS_TOKEN);
 		LocalDateTime currentTime = LocalDateTime.now();
 		Long accessTokenExpirySeconds = jwtConfiguration.getAccessTokenExpirySeconds();
 		SecretKey accessTokenSecretKey = getSecretKey();
@@ -66,7 +66,7 @@ public class JwtFactory {
 		}
 
 		String issuer = jwtConfiguration.getIssuer();
-		Map<String, String> claims = getClaims(user, TokenScope.REFRESH_TOKEN);
+		Map<String, String> claims = getClaims(user, TokenType.REFRESH_TOKEN);
 		LocalDateTime currentTime = LocalDateTime.now();
 		Long refreshTokenExpirySeconds = jwtConfiguration.getRefreshTokenExpirySeconds();
 		SecretKey refreshTokenSecretKey = getSecretKey();
@@ -90,7 +90,7 @@ public class JwtFactory {
 
 	}
 
-	private Map<String, String> getClaims(User user, TokenScope scope) {
+	private Map<String, String> getClaims(User user, TokenType scope) {
 		Map<String, String> claims = new HashMap<>();
 		claims.put("id", String.valueOf(user.getId()));
 		claims.put("email", user.getEmail());

@@ -2,18 +2,19 @@ package wave.domain.account.dto.request;
 
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.mail.CertificationType;
+import wave.global.utils.RandomCodeCreator;
 
-public record CertificationVerifyRequest(
+public record NewCertificationRequest(
 	String email,
-	String typeName,
-	String certificationCode
+	String typeName
 ) {
-	public static Certification of(CertificationVerifyRequest request) {
+
+	public static Certification of(NewCertificationRequest request) {
 		String typeName = request.typeName();
 		CertificationType certificationType = CertificationType.getCertificationType(typeName);
 		String email = request.email();
-		String certificationCode = request.certificationCode();
+		String randomCode = RandomCodeCreator.createRandomCode();
 
-		return new Certification(certificationType, email, certificationCode);
+		return new Certification(certificationType, email, randomCode);
 	}
 }

@@ -18,16 +18,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import wave.domain.account.application.jwt.JwtFactory;
-import wave.domain.account.dto.AccessToken;
-import wave.domain.account.dto.RefreshToken;
+import wave.domain.account.application.jwt.JwtUtils;
+import wave.domain.account.domain.vo.jwt.AccessToken;
+import wave.domain.account.domain.vo.jwt.RefreshToken;
 import wave.domain.account.domain.entity.User;
 
 @RequiredArgsConstructor
 @Component
 public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	private final ObjectMapper objectMapper;
-	private final JwtFactory jwtTokenFactory;
+	private final JwtUtils jwtTokenFactory;
 
 	@Override
 	public void onAuthenticationSuccess(
@@ -41,7 +41,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		RefreshToken refreshToken = jwtTokenFactory.createRefreshToken(user);
 		Map<String, String> tokenMap = new HashMap<>();
 		tokenMap.put("accessToken", accessToken.rawAccessToken());
-		tokenMap.put("refreshToken", refreshToken.rawRefreshToken());
+		tokenMap.put("refreshToken", refreshToken.getRefreshToken());
 
 		response.setStatus(HttpStatus.OK.value());
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);

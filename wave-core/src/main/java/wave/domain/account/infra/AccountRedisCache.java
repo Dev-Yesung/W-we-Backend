@@ -61,7 +61,7 @@ public class AccountRedisCache implements AccountCache {
 	}
 
 	@Override
-	public boolean isExistCertificationCode(CertificationType type, String email) {
+	public boolean existCertificationCode(CertificationType type, String email) {
 		String key = getTaggedKey(type, email);
 		String value = (String)valueOperations.get(key);
 

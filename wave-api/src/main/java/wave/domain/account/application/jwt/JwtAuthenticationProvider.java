@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.account.domain.vo.JwtAuthenticationToken;
+import wave.domain.account.domain.vo.jwt.JwtAuthenticationToken;
 
 @RequiredArgsConstructor
 @Component

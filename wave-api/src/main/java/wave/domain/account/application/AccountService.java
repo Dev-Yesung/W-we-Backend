@@ -4,24 +4,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import wave.domain.account.application.jwt.JwtUtils;
 import wave.domain.account.domain.AccountLoadPort;
 import wave.domain.account.domain.AccountUpdatePort;
+import wave.domain.account.domain.entity.User;
 import wave.domain.account.domain.vo.Certification;
-import wave.domain.account.dto.AccessToken;
-import wave.domain.account.dto.RefreshToken;
-import wave.domain.account.dto.request.CertificationRequest;
+import wave.domain.account.domain.vo.jwt.AccessToken;
+import wave.domain.account.domain.vo.jwt.RefreshToken;
 import wave.domain.account.dto.request.CertificationVerifyRequest;
+import wave.domain.account.dto.request.NewCertificationRequest;
 import wave.domain.account.dto.request.SignupRequest;
 import wave.domain.account.dto.response.AccountResponse;
 import wave.domain.account.dto.response.CertificationResponse;
-import wave.domain.account.application.jwt.JwtFactory;
-import wave.domain.account.domain.CertificationCodeFactory;
 import wave.domain.mail.CertificationType;
-import wave.domain.account.domain.vo.Profile;
-import wave.domain.account.domain.vo.Role;
-import wave.domain.account.domain.entity.User;
-import wave.global.error.ErrorCode;
-import wave.global.error.exception.BusinessException;
 
 @RequiredArgsConstructor
 @Transactional
@@ -31,8 +26,7 @@ public class AccountService {
 	private final AccountUpdatePort accountUpdatePort;
 	private final AccountLoadPort accountLoadPort;
 
-	private final CertificationCodeFactory certificationCodeFactory;
-	private final JwtFactory jwtFactory;
+	private final JwtUtils jwtUtils;
 
 	@Transactional(readOnly = true)
 	public void checkDuplicateEmail(String email) {
@@ -40,70 +34,49 @@ public class AccountService {
 	}
 
 	@Transactional(readOnly = true)
-	public CertificationResponse requestCertificationCode(CertificationRequest request) {
-		Certification certification = createCertification(request);
+	public CertificationResponse requestCertificationCode(NewCertificationRequest request) {
+		Certification certification = NewCertificationRequest.of(request);
 		accountUpdatePort.publishCertificationEvent(certification);
 		int ttl = accountUpdatePort.cacheCertificationCode(certification);
 
 		return new CertificationResponse(ttl);
 	}
 
-	@Transactional(readOnly = true)
 	public void verifyCertificationCode(CertificationVerifyRequest request) {
-		Certification certification = getCertification(request);
-		String certificationCode = accountLoadPort.getCertificationCode(certification);
-		certification.validateCode(certificationCode);
+		Certification certification = CertificationVerifyRequest.of(request);
+		validateCertificationCode(certification);
 		accountUpdatePort.removeCertificationCode(certification);
 	}
 
 	public AccountResponse signup(SignupRequest request) {
-		String email = request.email();
-		boolean isExist = accountLoadPort.isExistCertificationCode(CertificationType.SIGNUP, email);
-		if (isExist) {
-			throw new BusinessException(ErrorCode.NOT_VERIFIED_CERTIFICATION_CODE);
-		}
-
-		User newUser = getNewUser(request);
-		User savedUser = accountUpdatePort.saveAccount(newUser);
-		accountUpdatePort.publishNewAccountEvent(savedUser);
+		isExistedCertificationCode(request);
+		User savedUser = saveUserAndPublishAccountEvent(request);
 
 		return getAccountResponse(savedUser);
 	}
 
-	private Certification createCertification(CertificationRequest request) {
-		String email = request.email();
-		String typeName = request.typeName();
-		String randomCode = certificationCodeFactory.createRandomCode();
-		CertificationType certificationType = CertificationType.getCertificationType(typeName);
-
-		return new Certification(certificationType, email, randomCode);
+	private void validateCertificationCode(Certification certification) {
+		String certificationCode = accountLoadPort.getCertificationCode(certification);
+		certification.validateCode(certificationCode);
 	}
 
-	private Certification getCertification(CertificationVerifyRequest request) {
-		String typeName = request.typeName();
-		CertificationType certificationType = CertificationType.getCertificationType(typeName);
+	private void isExistedCertificationCode(SignupRequest request) {
 		String email = request.email();
-		String certificationCode = request.certificationCode();
-
-		return new Certification(certificationType, email, certificationCode);
+		accountLoadPort.existCertificationCode(CertificationType.SIGNUP, email);
 	}
 
-	private User getNewUser(SignupRequest request) {
-		String email = request.email();
-		String nickname = request.nickname();
-		Profile profile = new Profile("", "");
+	private User saveUserAndPublishAccountEvent(SignupRequest request) {
+		User newUser = SignupRequest.of(request);
+		User savedUser = accountUpdatePort.saveAccount(newUser);
+		accountUpdatePort.publishNewAccountEvent(savedUser);
 
-		return new User(email, nickname, profile, Role.USER);
+		return savedUser;
 	}
 
 	private AccountResponse getAccountResponse(User savedUser) {
-		Long id = savedUser.getId();
-		String email = savedUser.getEmail();
-		AccessToken accessToken = jwtFactory.createAccessToken(savedUser);
-		String rawAccessToken = accessToken.rawAccessToken();
-		RefreshToken refreshToken = jwtFactory.createRefreshToken(savedUser);
-		String rawRefreshToken = refreshToken.rawRefreshToken();
+		AccessToken accessToken = jwtUtils.createAccessToken(savedUser);
+		RefreshToken refreshToken = jwtUtils.createRefreshToken(savedUser);
 
-		return new AccountResponse(id, email, rawAccessToken, rawRefreshToken);
+		return AccountResponse.from(savedUser, accessToken, refreshToken);
 	}
 }

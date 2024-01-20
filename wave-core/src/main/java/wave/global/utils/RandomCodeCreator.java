@@ -1,13 +1,10 @@
-package wave.domain.certification.domain;
+package wave.global.utils;
 
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class RandomCodeCreator {
+public final class RandomCodeCreator {
 	private static final int RANDOM_CODE_LENGTH = 6;
 	private static final int LOWER_BOUND_UPPER_CASE = 'A';
 	private static final int UPPER_BOUND_UPPER_CASE = 'Z' + 1;
@@ -16,7 +13,7 @@ public class RandomCodeCreator {
 	private static final int LOWER_BOUND_NUMBER = '0';
 	private static final int UPPER_BOUND_NUMBER = '9' + 1;
 
-	public String createRandomCode() {
+	public static String createRandomCode() {
 		return Stream.generate(() -> {
 				int randomType = new Random().nextInt(3);
 				return switch (randomType) {

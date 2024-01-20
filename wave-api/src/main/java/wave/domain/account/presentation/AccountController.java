@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.application.AccountService;
-import wave.domain.account.dto.request.CertificationRequest;
+import wave.domain.account.dto.request.NewCertificationRequest;
 import wave.domain.account.dto.request.CertificationVerifyRequest;
 import wave.domain.account.dto.request.SignupRequest;
 import wave.domain.account.dto.response.AccountResponse;
@@ -40,7 +40,7 @@ public class AccountController {
 
 	@PostMapping("/certification")
 	public ResponseEntity<CertificationResponse> requestCertification(
-		@RequestBody CertificationRequest request
+		@RequestBody NewCertificationRequest request
 	) {
 		CertificationResponse response = accountService.requestCertificationCode(request);
 

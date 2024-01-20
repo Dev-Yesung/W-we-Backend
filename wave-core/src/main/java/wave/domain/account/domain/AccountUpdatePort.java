@@ -1,7 +1,7 @@
 package wave.domain.account.domain;
 
-import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.entity.User;
+import wave.domain.account.domain.vo.Certification;
 
 public interface AccountUpdatePort {
 	void publishCertificationEvent(Certification certification);
