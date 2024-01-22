@@ -19,8 +19,8 @@ public class CertificationMailService {
 
 	@KafkaListener(
 		topics = {"signup_certification", "login_certification"},
-		groupId = "group_certification",
-		containerFactory = ""
+		groupId = "group_mail",
+		containerFactory = "kafkaListenerContainerFactory"
 	)
 	public void sendCertificationCodeByType(Object message) {
 		Certification certification = getCertification(message);

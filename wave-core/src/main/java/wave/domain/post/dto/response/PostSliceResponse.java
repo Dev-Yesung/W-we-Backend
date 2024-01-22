@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Slice;
 
-import wave.domain.post.domain.Post;
+import wave.domain.post.domain.entity.Post;
 
 public record PostSliceResponse(
 	List<PostResponse> posts,

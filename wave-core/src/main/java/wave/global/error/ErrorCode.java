@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+
 	INVALID_METHOD_ARGUMENT("", ""),
 
 	NOT_FOUND_USER("-U001", "유저를 찾을 수 없습니다."),
@@ -33,8 +34,9 @@ public enum ErrorCode {
 	NOT_FOUND_MUSIC_FILE("-MF008", "음원 파일을 찾을 수 없습니다."),
 	UNABLE_TO_GET_FILE_INFO("-MF009", "음원 파일의 정보를 가져올 수 없습니다."),
 	NOT_FOUND_MUSIC_FILE_DIRECTORY("-MF010", "음원의 디렉토리를 찾을 수 없습니다."),
+	INVALID_MEDIA_URL("-MF011", ""),
 
-	INVALID_URL("-P001", "올바르지 않은 포스트 조회입니다."),
+	INVALID_POST_URL("-P001", "올바르지 않은 포스트 조회입니다."),
 	NOT_FOUND_POST("-P002", "포스트를 찾을 수 없습니다."),
 	NO_AUTHORITY_TO_POST("-P003", "포스트에 권한이 없습니다."),
 
@@ -45,7 +47,7 @@ public enum ErrorCode {
 	NOT_INCLUDED_COMMENT_TO_POST("-C002", "해당 댓글과 일치하지 않는 포스트입니다."),
 	NO_AUTHORITY_TO_COMMENT("-C003", "해당 댓글에 권한이 없습니다."),
 
-	INVALID_MESSAGE_CASTING("-EVT001", "메시지 객체의 캐스팅 타입이 잘못되었습니다.");
+	INVALID_MESSAGE_CASTING("-EVT001", "메시지의 객체변환이 잘못되었습니다.");
 
 	private final String code;
 	private final String message;

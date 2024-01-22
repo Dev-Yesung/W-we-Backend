@@ -1,6 +1,6 @@
 package wave.domain.post.dto.response;
 
-import wave.domain.post.domain.Post;
+import wave.domain.post.domain.entity.Post;
 
 public record OtherMusicPostCreateResponse(
 	Long postId,

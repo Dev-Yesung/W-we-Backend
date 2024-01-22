@@ -1,6 +1,6 @@
 package wave.domain.post.dto.response;
 
-import wave.domain.comment.domain.Comment;
+import wave.domain.post.domain.entity.Comment;
 
 public record CommentResponse(
 	Long postId,

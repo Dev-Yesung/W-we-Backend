@@ -1,6 +1,6 @@
 package wave.domain.post.dto;
 
-import wave.domain.post.domain.Post;
+import wave.domain.post.domain.entity.Post;
 import wave.domain.post.dto.request.OtherMusicPostCreateRequest;
 import wave.domain.account.domain.entity.User;
 

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.extern.slf4j.Slf4j;
 import wave.config.MusicUploadConfiguration;
 import wave.domain.media.dto.UploadMusicDto;
 import wave.domain.media.dto.response.UploadMusicResponse;
@@ -22,7 +21,6 @@ import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 
 // File을 객체화 시키면 좋을듯..?
-@Slf4j
 @Transactional
 @Service
 public class MusicUploadService {
