@@ -1,5 +1,8 @@
 package wave.domain.post.adapter.out;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.infra.AccountJpaRepository;
 import wave.domain.media.domain.vo.MediaUrl;
@@ -8,8 +11,8 @@ import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.UpdatePostPort;
 import wave.domain.post.infra.CommentJpaRepository;
-import wave.domain.post.infra.PostQueryRepository;
 import wave.domain.post.infra.PostJpaRepository;
+import wave.domain.post.infra.PostQueryRepository;
 import wave.global.common.PersistenceAdapter;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;
@@ -37,5 +40,10 @@ public class PostPersistenceAdapter
 
 		MediaUrl mediaUrl = MediaUploadResponse.of(response);
 		post.updateMediaUrl(mediaUrl);
+	}
+
+	@Override
+	public Slice<Post> getAllPosts(Pageable pageable) {
+		return postQueryRepository.getPostByCreatedDateDesc(pageable);
 	}
 }

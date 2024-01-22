@@ -1,19 +1,24 @@
 package wave.domain.post.application;
 
+import static org.springframework.data.domain.Sort.Direction.*;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.media.dto.UploadMusicDto;
 import wave.domain.media.dto.response.MediaUploadResponse;
-import wave.domain.media.dto.response.UploadMusicResponse;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
 import wave.domain.post.domain.port.out.UpdatePostPort;
 import wave.domain.post.dto.MyMusicPostDto;
 import wave.domain.post.dto.response.PostCreateResponse;
-import wave.domain.user.infra.UserRepository;
+import wave.domain.post.dto.response.PostsResponse;
 import wave.global.common.UseCase;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
@@ -48,6 +53,14 @@ public class PostService {
 		throw new BusinessException(ErrorCode.INVALID_MESSAGE_CASTING);
 	}
 
+	@Transactional(readOnly = true)
+	public PostsResponse getAllPostsByCreatedDateDesc() {
+		Pageable pageable = PageRequest.of(0, 10, Sort.by(DESC, "createdAt"));
+		Slice<Post> allPosts = loadPostPort.getAllPosts(pageable);
+
+		return PostsResponse.of(allPosts);
+	}
+
 	// public OtherMusicPostCreateResponse createOtherMusicPost(OtherMusicDto otherMusicDto) {
 	// 	Post newPost = otherMusicDto.toEntity();
 	// 	Post savedPost = postRepository.save(newPost);
@@ -55,12 +68,7 @@ public class PostService {
 	// 	return OtherMusicPostCreateResponse.of(savedPost);
 	// }
 	//
-	// @Transactional(readOnly = true)
-	// public PostSliceResponse getPostByCreatedDateDesc(Pageable pageable) {
-	// 	Slice<Post> posts = postQueryRepository.getPostByCreatedDateDesc(pageable);
-	//
-	// 	return PostSliceResponse.of(posts);
-	// }
+
 	//
 	// @Transactional(readOnly = true)
 	// public GetPostsByEmailResponse getPostsByUserEmail(GetPostsByEmailRequest request) {

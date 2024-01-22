@@ -5,6 +5,7 @@ import static org.springframework.http.MediaType.*;
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -17,6 +18,7 @@ import wave.domain.post.dto.MyMusicPostDto;
 import wave.domain.post.dto.request.MyMusicPostCreateRequest;
 import wave.domain.post.dto.response.PostCreateResponse;
 import wave.domain.account.domain.entity.User;
+import wave.domain.post.dto.response.PostsResponse;
 import wave.global.aop.AuthenticationUser;
 import wave.global.common.WebAdapter;
 import wave.global.utils.UriUtils;
@@ -49,14 +51,13 @@ public class PostController {
 			.body(response);
 	}
 
-	// @GetMapping
-	// public ResponseEntity<PostSliceResponse> getPostByCreatedDateDesc(
-	// 	@PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable
-	// ) {
-	// 	PostSliceResponse response = postService.getPostByCreatedDateDesc(pageable);
-	//
-	// 	return ResponseEntity.ok(response);
-	// }
+	@GetMapping
+	public ResponseEntity<PostsResponse> getAllPostsByCreatedDateDesc() {
+		PostsResponse response = postService.getAllPostsByCreatedDateDesc();
+
+		return ResponseEntity.ok(response);
+	}
+
 	//
 	// @GetMapping("/{email}")
 	// public ResponseEntity<GetPostsByEmailResponse> getPostsByUserEmail(
