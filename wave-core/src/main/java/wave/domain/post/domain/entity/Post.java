@@ -94,4 +94,16 @@ public class Post extends BaseEntity {
 	public Long getPostUserId() {
 		return user.getId();
 	}
+
+	public String getPostUserNickname() {
+		return user.getNickname();
+	}
+
+	public String getImageUrl() {
+		return mediaUrl.getImageUrl();
+	}
+
+	public String getMusicUrl() {
+		return mediaUrl.getMusicUrl();
+	}
 }

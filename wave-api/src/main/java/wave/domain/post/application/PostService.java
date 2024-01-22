@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,10 +54,22 @@ public class PostService {
 
 	@Transactional(readOnly = true)
 	public PostsResponse getAllPostsByCreatedDateDesc() {
-		Pageable pageable = PageRequest.of(0, 10, Sort.by(DESC, "createdAt"));
+		Pageable pageable = getDefaultSlicePageable();
 		Slice<Post> allPosts = loadPostPort.getAllPosts(pageable);
 
 		return PostsResponse.of(allPosts);
+	}
+
+	@Transactional(readOnly = true)
+	public PostsResponse getPostsByUserEmail(String email) {
+		Pageable pageable = getDefaultSlicePageable();
+		Slice<Post> allPosts = loadPostPort.getAllPostsByEmail(email, pageable);
+
+		return PostsResponse.of(allPosts);
+	}
+
+	private Pageable getDefaultSlicePageable() {
+		return PageRequest.of(0, 10, Sort.by(DESC, "createdAt"));
 	}
 
 	// public OtherMusicPostCreateResponse createOtherMusicPost(OtherMusicDto otherMusicDto) {
@@ -66,13 +77,6 @@ public class PostService {
 	// 	Post savedPost = postRepository.save(newPost);
 	//
 	// 	return OtherMusicPostCreateResponse.of(savedPost);
-	// }
-	//
-
-	//
-	// @Transactional(readOnly = true)
-	// public GetPostsByEmailResponse getPostsByUserEmail(GetPostsByEmailRequest request) {
-	// 	return null;
 	// }
 	//
 	// public PostDeleteDto deletePost(PostDeleteDto request) {

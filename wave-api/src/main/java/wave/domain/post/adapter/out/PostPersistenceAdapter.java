@@ -46,4 +46,9 @@ public class PostPersistenceAdapter
 	public Slice<Post> getAllPosts(Pageable pageable) {
 		return postQueryRepository.getPostByCreatedDateDesc(pageable);
 	}
+
+	@Override
+	public Slice<Post> getAllPostsByEmail(String email, Pageable pageable) {
+		return null;
+	}
 }

@@ -6,6 +6,7 @@ import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import wave.domain.account.domain.entity.User;
 import wave.domain.post.application.PostService;
 import wave.domain.post.dto.MyMusicPostDto;
 import wave.domain.post.dto.request.MyMusicPostCreateRequest;
 import wave.domain.post.dto.response.PostCreateResponse;
-import wave.domain.account.domain.entity.User;
 import wave.domain.post.dto.response.PostsResponse;
 import wave.global.aop.AuthenticationUser;
 import wave.global.common.WebAdapter;
@@ -58,16 +59,12 @@ public class PostController {
 		return ResponseEntity.ok(response);
 	}
 
-	//
-	// @GetMapping("/{email}")
-	// public ResponseEntity<GetPostsByEmailResponse> getPostsByUserEmail(
-	// 	@PathVariable String email
-	// ) {
-	// 	GetPostsByEmailRequest request = new GetPostsByEmailRequest(email);
-	// 	GetPostsByEmailResponse response = postService.getPostsByUserEmail(request);
-	//
-	// 	return ResponseEntity.ok(response);
-	// }
+	@GetMapping("/{email}")
+	public ResponseEntity<PostsResponse> getAllPostsByUser(@PathVariable String email) {
+		PostsResponse response = postService.getPostsByUserEmail(email);
+
+		return ResponseEntity.ok(response);
+	}
 	//
 	// @PostMapping("/other-music")
 	// public ResponseEntity<OtherMusicPostCreateResponse> createOwnMusicPost(
