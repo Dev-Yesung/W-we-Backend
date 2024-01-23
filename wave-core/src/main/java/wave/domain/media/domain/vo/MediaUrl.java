@@ -1,10 +1,14 @@
 package wave.domain.media.domain.vo;
 
+import static wave.domain.media.domain.vo.MediaUploadStatus.*;
+
 import java.util.Objects;
 
 import org.springframework.util.StringUtils;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,15 +23,33 @@ public class MediaUrl {
 	private String imageUrl;
 	private String musicUrl;
 
-	public MediaUrl(String imageUrl, String musicUrl) {
-		validate(imageUrl, musicUrl);
+	@Enumerated(EnumType.STRING)
+	private MediaUploadStatus uploadStatus;
+
+	public MediaUrl(
+		String imageUrl,
+		String musicUrl,
+		MediaUploadStatus uploadStatus
+	) {
+		validateImageUrl(imageUrl, uploadStatus);
+		validateMusicUrl(musicUrl, uploadStatus);
 		this.imageUrl = imageUrl;
 		this.musicUrl = musicUrl;
+		this.uploadStatus = uploadStatus;
 	}
 
-	private void validate(String imageUrl, String musicUrl) {
-		if (!(StringUtils.hasText(imageUrl) && StringUtils.hasText(musicUrl))) {
-			throw new BusinessException(ErrorCode.INVALID_MEDIA_URL);
+	private void validateImageUrl(
+		String imageUrl,
+		MediaUploadStatus uploadStatus
+	) {
+		if (!uploadStatus.equals(SHARED) && imageUrl == null) {
+			throw new BusinessException(ErrorCode.INVALID_IMAGE_URL);
+		}
+	}
+
+	private void validateMusicUrl(String musicUrl, MediaUploadStatus uploadStatus) {
+		if (!uploadStatus.equals(PROGRESSED) && !StringUtils.hasText(musicUrl)) {
+			throw new BusinessException(ErrorCode.INVALID_MUSIC_URL);
 		}
 	}
 

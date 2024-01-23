@@ -40,7 +40,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		AccessToken accessToken = jwtTokenFactory.createAccessToken(user);
 		RefreshToken refreshToken = jwtTokenFactory.createRefreshToken(user);
 		Map<String, String> tokenMap = new HashMap<>();
-		tokenMap.put("accessToken", accessToken.rawAccessToken());
+		tokenMap.put("accessToken", accessToken.getAccessToken());
 		tokenMap.put("refreshToken", refreshToken.getRefreshToken());
 
 		response.setStatus(HttpStatus.OK.value());

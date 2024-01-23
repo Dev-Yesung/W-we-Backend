@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FileId {
 
-	private final String userId;
-	private final String postId;
+	private final Long userId;
+	private final Long postId;
 
 	@Override
 	public boolean equals(Object o) {

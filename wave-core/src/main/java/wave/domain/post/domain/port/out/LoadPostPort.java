@@ -7,7 +7,7 @@ import wave.domain.post.domain.entity.Post;
 
 public interface LoadPostPort {
 
-	Slice<Post> getAllPosts(Pageable pageable);
+	Slice<Post> getAllPostsByCreatedDateDesc(Pageable pageable);
 
-	Slice<Post> getAllPostsByEmail(String email, Pageable pageable);
+	Slice<Post> getAllPostsByEmailAndCreatedDateDesc(String email, Pageable pageable);
 }

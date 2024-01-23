@@ -6,22 +6,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.account.domain.vo.CustomUserDetails;
 import wave.domain.account.domain.entity.User;
-import wave.domain.user.infra.UserRepository;
-import wave.global.error.ErrorCode;
-import wave.global.error.exception.EntityException;
+import wave.domain.account.domain.port.out.LoadAccountPort;
+import wave.domain.account.domain.vo.CustomUserDetails;
 
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-	private final UserRepository userRepository;
+
+	private final LoadAccountPort loadAccountPort;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Long userId = Long.valueOf(username);
-		User user = userRepository.findById(userId)
-			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_USER));
+		User user = loadAccountPort.findAccountById(userId);
 
 		return new CustomUserDetails(user);
 	}

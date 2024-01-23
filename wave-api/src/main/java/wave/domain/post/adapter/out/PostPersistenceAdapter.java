@@ -33,7 +33,7 @@ public class PostPersistenceAdapter
 	}
 
 	@Override
-	public void updateMusicUploadData(MediaUploadResponse response) {
+	public void updateMusicUploadUrl(MediaUploadResponse response) {
 		Long postId = response.postId();
 		Post post = postJpaRepository.findById(postId)
 			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_POST));
@@ -43,12 +43,12 @@ public class PostPersistenceAdapter
 	}
 
 	@Override
-	public Slice<Post> getAllPosts(Pageable pageable) {
+	public Slice<Post> getAllPostsByCreatedDateDesc(Pageable pageable) {
 		return postQueryRepository.getPostByCreatedDateDesc(pageable);
 	}
 
 	@Override
-	public Slice<Post> getAllPostsByEmail(String email, Pageable pageable) {
-		return null;
+	public Slice<Post> getAllPostsByEmailAndCreatedDateDesc(String email, Pageable pageable) {
+		return postQueryRepository.getAllPostsByEmailAndCreatedDateDesc(email, pageable);
 	}
 }

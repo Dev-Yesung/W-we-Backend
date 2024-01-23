@@ -16,6 +16,7 @@ import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
 import wave.domain.post.domain.port.out.UpdatePostPort;
 import wave.domain.post.dto.MyMusicPostDto;
+import wave.domain.post.dto.SharedMusicDto;
 import wave.domain.post.dto.response.PostCreateResponse;
 import wave.domain.post.dto.response.PostsResponse;
 import wave.global.common.UseCase;
@@ -32,7 +33,7 @@ public class PostService {
 	private final PublishPostEventPort publishPostEventPort;
 
 	public PostCreateResponse createMyMusicPost(MyMusicPostDto myMusicPostDto) {
-		Post newPost = myMusicPostDto.toEntity();
+		Post newPost = MyMusicPostDto.to(myMusicPostDto);
 		Post savedPost = updatePostPort.saveNewPost(newPost);
 		publishPostEventPort.publishMusicUploadEvent(savedPost, myMusicPostDto);
 
@@ -45,17 +46,24 @@ public class PostService {
 	public MediaUploadResponse subscribeMediaFileUploadMessage(Object message) {
 		// 업로드 완료 메시지를 전달해야 하기 때문에, SSE 사용 필요할 듯?
 		if (message instanceof MediaUploadResponse response) {
-			updatePostPort.updateMusicUploadData(response);
+			updatePostPort.updateMusicUploadUrl(response);
 
 			return response;
 		}
 		throw new BusinessException(ErrorCode.INVALID_MESSAGE_CASTING);
 	}
 
+	public PostCreateResponse createOtherMusicPost(SharedMusicDto sharedMusicDto) {
+		Post post = SharedMusicDto.toEntity(sharedMusicDto);
+		Post savedPost = updatePostPort.saveNewPost(post);
+
+		return PostCreateResponse.of(savedPost);
+	}
+
 	@Transactional(readOnly = true)
 	public PostsResponse getAllPostsByCreatedDateDesc() {
 		Pageable pageable = getDefaultSlicePageable();
-		Slice<Post> allPosts = loadPostPort.getAllPosts(pageable);
+		Slice<Post> allPosts = loadPostPort.getAllPostsByCreatedDateDesc(pageable);
 
 		return PostsResponse.of(allPosts);
 	}
@@ -63,7 +71,7 @@ public class PostService {
 	@Transactional(readOnly = true)
 	public PostsResponse getPostsByUserEmail(String email) {
 		Pageable pageable = getDefaultSlicePageable();
-		Slice<Post> allPosts = loadPostPort.getAllPostsByEmail(email, pageable);
+		Slice<Post> allPosts = loadPostPort.getAllPostsByEmailAndCreatedDateDesc(email, pageable);
 
 		return PostsResponse.of(allPosts);
 	}
@@ -72,12 +80,6 @@ public class PostService {
 		return PageRequest.of(0, 10, Sort.by(DESC, "createdAt"));
 	}
 
-	// public OtherMusicPostCreateResponse createOtherMusicPost(OtherMusicDto otherMusicDto) {
-	// 	Post newPost = otherMusicDto.toEntity();
-	// 	Post savedPost = postRepository.save(newPost);
-	//
-	// 	return OtherMusicPostCreateResponse.of(savedPost);
-	// }
 	//
 	// public PostDeleteDto deletePost(PostDeleteDto request) {
 	// 	Long postId = request.postId();
@@ -159,7 +161,7 @@ public class PostService {
 	// }
 	//
 	// private void updatePostUrl(UploadMusicResponse response, Post post) {
-	// 	String url = response.url();
-	// 	post.updateUrl(url);
+	// 	String musicUrl = response.musicUrl();
+	// 	post.updateUrl(musicUrl);
 	// }
 }

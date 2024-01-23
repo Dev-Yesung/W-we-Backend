@@ -34,7 +34,8 @@ public enum ErrorCode {
 	NOT_FOUND_MUSIC_FILE("-MF008", "음원 파일을 찾을 수 없습니다."),
 	UNABLE_TO_GET_FILE_INFO("-MF009", "음원 파일의 정보를 가져올 수 없습니다."),
 	NOT_FOUND_MUSIC_FILE_DIRECTORY("-MF010", "음원의 디렉토리를 찾을 수 없습니다."),
-	INVALID_MEDIA_URL("-MF011", ""),
+	INVALID_MUSIC_URL("-MF011", "음원의 URL이 올바르지 않습니다."),
+	INVALID_IMAGE_URL("-MF012", "이미지의 URL이 올바르지 않습니다."),
 
 	INVALID_POST_URL("-P001", "올바르지 않은 포스트 조회입니다."),
 	NOT_FOUND_POST("-P002", "포스트를 찾을 수 없습니다."),

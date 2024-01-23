@@ -50,6 +50,12 @@ public class AccountPersistenceAdapter
 	}
 
 	@Override
+	public User findAccountById(Long userId) {
+		return accountRepository.findById(userId)
+			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_USER));
+	}
+
+	@Override
 	public User saveAccount(User user) {
 		return accountRepository.save(user);
 	}

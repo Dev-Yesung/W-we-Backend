@@ -36,7 +36,7 @@ public class StreamingService {
 		validatePathExistence(musicFilePath);
 		String rangeValues = request.rangeHeader();
 		if (!StringUtils.hasText(rangeValues)) {
-			log.info("RangeValues is Null. So read all music file content.");
+			log.info("RangeValues is Null. So read all music file descriptions.");
 			return loadEntireMusicFile(filePath);
 		}
 

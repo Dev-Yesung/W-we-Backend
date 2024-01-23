@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
 import wave.domain.post.application.PostService;
 import wave.domain.post.dto.MyMusicPostDto;
+import wave.domain.post.dto.SharedMusicDto;
 import wave.domain.post.dto.request.MyMusicPostCreateRequest;
+import wave.domain.post.dto.request.SharedMusicPostCreateRequest;
 import wave.domain.post.dto.response.PostCreateResponse;
 import wave.domain.post.dto.response.PostsResponse;
 import wave.global.aop.AuthenticationUser;
@@ -65,19 +68,19 @@ public class PostController {
 
 		return ResponseEntity.ok(response);
 	}
-	//
-	// @PostMapping("/other-music")
-	// public ResponseEntity<OtherMusicPostCreateResponse> createOwnMusicPost(
-	// 	@RequestBody @Validated OtherMusicPostCreateRequest request,
-	// 	@AuthenticationUser User user
-	// ) {
-	// 	OtherMusicDto otherMusicDto = OtherMusicDto.of(request, user);
-	// 	OtherMusicPostCreateResponse response = postService.createOtherMusicPost(otherMusicDto);
-	//
-	// 	return ResponseEntity
-	// 		.created(URI.create("/other-music" + "/" + response.postId()))
-	// 		.body(response);
-	// }
+
+	@PostMapping("/shared-music")
+	public ResponseEntity<PostCreateResponse> createOwnMusicPost(
+		@RequestBody SharedMusicPostCreateRequest request,
+		@AuthenticationUser User user
+	) {
+		SharedMusicDto sharedMusicDto = SharedMusicDto.from(request, user);
+		PostCreateResponse response = postService.createOtherMusicPost(sharedMusicDto);
+
+		return ResponseEntity
+			.created(URI.create("/shared-music/" + response.postId()))
+			.body(response);
+	}
 	//
 	// @DeleteMapping("/{postId}")
 	// public ResponseEntity<PostDeleteDto> deletePost(

@@ -1,5 +1,7 @@
 package wave.domain.media.dto.response;
 
+import static wave.domain.media.domain.vo.MediaUploadStatus.*;
+
 import wave.domain.media.domain.vo.MediaUrl;
 
 public record MediaUploadResponse(
@@ -12,6 +14,6 @@ public record MediaUploadResponse(
 		String imageUrl = response.imageUrl();
 		String musicUrl = response.musicUrl();
 
-		return new MediaUrl(imageUrl, musicUrl);
+		return new MediaUrl(imageUrl, musicUrl, COMPLETED);
 	}
 }

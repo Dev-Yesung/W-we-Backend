@@ -12,7 +12,7 @@ public record PostsResponse(
 ) {
 	public static PostsResponse of(Slice<Post> posts) {
 		List<PostResponse> postResponses = posts.stream()
-			.map(PostResponse::of)
+			.map(PostResponse::from)
 			.toList();
 		boolean hasNext = posts.hasNext();
 

@@ -7,5 +7,5 @@ public interface UpdatePostPort {
 
 	Post saveNewPost(Post post);
 
-	void updateMusicUploadData(MediaUploadResponse response);
+	void updateMusicUploadUrl(MediaUploadResponse response);
 }

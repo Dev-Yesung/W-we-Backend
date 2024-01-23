@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +17,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wave.domain.account.domain.entity.User;
+import wave.domain.media.domain.vo.MediaUploadStatus;
 import wave.domain.media.domain.vo.MediaUrl;
+import wave.domain.post.domain.vo.PostContent;
 import wave.global.BaseEntity;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
@@ -30,8 +33,10 @@ public class Post extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String title;
-	private String contents;
+	@Embedded
+	private PostContent postContent;
+
+	@Embedded
 	private MediaUrl mediaUrl;
 
 	@ElementCollection(fetch = FetchType.LAZY)
@@ -41,32 +46,23 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	private boolean isUploadCompleted;
-
 	public Post(
-		String title,
-		String contents,
+		PostContent postContent,
+		MediaUrl mediaUrl,
 		User user
 	) {
-		this(title, contents, null, user, false);
-	}
-
-	private Post(
-		String title,
-		String contents,
-		MediaUrl mediaUrl,
-		User user,
-		boolean isUploadCompleted
-	) {
-		this.title = title;
-		this.contents = contents;
+		updateMediaUrl(mediaUrl);
+		this.postContent = postContent;
 		this.mediaUrl = mediaUrl;
 		this.user = user;
-		this.isUploadCompleted = isUploadCompleted;
 	}
 
 	public void updateMediaUrl(MediaUrl mediaUrl) {
+		if (mediaUrl == null) {
+			throw new BusinessException(ErrorCode.INVALID_MUSIC_URL);
+		}
 		this.mediaUrl = mediaUrl;
+
 	}
 
 	public void updateLikes(User user) {
@@ -105,5 +101,9 @@ public class Post extends BaseEntity {
 
 	public String getMusicUrl() {
 		return mediaUrl.getMusicUrl();
+	}
+
+	public MediaUploadStatus getUploadStatus() {
+		return mediaUrl.getUploadStatus();
 	}
 }
