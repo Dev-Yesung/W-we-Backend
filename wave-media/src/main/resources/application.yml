@@ -3,4 +3,4 @@ spring:
     import:
       - classpath:application-db.yml
       - classpath:application-server.yml
-      - classpath:application-upload.yml
+      - classpath:application-media.yml

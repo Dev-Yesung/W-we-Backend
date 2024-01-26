@@ -33,7 +33,7 @@ import wave.global.filter.JwtAuthenticationProcessingFilter;
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
-public class SecurityConfiguration {
+public class ApiSecurityConfig {
 	private static final String SIGN_UP_URL = "/api/accounts/signup";
 	private static final String LOG_IN_URL = "/api/accounts/login";
 	private static final String REFRESH_TOKEN_URL = "/api/accounts/token";

@@ -68,7 +68,7 @@ public class StreamingService {
 		Path musicFilePath = Paths.get(filePath);
 		validatePathExistence(musicFilePath);
 		if (!musicFilePath.toFile().exists()) {
-			throw new BusinessException(ErrorCode.NOT_FOUND_MUSIC_FILE);
+			throw new BusinessException(ErrorCode.NOT_FOUND_FILE);
 		}
 		long endRange = getInitialEndRange(musicFilePath);
 
@@ -128,7 +128,7 @@ public class StreamingService {
 		String[] fileNames = directory.list();
 		log.info(Arrays.toString(fileNames));
 		if (fileNames == null) {
-			throw new BusinessException(ErrorCode.NOT_FOUND_MUSIC_FILE);
+			throw new BusinessException(ErrorCode.NOT_FOUND_FILE);
 		}
 
 		return fileNames[0];
@@ -143,7 +143,7 @@ public class StreamingService {
 	private void validatePathExistence(Path musicFilePath) {
 		File file = musicFilePath.toFile();
 		if (!file.exists()) {
-			throw new BusinessException(ErrorCode.NOT_FOUND_MUSIC_FILE);
+			throw new BusinessException(ErrorCode.NOT_FOUND_FILE);
 		}
 	}
 

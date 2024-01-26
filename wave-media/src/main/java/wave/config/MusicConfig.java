@@ -8,12 +8,13 @@ import org.springframework.context.annotation.Configuration;
 import lombok.Data;
 
 @Data
-@ConfigurationProperties(prefix = "configuration.upload.music")
+@ConfigurationProperties(prefix = "configuration.media.music.file")
 @Configuration
-public class MusicUploadConfiguration {
-	private String host;
+public class MusicConfig {
+
 	private String rootPath;
 	private String fileNameSeparator;
 	private long maxFileSize;
-	private List<String> fileExtensions;
+	private List<String> permittedFileExtensions;
+
 }

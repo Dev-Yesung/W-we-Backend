@@ -20,8 +20,6 @@ import wave.domain.post.dto.SharedMusicDto;
 import wave.domain.post.dto.response.PostCreateResponse;
 import wave.domain.post.dto.response.PostsResponse;
 import wave.global.common.UseCase;
-import wave.global.error.ErrorCode;
-import wave.global.error.exception.BusinessException;
 
 @RequiredArgsConstructor
 @Transactional
@@ -40,17 +38,15 @@ public class PostService {
 		return PostCreateResponse.of(savedPost);
 	}
 
-	@KafkaListener(topics = "media_file_upload",
-		groupId = "group_media_file_upload",
+	@KafkaListener(topics = "media_event_result",
+		groupId = "group_media_event_result",
 		containerFactory = "kafkaListenerContainerFactory")
 	public MediaUploadResponse subscribeMediaFileUploadMessage(Object message) {
 		// 업로드 완료 메시지를 전달해야 하기 때문에, SSE 사용 필요할 듯?
-		if (message instanceof MediaUploadResponse response) {
-			updatePostPort.updateMusicUploadUrl(response);
+		MediaUploadResponse response = (MediaUploadResponse)message;
+		updatePostPort.updateMusicUploadUrl(response);
 
-			return response;
-		}
-		throw new BusinessException(ErrorCode.INVALID_MESSAGE_CASTING);
+		return response;
 	}
 
 	public PostCreateResponse createOtherMusicPost(SharedMusicDto sharedMusicDto) {
