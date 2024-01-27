@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import wave.config.MusicFileConfiguration;
+import wave.config.MusicConfig;
 import wave.domain.streaming.dto.request.LoadMusicRequest;
 import wave.domain.streaming.dto.response.LoadMusicResponse;
 import wave.global.error.ErrorCode;
@@ -27,7 +27,7 @@ import wave.global.error.exception.BusinessException;
 @Service
 public class StreamingService {
 	private static final long DEFAULT_RANGE_VALUE = 0L;
-	private final MusicFileConfiguration musicFileConfiguration;
+	private final MusicConfig musicConfig;
 
 	@Transactional(readOnly = true)
 	public LoadMusicResponse loadMusicFile(LoadMusicRequest request) {
@@ -109,7 +109,7 @@ public class StreamingService {
 	}
 
 	private String getFilePath(LoadMusicRequest request) {
-		String rootPath = musicFileConfiguration.getRootPath();
+		String rootPath = musicConfig.getRootPath();
 		String userId = String.valueOf(request.userId());
 		String postId = String.valueOf(request.postId());
 

@@ -1,11 +1,11 @@
-package wave.domain.mail.infra.adapter;
+package wave.domain.certification.adapter.out;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;
 import wave.domain.mail.domain.port.out.SendMailEventPort;
 import wave.domain.mail.domain.vo.MailResult;
-import wave.domain.mail.infra.event.MailEventBroker;
+import wave.domain.mail.infra.MailEventBroker;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor

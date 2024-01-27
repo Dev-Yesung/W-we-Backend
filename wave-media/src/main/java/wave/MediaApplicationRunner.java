@@ -1,7 +1,5 @@
 package wave;
 
-import java.io.File;
-
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -33,7 +31,6 @@ public class MediaApplicationRunner implements ApplicationRunner {
 
 	private void initializeMediaStorage(String path) {
 		String normalizedPath = FileUtils.getNormalizedPath(path);
-		File directory = new File(normalizedPath);
-		FileUtils.createDirectoryIfNotExist(directory);
+		FileUtils.createDirectoryIfNotExist(normalizedPath);
 	}
 }

@@ -9,10 +9,4 @@ public record MediaUploadResponse(
 	FileId fileId,
 	MediaUrl mediaUrl
 ) {
-	public static MediaUrl of(MediaUploadResponse response) {
-		String imageUrl = response.imageUrl();
-		String musicUrl = response.musicUrl();
-
-		return new MediaUrl(imageUrl, musicUrl, COMPLETED);
-	}
 }

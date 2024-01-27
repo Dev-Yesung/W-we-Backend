@@ -1,4 +1,4 @@
-package wave.domain.certification.adapter.out;
+package wave.domain.certification.infra;
 
 import static java.nio.charset.StandardCharsets.*;
 
@@ -13,7 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;
-import wave.domain.mail.infra.mail.MailSender;
+import wave.domain.mail.infra.MailSender;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 

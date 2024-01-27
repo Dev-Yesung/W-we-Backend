@@ -1,4 +1,4 @@
-package wave.domain.mail.infra.event;
+package wave.domain.mail.infra;
 
 import wave.domain.mail.domain.vo.MailResult;
 

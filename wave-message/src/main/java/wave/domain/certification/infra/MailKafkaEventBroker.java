@@ -1,10 +1,11 @@
-package wave.domain.mail.infra.event;
+package wave.domain.certification.infra;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.mail.domain.vo.MailResult;
+import wave.domain.mail.infra.MailEventBroker;
 
 @RequiredArgsConstructor
 @Component

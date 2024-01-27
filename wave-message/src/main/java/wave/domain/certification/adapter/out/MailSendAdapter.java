@@ -1,9 +1,9 @@
-package wave.domain.mail.infra.adapter;
+package wave.domain.certification.adapter.out;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.mail.domain.port.out.SendMailPort;
-import wave.domain.mail.infra.mail.MailSender;
+import wave.domain.mail.infra.MailSender;
 import wave.global.common.CommonAdapter;
 
 @RequiredArgsConstructor

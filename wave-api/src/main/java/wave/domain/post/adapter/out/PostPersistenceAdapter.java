@@ -34,11 +34,11 @@ public class PostPersistenceAdapter
 
 	@Override
 	public void updateMusicUploadUrl(MediaUploadResponse response) {
-		Long postId = response.postId();
+		Long postId = response.fileId().getPostId();
 		Post post = postJpaRepository.findById(postId)
 			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_POST));
 
-		MediaUrl mediaUrl = MediaUploadResponse.of(response);
+		MediaUrl mediaUrl = response.mediaUrl();
 		post.updateMediaUrl(mediaUrl);
 	}
 

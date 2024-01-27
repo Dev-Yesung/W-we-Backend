@@ -1,4 +1,4 @@
-package wave.domain.mail.infra.mail;
+package wave.domain.mail.infra;
 
 import wave.domain.account.domain.vo.Certification;
 
