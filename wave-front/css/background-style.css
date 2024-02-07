@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #ee5425, #e71364, #4d65ed, #0bcea0);
+  background-size: 400% 400%;
+  animation: gradient-bg 15s ease infinite;
+  overflow-x: hidden; /* 수평 스크롤 막기 */
+  background-attachment: fixed;
+}
+
+body .wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-image: url("/image/wave.png");
+  background-size: 1000px 100px;
+}
+
+@keyframes gradient-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body .wave.water {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-image: url("/image/wave.png");
+  background-size: 1000px 100px;
+  z-index: -1;
+}
+
+body .wave.water:nth-child(2) {
+  animation: animate2 15s linear infinite;
+  z-index: 999;
+  opacity: 0.5;
+  animation-delay: -5s;
+  bottom: 10px;
+}
+body .wave.water:nth-child(3) {
+  animation: animate 30s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+  z-index: 998;
+  opacity: 0.2;
+  animation-delay: -5s;
+  bottom: 15px;
+}
+body .wave.water:nth-child(4) {
+  animation: animate2 5s linear infinite;
+  z-index: 997;
+  opacity: 0.7;
+  animation-delay: -5s;
+  bottom: 20px;
+}
+
+@keyframes animate {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 1000px;
+  }
+}
+@keyframes animate2 {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: -1000px;
+  }
+}

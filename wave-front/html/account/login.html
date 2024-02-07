@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wvv</title>
+  </head>
+  <script src="/script/account.js" defer></script>
+  <body>
+    <header><h1>Wavv</h1></header>
+    <main>
+      <div>
+        <!-- 로그인 -->
+        <div class="form-login">
+          <form onsubmit="return submitLoginForm()">
+            <input
+              type="email"
+              id="login-email"
+              placeholder="사용자 이메일"
+              required
+            />
+            <input
+              type="password"
+              id="login-password"
+              placeholder="비밀번호"
+              required
+            />
+            <!-- 로그인 버튼 -->
+            <input type="submit" value="로그인" />
+          </form>
+        </div>
+        <!-- 계정찾기 -->
+        <div><a href="account-lost.html">계정을 잊으셨나요?</a></div>
+      </div>
+      <!-- 회원가입 -->
+      <div>
+        <span>
+          계정이 없으신가요? <a href="account-signup.html">가입하기</a>
+        </span>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

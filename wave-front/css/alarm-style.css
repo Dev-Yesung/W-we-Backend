@@ -1,0 +1,125 @@
+/* 알림 모달 스타일 */
+.modal-dialog-slideout {
+  position: fixed;
+  top: 10%;
+  right: -300px; /* 시작 위치를 오른쪽 바깥으로 설정 */
+  max-height: 500px; /* 최대 높이 설정 */
+  width: 300px; /* 모달 너비 */
+  margin: 0;
+  margin-right: 50px;
+  padding: 3%;
+  background-color: white;
+  z-index: 1050;
+  transition: right 0.3s ease-in-out; /* 오른쪽 위치에 대한 전환 애니메이션 */
+  border-radius: 20px; /* 모달 테두리 둥글게 */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* 쉐도잉 추가 */
+  overflow-y: auto; /* 내용이 모달을 넘어갈 경우 스크롤 생성 */
+}
+
+.modal.show .modal-dialog-slideout {
+  right: 0; /* 모달이 나타날 때 오른쪽 위치를 0으로 이동시킵니다. */
+}
+
+/* 모달 헤더 스타일 */
+.modal-header {
+  background-color: #f8f9fa; /* 모달 헤더 배경색 */
+  border-bottom: none; /* 모달 헤더 아래 테두리 없애기 */
+  border-top-left-radius: 20px; /* 모달 헤더의 왼쪽 위 모서리 둥글게 */
+  border-top-right-radius: 20px; /* 모달 헤더의 오른쪽 위 모서리 둥글게 */
+}
+
+/* 모달 바디 스타일 */
+.modal-body {
+  padding: 20px; /* 모달 바디 패딩 설정 */
+}
+
+/* 모달 푸터 스타일 */
+.modal-footer {
+  background-color: #f8f9fa; /* 모달 푸터 배경색 */
+  border-top: none; /* 모달 푸터 위 테두리 없애기 */
+  border-bottom-left-radius: 20px; /* 모달 푸터의 왼쪽 아래 모서리 둥글게 */
+  border-bottom-right-radius: 20px; /* 모달 푸터의 오른쪽 아래 모서리 둥글게 */
+}
+
+.modal-container {
+  height: 100%;
+}
+
+#received-alarm {
+  margin-left: 20px;
+  padding-bottom: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+#alarm-content {
+  text-align: right;
+  margin: 20px;
+  margin-right: 0px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+/* 모달 클릭 방지 */
+.modal-dialog-slideout {
+  pointer-events: auto;
+}
+
+#alarm-erase-all {
+  padding-top: 17px;
+  text-align: right;
+}
+
+#alarm-erase-all button {
+  background-color: #4caf50; /* 배경색을 알림을 모두 읽었다는 느낌을 주는 색상으로 설정 */
+  border: none; /* 테두리 제거 */
+  border-radius: 10px; /* 버튼 테두리를 둥글게 만듭니다. */
+  padding: 4px 8px; /* 내부 여백 설정 */
+  color: #fff; /* 텍스트 색상을 흰색으로 설정 */
+  font-size: 12px; /* 폰트 크기 조정 */
+  font-weight: bold; /* 폰트를 굵게 설정하여 더 강조합니다. */
+  text-transform: uppercase; /* 텍스트를 대문자로 변환하여 강조합니다. */
+  letter-spacing: 1px; /* 글자 사이 간격을 늘려서 더 가독성을 높입니다. */
+  cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능성을 나타냅니다. */
+  transition: background-color 0.3s, color 0.3s; /* 배경색 및 텍스트 색상에 대한 전환 효과 설정 */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 쉐도우 효과 추가하여 버튼에 입체감 부여 */
+}
+
+#alarm-erase-all button:hover {
+  background-color: #388e3c; /* 마우스 오버시 배경색을 조금 더 진한 색상으로 변경 */
+}
+
+.alarm-item button {
+  margin-left: 55px;
+  border: none; /* 테두리 제거 */
+  border-radius: 10px; /* 버튼 테두리를 둥글게 만듭니다. */
+  color: #fff; /* 텍스트 색상을 흰색으로 설정 */
+  font-size: 16px; /* 폰트 크기 설정 */
+  font-weight: bold; /* 폰트를 굵게 설정하여 더 강조합니다. */
+  cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능성을 나타냅니다. */
+  transition: background-color 0.3s, color 0.3s, transform 0.3s; /* 배경색, 텍스트 색상 및 변형에 대한 전환 효과 설정 */
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2); /* 약간의 쉐도우 효과 추가 */
+}
+
+.alarm-item button img {
+  width: 22px;
+  height: 22px;
+}
+
+.alarm-item {
+  border-bottom: 1px solid #dee2e6; /* 알림 항목 구분선 */
+  padding: 15px 0; /* 알림 항목 안쪽 여백 설정 */
+}
+
+.alarm-item:last-child {
+  border-bottom: none; /* 마지막 알림 항목의 구분선 제거 */
+}
+
+.alarm-item-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alarm-item-content p {
+  margin: 0; /* 문단의 기본 여백 제거 */
+}

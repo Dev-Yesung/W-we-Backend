@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home﹒Wvv</title>
+
+    <!-- Bootstrap CDN srcs -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <!-- Popper CDN srcs -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+      defer
+    ></script>
+
+    <!-- Custom Sources -->
+    <link href="/css/background-style.css" rel="stylesheet" />
+    <link href="/css/home-style.css" rel="stylesheet" />
+    <link href="/css/alarm-style.css" rel="stylesheet" />
+    <script src="/script/home.js" defer></script>
+    <script src="/script/alarm.js" defer></script>
+  </head>
+
+  <body class="wave water">
+    <header
+      class="bg-light sticky-top d-flex justify-content-between align-items-center"
+    >
+      <div class="mx-2 flex-shrink-0">
+        <a href="home.html">
+          <img
+            src="/image/logo-btn-icon.png"
+            alt="로고"
+            id="logo-btn"
+            class="btn"
+            onmouseover="changeImage()"
+            onmouseout="restoreImage()"
+          />
+          <div id="logo-title">Wvv</div>
+        </a>
+      </div>
+      <input
+        type="text"
+        id="search-bar"
+        class="form-control mx-3 flex-grow-1"
+        placeholder="검색"
+      />
+      <div id="alarm-modal-btn" class="mx-2 flex-shrink-0">
+        <img
+          src="/image/alarm-btn-icon.svg"
+          class="btn header-btn"
+          alt="알림"
+        />
+      </div>
+    </header>
+
+    <main
+      id="post-container-frame"
+      class="container mt-5 d-flex justify-content-center"
+    >
+      <!-- 포스트 컨테이너 시작 -->
+      <div
+        id="post-container"
+        class="flex-wrap flex-shrink-0 justify-content-between"
+      ></div>
+      <!-- 포스트 컨테이너 끝 -->
+    </main>
+
+    <footer id="nav-footer" class="fixed-bottom bg-light">
+      <div class="text-center">
+        <a href="home.html"
+          ><img src="/image/home-btn-icon.svg" class="btn mx-4 nav-btn"
+        /></a>
+        <img src="/image/search-btn-icon.svg" class="btn mx-3 nav-btn" />
+        <img src="/image/post-btn-icon.svg" class="btn mx-3 nav-btn" />
+        <img src="/image/message-btn-icon.svg" class="btn mx-3 nav-btn" />
+        <img src="/image/my-btn-icon.svg" class="btn mx-3 nav-btn" />
+      </div>
+    </footer>
+
+    <div class="wave water"></div>
+    <div class="wave water"></div>
+    <div class="wave water"></div>
+    <div class="wave water"></div>
+
+    <div id="alarm-modal" class="modal">
+      <div class="modal-dialog modal-dialog-slideout modal-dialog-left">
+        <div class="modal-container">
+          <div id="received-alarm"></div>
+          <div id="alarm-erase-all"></div>
+          <div id="alarm-content"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
