@@ -7,13 +7,13 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
 import wave.domain.post.domain.entity.Post;
+import wave.domain.post.domain.port.out.PostQueryRepository;
 
 @Repository
 public class QueryDslPostQueryRepository implements PostQueryRepository {

@@ -11,7 +11,7 @@ import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.FileUploadDto;
-import wave.domain.media.infra.MusicRepository;
+import wave.domain.media.domain.port.out.MusicRepository;
 import wave.global.common.PersistenceAdapter;
 import wave.global.utils.FileUtils;
 

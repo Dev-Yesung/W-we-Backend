@@ -5,7 +5,7 @@ import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;
 import wave.domain.mail.domain.port.out.SendMailEventPort;
 import wave.domain.mail.domain.vo.MailResult;
-import wave.domain.mail.infra.MailEventBroker;
+import wave.domain.mail.domain.port.MailEventBroker;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor

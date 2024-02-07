@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wave.config.MusicConfig;
-import wave.domain.streaming.dto.request.LoadMusicRequest;
-import wave.domain.streaming.dto.response.LoadMusicResponse;
+import wave.domain.media.dto.request.LoadMusicRequest;
+import wave.domain.media.dto.response.LoadMusicResponse;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 

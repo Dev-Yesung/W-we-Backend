@@ -15,7 +15,7 @@ import org.springframework.util.ClassUtils;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.port.out.LoadAccountPort;
-import wave.domain.account.infra.AccountCache;
+import wave.domain.account.domain.port.out.AccountCache;
 import wave.domain.account.domain.vo.CertificationType;
 import wave.domain.account.domain.vo.Role;
 import wave.domain.account.domain.entity.User;

@@ -1,4 +1,4 @@
-package wave.domain.streaming.dto.response;
+package wave.domain.media.dto.response;
 
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 

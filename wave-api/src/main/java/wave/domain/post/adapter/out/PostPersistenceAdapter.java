@@ -12,7 +12,7 @@ import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.UpdatePostPort;
 import wave.domain.post.infra.CommentJpaRepository;
 import wave.domain.post.infra.PostJpaRepository;
-import wave.domain.post.infra.PostQueryRepository;
+import wave.domain.post.domain.port.out.PostQueryRepository;
 import wave.global.common.PersistenceAdapter;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;

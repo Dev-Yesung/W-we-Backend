@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
 import wave.config.CacheConfig;
+import wave.domain.account.domain.port.out.AccountCache;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;
 

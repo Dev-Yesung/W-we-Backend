@@ -1,4 +1,4 @@
-package wave.domain.account.infra;
+package wave.domain.account.domain.port.out;
 
 import java.util.Optional;
 

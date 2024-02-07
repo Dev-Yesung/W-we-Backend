@@ -6,7 +6,7 @@ import wave.domain.account.domain.entity.User;
 import wave.domain.account.domain.port.out.PublishAccountEventPort;
 import wave.domain.account.domain.port.out.SubscribeAccountEventPort;
 import wave.domain.account.domain.vo.Certification;
-import wave.domain.account.infra.AccountEventBroker;
+import wave.domain.account.domain.port.out.AccountEventBroker;
 
 @RequiredArgsConstructor
 @EventAdapter

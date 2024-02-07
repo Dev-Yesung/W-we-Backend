@@ -1,4 +1,4 @@
-package wave.domain.streaming.dto.request;
+package wave.domain.media.dto.request;
 
 public record LoadMusicRequest(
 	Long userId,

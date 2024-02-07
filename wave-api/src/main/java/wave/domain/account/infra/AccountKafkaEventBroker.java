@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
+import wave.domain.account.domain.port.out.AccountEventBroker;
 import wave.domain.account.domain.vo.AccountEventType;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;

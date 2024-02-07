@@ -8,7 +8,7 @@ import wave.domain.account.domain.port.out.UpdateAccountPort;
 import wave.global.common.PersistenceAdapter;
 import wave.domain.account.domain.entity.User;
 import wave.domain.account.domain.vo.Certification;
-import wave.domain.account.infra.AccountCache;
+import wave.domain.account.domain.port.out.AccountCache;
 import wave.domain.account.infra.AccountJpaRepository;
 import wave.domain.account.domain.vo.CertificationType;
 import wave.global.error.ErrorCode;
@@ -70,4 +70,5 @@ public class AccountPersistenceAdapter
 		accountCache.removeCertificationCode(certification)
 			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_CERTIFICATION_CODE));
 	}
+
 }

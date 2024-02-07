@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.media.dto.MediaFileUploadMessage;
+import wave.domain.post.domain.port.out.PostEventBroker;
 
 @RequiredArgsConstructor
 @Component

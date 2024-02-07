@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.mail.domain.vo.MailResult;
-import wave.domain.mail.infra.MailEventBroker;
+import wave.domain.mail.domain.port.MailEventBroker;
 
 @RequiredArgsConstructor
 @Component

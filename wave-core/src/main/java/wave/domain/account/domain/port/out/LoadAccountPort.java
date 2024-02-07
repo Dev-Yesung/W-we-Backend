@@ -17,4 +17,5 @@ public interface LoadAccountPort {
 	void existCertificationCode(CertificationType certificationType, String email);
 
 	User findAccountById(Long userId);
+
 }

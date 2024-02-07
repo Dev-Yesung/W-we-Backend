@@ -5,10 +5,10 @@ import wave.domain.account.domain.vo.Certification;
 
 public interface UpdateAccountPort {
 
-
 	User saveAccount(User user);
 
 	int cacheCertificationCode(Certification certification);
 
 	void removeCertificationCode(Certification certification);
+
 }

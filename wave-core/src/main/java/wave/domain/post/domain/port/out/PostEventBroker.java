@@ -1,4 +1,4 @@
-package wave.domain.post.infra;
+package wave.domain.post.domain.port.out;
 
 import java.util.concurrent.CompletableFuture;
 

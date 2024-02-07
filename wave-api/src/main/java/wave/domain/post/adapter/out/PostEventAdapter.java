@@ -5,7 +5,7 @@ import wave.domain.media.dto.MediaFileUploadMessage;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
 import wave.domain.post.dto.MyMusicPostDto;
-import wave.domain.post.infra.PostEventBroker;
+import wave.domain.post.domain.port.out.PostEventBroker;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor

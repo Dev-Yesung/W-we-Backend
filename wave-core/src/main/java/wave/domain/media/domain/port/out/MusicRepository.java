@@ -1,4 +1,4 @@
-package wave.domain.media.infra;
+package wave.domain.media.domain.port.out;
 
 import org.springframework.web.multipart.MultipartFile;
 

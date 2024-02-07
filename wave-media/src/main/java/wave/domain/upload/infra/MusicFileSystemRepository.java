@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import wave.config.MusicConfig;
 import wave.domain.media.domain.entity.MusicFile;
 import wave.domain.media.domain.vo.FileId;
-import wave.domain.media.infra.MusicRepository;
+import wave.domain.media.domain.port.out.MusicRepository;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.FileException;
 import wave.global.utils.FileUtils;
