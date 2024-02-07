@@ -128,10 +128,12 @@ footer {
   display: inline-flex;
   margin-left: 6px;
   margin-top: 8px;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: 13.5px;
 }
 
 #post-time {
+  font-weight: 360;
   padding-bottom: 8px;
   text-align: right;
   font-size: 14px;

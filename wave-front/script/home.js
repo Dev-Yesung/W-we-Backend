@@ -227,9 +227,7 @@ goToTopBtn.onclick = function () {
     behavior: "smooth",
   });
 };
-
 document.body.appendChild(goToTopBtn);
-
 window.addEventListener("scroll", function () {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     goToTopBtn.style.display = "block";
@@ -237,6 +235,17 @@ window.addEventListener("scroll", function () {
     goToTopBtn.style.display = "none";
   }
 });
+
+const goToBottomBtn = document.createElement("button");
+goToTopBtn.id = "goToBottomBtn";
+goToTopBtn.style.display = "none";
+goToTopBtn.innerHTML = "<img src='/image/goToTop-btn.svg' />";
+goToTopBtn.onclick = function () {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 
 function changeImage() {
   document.getElementById("logo-btn").src = "/image/animated-logo.gif";

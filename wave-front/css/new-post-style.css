@@ -1,0 +1,119 @@
+.new-post-modal-dialog {
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 3.5rem);
+}
+
+.new-post-modal-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.new-post-modal-header button {
+  border: none; /* 기본 테두리 제거 */
+  border-radius: 7px; /* 모서리를 둥글게 만듭니다. */
+  padding: 5px 10px; /* 내부 여백 추가 */
+  cursor: pointer; /* 포인터 커서 추가 */
+
+  /* 버튼 스타일 */
+  background-color: #007bff; /* 배경색 */
+  color: #fff; /* 텍스트 색상 */
+  font-size: 14px; /* 폰트 크기 */
+
+  /* 마우스 오버 효과 */
+  transition: background-color 0.3s ease;
+}
+
+.new-post-modal-header button:hover {
+  background-color: #0056b3; /* 마우스 오버시 더 어두운 색상으로 변경 */
+}
+
+.new-post-modal-container label {
+  font-weight: 700;
+}
+
+.new-post-modal-footer {
+  text-align: center;
+}
+
+#new-post-upload-btn {
+  width: 50px;
+}
+
+#new-post-link-share-alert {
+  /* 버튼 스타일링 */
+  width: 20px;
+  height: 20px;
+  background-image: url(/image/alert-icon.svg);
+  background-size: 80%; /* 배경 이미지를 요소에 맞게 조정 */
+  background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+
+  /* 이미지 내부 여백 추가 */
+  padding: 5px; /* 원하는 만큼의 여백 크기 설정 */
+}
+
+/* 말풍선 효과 스타일링 */
+#new-post-link-share-alert::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000;
+  color: #fff;
+  width: 170px;
+  padding: 5px 2px; /* 위아래 5px, 좌우 10px로 내부 여백 설정 */
+  border-radius: 5px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: pre-wrap;
+}
+
+#new-post-link-share-alert:hover::after {
+  opacity: 1;
+}
+
+#new-post-upload-music-alert {
+  /* 버튼 스타일링 */
+  width: 20px;
+  height: 20px;
+  background-image: url(/image/alert-icon.svg);
+  background-size: 80%; /* 배경 이미지를 요소에 맞게 조정 */
+  background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+
+  /* 이미지 내부 여백 추가 */
+  padding: 5px; /* 원하는 만큼의 여백 크기 설정 */
+}
+
+#new-post-upload-music-alert::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000;
+  color: #fff;
+  width: 170px;
+  padding: 5px 2px; /* 위아래 5px, 좌우 10px로 내부 여백 설정 */
+  border-radius: 5px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: pre-wrap;
+}
+
+#new-post-upload-music-alert:hover::after {
+  opacity: 1;
+}
