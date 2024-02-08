@@ -7,10 +7,10 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-.svg
-.gif
-.png
-.ico
+*.svg
+*.gif
+*.png
+*.ico
 browserconfig.xml
 manifest.json
 
