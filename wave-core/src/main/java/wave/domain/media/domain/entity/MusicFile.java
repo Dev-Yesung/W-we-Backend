@@ -1,5 +1,7 @@
 package wave.domain.media.domain.entity;
 
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+
 import lombok.Getter;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.Music;
@@ -14,10 +16,6 @@ public class MusicFile extends File {
 		this.music = music;
 	}
 
-	public String getPath() {
-		return music.getPath();
-	}
-
 	public String getMusicFileName() {
 		return music.getFileName();
 	}
@@ -25,4 +23,25 @@ public class MusicFile extends File {
 	public String getMusicFileExtension() {
 		return music.getFileExtension();
 	}
+
+	public String getMusicMimeType() {
+		return music.getMimeType();
+	}
+
+	public long getMusicFileSize() {
+		return music.getFileSize();
+	}
+
+	public String getPath() {
+		return music.getPath();
+	}
+
+	public long[] getFileRange(String rangeHeader) {
+		return music.getFileRange(rangeHeader);
+	}
+
+	public StreamingResponseBody createStreamingResponseBody(String rangeHeader) {
+		return music.createStreamingResponseBody(rangeHeader);
+	}
+
 }

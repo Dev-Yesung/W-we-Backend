@@ -49,10 +49,12 @@ public class StreamingController {
 		LoadMusicResponse response
 	) {
 		HttpHeaders responseHeaders = new HttpHeaders();
-		String mimeType = getMimeType(response);
+		String mimeType = response.mimeType();
+		long fileSize = response.fileSize();
 		long startRange = response.startRange();
 		long endRange = response.endRange();
-		long fileSize = getFileSize(response);
+		StreamingResponseBody streamingResponseBody = response.streamingResponseBody();
+
 		String contentLength = String.valueOf(endRange - startRange + 1);
 		String contentRange = String.format("bytes %d-%d/%d", startRange, endRange, fileSize);
 
@@ -60,29 +62,7 @@ public class StreamingController {
 		responseHeaders.add(CONTENT_LENGTH, contentLength);
 		responseHeaders.add(ACCEPT_RANGES, "bytes");
 		responseHeaders.add(CONTENT_RANGE, contentRange);
-		StreamingResponseBody streamingResponseBody = response.streamingResponseBody();
 
 		return new ResponseEntity<>(streamingResponseBody, responseHeaders, PARTIAL_CONTENT);
-	}
-
-	private long getFileSize(LoadMusicResponse response) {
-		String filePath = response.musicFilePath();
-		Path path = Paths.get(filePath);
-		try {
-			return Files.size(path);
-		} catch (IOException e) {
-			throw new BusinessException(ErrorCode.UNABLE_TO_GET_FILE_INFO);
-		}
-	}
-
-	private String getMimeType(
-		LoadMusicResponse response) {
-		String filePath = response.musicFilePath();
-		Path path = Path.of(filePath);
-		try {
-			return Files.probeContentType(path);
-		} catch (IOException e) {
-			throw new BusinessException(ErrorCode.UNABLE_TO_GET_FILE_INFO);
-		}
 	}
 }

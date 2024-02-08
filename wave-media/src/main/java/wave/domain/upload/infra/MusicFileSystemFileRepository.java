@@ -14,17 +14,32 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import wave.config.MusicConfig;
 import wave.domain.media.domain.entity.MusicFile;
+import wave.domain.media.domain.port.out.MusicFileRepository;
 import wave.domain.media.domain.vo.FileId;
-import wave.domain.media.domain.port.out.MusicRepository;
+import wave.domain.media.domain.vo.Music;
 import wave.global.error.ErrorCode;
+import wave.global.error.exception.EntityException;
 import wave.global.error.exception.FileException;
 import wave.global.utils.FileUtils;
 
 @RequiredArgsConstructor
 @Repository
-public class MusicFileSystemRepository implements MusicRepository {
+public class MusicFileSystemFileRepository implements MusicFileRepository {
 
 	private final MusicConfig musicConfig;
+
+	@Override
+	public Music findFileByPath(String path) {
+		Path filePath = Paths.get(path);
+		isPathExist(filePath);
+
+		String fileName = getFileNameWithoutExtension(filePath);
+		String extension = getFileExtension(filePath);
+		String mimeType = getMimeType(filePath);
+		long fileSize = getFileSize(filePath);
+
+		return new Music(fileName, extension, mimeType, fileSize, path);
+	}
 
 	@Override
 	public void saveFile(MusicFile musicFile, MultipartFile file) {
@@ -35,8 +50,52 @@ public class MusicFileSystemRepository implements MusicRepository {
 	}
 
 	@Override
-	public void deleteFile(String path) {
+	public void deleteFileByPath(String path) {
 		deleteFileOnStorage(path);
+	}
+
+	private void isPathExist(Path path) {
+		if (!Files.exists(path)) {
+			throw new EntityException(ErrorCode.NOT_FOUND_FILE);
+		}
+	}
+
+	private String getFileNameWithoutExtension(Path filePath) {
+		String fileName = filePath.getFileName().toString();
+		int lastDotIndex = fileName.lastIndexOf('.');
+		if (lastDotIndex > 0) {
+			fileName = fileName.substring(0, lastDotIndex);
+		}
+
+		return fileName;
+	}
+
+	private String getFileExtension(Path filePath) {
+		String fileName = filePath.getFileName().toString();
+		int lastDotIndex = fileName.lastIndexOf('.');
+
+		String extension = "";
+		if (lastDotIndex > 0) {
+			extension = fileName.substring(lastDotIndex + 1);
+		}
+
+		return extension;
+	}
+
+	private String getMimeType(Path path) {
+		try {
+			return Files.probeContentType(path);
+		} catch (IOException e) {
+			throw new EntityException(ErrorCode.UNABLE_TO_GET_FILE_INFO, e);
+		}
+	}
+
+	private long getFileSize(Path filePath) {
+		try {
+			return Files.size(filePath);
+		} catch (IOException e) {
+			throw new EntityException(ErrorCode.UNABLE_TO_GET_FILE_INFO, e);
+		}
 	}
 
 	private String getFileNameWithExtension(MusicFile musicFile) {

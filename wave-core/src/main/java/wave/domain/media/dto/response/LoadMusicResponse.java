@@ -4,9 +4,9 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 public record LoadMusicResponse(
 	StreamingResponseBody streamingResponseBody,
-	String musicFilePath,
+	String mimeType,
+	long fileSize,
 	long startRange,
 	long endRange
 ) {
-
 }
