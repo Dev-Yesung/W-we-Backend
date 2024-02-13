@@ -4,3 +4,4 @@ spring:
       - classpath:application-db.yml
       - classpath:application-server.yml
       - classpath:application-media.yml
+      - classpath:application-consumer.yml

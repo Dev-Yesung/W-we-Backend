@@ -26,6 +26,7 @@ import wave.global.error.exception.EntityException;
 @RequiredArgsConstructor
 @Component
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
+
 	private final AccountCache accountCache;
 	private final LoadAccountPort accountLoadPort;
 

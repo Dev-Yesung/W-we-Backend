@@ -3,21 +3,25 @@ package wave.domain.account.infra;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
-import lombok.RequiredArgsConstructor;
 import wave.config.CacheConfig;
 import wave.domain.account.domain.port.out.AccountCache;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;
 
-@RequiredArgsConstructor
 @Repository
 public class AccountRedisCache implements AccountCache {
 
-	private final CacheConfig cacheConfig;
 	private final ValueOperations<String, Object> valueOperations;
+	private final CacheConfig cacheConfig;
+
+	public AccountRedisCache(CacheConfig cacheConfig, RedisTemplate<String, Object> redisTemplate) {
+		this.cacheConfig = cacheConfig;
+		this.valueOperations = redisTemplate.opsForValue();
+	}
 
 	@Override
 	public int cacheCertificationCode(Certification certification) {

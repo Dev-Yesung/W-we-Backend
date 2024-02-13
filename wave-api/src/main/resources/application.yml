@@ -2,7 +2,7 @@ spring:
   config:
     import:
       - classpath:application-server.yml
-      - classpath:application-jwt.yml
       - classpath:application-db.yml
-      - classpath:application-upload.yml
+      - classpath:application-jwt.yml
       - classpath:application-producer.yml
+      - classpath:application-consumer.yml
