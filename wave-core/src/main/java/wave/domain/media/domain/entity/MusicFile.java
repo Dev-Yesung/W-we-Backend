@@ -23,13 +23,19 @@ public class MusicFile extends AbstractMediaFile {
 	}
 
 	public MultipartFile convertByteDataToMultipartFile() {
-		Path fileDataByPath = music.createFileDataByPath();
+		Path fileDataByPath = music.createFilePath();
 
 		return new MediaMultipartFile(fileDataByPath);
 	}
 
-	public Path createFileDataByPath() {
-		return music.createFileDataByPath();
+	public MultipartFile convertByteDataToMultipartFileByTemp() {
+		Path fileDataByPath = music.createFileDataByTemporary();
+
+		return new MediaMultipartFile(fileDataByPath);
+	}
+
+	public Path createFilePath() {
+		return music.createFilePath();
 	}
 
 	public long[] extractFileRange(String rangeHeader) {

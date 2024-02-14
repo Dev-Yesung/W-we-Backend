@@ -42,7 +42,7 @@ public final class MultipartFileUtils {
 
 	public static long getFileSize(MultipartFile file) {
 		long fileSize = file.getSize();
-		if (fileSize > 0) {
+		if (fileSize <= 0) {
 			throw new FileException(ErrorCode.INVALID_FILE_SIZE);
 		}
 

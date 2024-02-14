@@ -21,6 +21,8 @@ public class KafkaCommonJsonDeserializer {
 		configurations.put(KEY_DESERIALIZER_CLASS, StringDeserializer.class);
 		configurations.put(VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
 		configurations.put(TRUSTED_PACKAGES, "*");
+		// Consumer Max Fetch Size : 50MB
+		configurations.put(FETCH_MAX_BYTES_CONFIG, 100_428_800);
 
 		return configurations;
 	}

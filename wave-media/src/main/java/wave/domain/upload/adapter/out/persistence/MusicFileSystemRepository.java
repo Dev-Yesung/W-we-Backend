@@ -36,13 +36,13 @@ public class MusicFileSystemRepository implements MusicFileRepository {
 
 	@Override
 	public void saveFile(MusicFile musicFile) {
-		MultipartFile multipartFile = musicFile.convertByteDataToMultipartFile();
-		MultipartFileUtils.isPermittedFileSize(multipartFile, musicConfig.getMaxFileSize());
-		Path fileDataByPath = musicFile.createFileDataByPath();
-		InputStream inputStream = MultipartFileUtils.getInputStream(multipartFile);
+		MultipartFile tmpMultipartFile = musicFile.convertByteDataToMultipartFileByTemp();
+		MultipartFileUtils.isPermittedFileSize(tmpMultipartFile, musicConfig.getMaxFileSize());
+		Path targetFile = musicFile.createFilePath();
+		InputStream tmpFileInputStream = MultipartFileUtils.getInputStream(tmpMultipartFile);
 
 		try {
-			Files.copy(inputStream, fileDataByPath);
+			Files.copy(tmpFileInputStream, targetFile);
 		} catch (IOException e) {
 			throw new FileException(ErrorCode.UNABLE_TO_UPLOAD_FILE, e);
 		}

@@ -20,6 +20,7 @@ public class MediaFileUploadService {
 		containerFactory = "kafkaListenerContainerFactory")
 	public void savePostFiles(MediaFileUploadMessage uploadMessage) {
 		updateMediaPort.saveFile(uploadMessage);
+		// 업로드 작업이 끝나면 포스트 업로드가 끝났다고 메시지 전송
 	}
 
 	@KafkaListener(topics = "media_file_delete",

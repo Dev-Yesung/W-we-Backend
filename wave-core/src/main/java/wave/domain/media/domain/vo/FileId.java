@@ -1,29 +1,19 @@
 package wave.domain.media.domain.vo;
 
-import java.util.Objects;
-
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@EqualsAndHashCode
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class FileId {
 
-	private final Long userId;
-	private final Long postId;
+	private Long userId;
+	private Long postId;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		FileId fileId = (FileId)o;
-		return Objects.equals(userId, fileId.userId) && Objects.equals(postId, fileId.postId);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(userId, postId);
-	}
 }

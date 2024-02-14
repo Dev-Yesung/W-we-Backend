@@ -36,10 +36,10 @@ public class ImageFileSystemRepository implements ImageFileRepository {
 
 	@Override
 	public void saveFile(ImageFile imageFile) {
-		MultipartFile multipartFile = imageFile.convertByteDataToMultipartFile();
-		MultipartFileUtils.isPermittedFileSize(multipartFile, imageConfig.getMaxFileSize());
-		Path fileDataByPath = imageFile.createFileDataByPath();
-		InputStream inputStream = MultipartFileUtils.getInputStream(multipartFile);
+		MultipartFile tmpMultipartFile = imageFile.convertByteDataToMultipartFileByTemp();
+		MultipartFileUtils.isPermittedFileSize(tmpMultipartFile, imageConfig.getMaxFileSize());
+		Path fileDataByPath = imageFile.createFilePath();
+		InputStream inputStream = MultipartFileUtils.getInputStream(tmpMultipartFile);
 
 		try {
 			Files.copy(inputStream, fileDataByPath);

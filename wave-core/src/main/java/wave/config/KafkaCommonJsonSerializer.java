@@ -15,6 +15,8 @@ public class KafkaCommonJsonSerializer {
 		configurations.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
 		configurations.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		configurations.put(VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+		// Producer Max Request Size : 50MB
+		configurations.put(MAX_REQUEST_SIZE_CONFIG, 52_428_800);
 
 		return configurations;
 	}

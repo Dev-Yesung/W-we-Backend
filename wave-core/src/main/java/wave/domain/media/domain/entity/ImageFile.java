@@ -19,13 +19,13 @@ public class ImageFile extends AbstractMediaFile {
 		this.image = image;
 	}
 
-	public MultipartFile convertByteDataToMultipartFile() {
-		Path fileDataByPath = image.createFileDataByPath();
+	public MultipartFile convertByteDataToMultipartFileByTemp() {
+		Path fileDataByPath = image.createFileDataByTemporary();
 
 		return new MediaMultipartFile(fileDataByPath);
 	}
 
-	public Path createFileDataByPath() {
-		return image.createFileDataByPath();
+	public Path createFilePath() {
+		return image.createFilePath();
 	}
 }

@@ -5,13 +5,16 @@ import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
@@ -21,15 +24,16 @@ import wave.global.utils.FileUtils;
 @Slf4j
 @Getter
 @EqualsAndHashCode
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Music {
 
-	private final String fileName;
-	private final String fileExtension;
-	private final String mimeType;
-	private final long fileSize;
-	private final String path;
-	private final byte[] fileData;
+	private String fileName;
+	private String fileExtension;
+	private String mimeType;
+	private long fileSize;
+	private String path;
+	private byte[] fileData;
 
 	public static Music toMusic(Music before, String path) {
 		String fileName = before.getFileName();
@@ -89,12 +93,20 @@ public class Music {
 		return new long[] {startRange, endRange};
 	}
 
-	public Path createFileDataByPath() {
-		Path filePath = Paths.get(path);
+	public Path createFilePath() {
+		FileUtils.createDirectoryIfNotExist(path);
+		String fileNameWithExtension = FileUtils.appendFileNameWithExtension(fileName, fileExtension);
+
+		return Paths.get(path + "/" + fileNameWithExtension);
+	}
+
+	public Path createFileDataByTemporary() {
+		String uuid = UUID.randomUUID().toString();
 		try {
+			Path filePath = Files.createTempFile(uuid, ".tmp");
 			return Files.write(filePath, fileData);
 		} catch (IOException e) {
-			throw new FileException(ErrorCode.UNABLE_TO_GET_FILE_DATA);
+			throw new FileException(ErrorCode.UNABLE_TO_GET_FILE_DATA, e);
 		}
 	}
 

@@ -18,16 +18,15 @@ public final class FileUtils {
 
 	private static final String DIRECTORY_PATH_REGEX = "^(?:[a-zA-Z]:)?[\\\\/]?([a-zA-Z0-9]+[\\\\/]?)*$";
 
+	public static String appendFileNameWithExtension(String name, String extension) {
+		return convertWhiteSpaceToDash(name) + "." + extension;
+	}
+
 	public static void isValidFileExtension(String target, List<String> validExtensions) {
 		validExtensions.stream()
 			.filter(target::equals)
 			.findAny()
 			.orElseThrow(() -> new FileException(ErrorCode.INVALID_FILE_EXTENSION));
-	}
-
-	public static String convertWhiteSpaceToDash(String fileName) {
-		return fileName.trim()
-			.replaceAll(" ", "-");
 	}
 
 	public static String getNormalizedPath(String path) {
@@ -111,24 +110,8 @@ public final class FileUtils {
 		return directory.exists();
 	}
 
-	// private String getFileNameWithExtension(MusicFile musicFile) {
-	// 	FileId fileId = musicFile.getFileId();
-	// 	String musicFileName = musicFile.getMusicFileName();
-	// 	String musicFileExtension = musicFile.getMusicFileExtension();
-	//
-	// 	String normalizedFileName = normalizeFileName(fileId, musicFileName);
-	// 	isValidFileExtension(musicFileExtension);
-	//
-	// 	return normalizedFileName + "." + musicFileExtension;
-	// }
-	//
-	// private String normalizeFileName(FileId fileId, String musicFileName) {
-	// 	Long userId = fileId.getUserId();
-	// 	Long postId = fileId.getPostId();
-	// 	String fileNameSeparator = musicConfig.getFileNameSeparator();
-	// 	String convertedFileName = convertWhiteSpaceToDash(musicFileName);
-	//
-	// 	return userId + fileNameSeparator + postId + fileNameSeparator + convertedFileName;
-	// }
-
+	private static String convertWhiteSpaceToDash(String fileName) {
+		return fileName.trim()
+			.replaceAll(" ", "-");
+	}
 }
