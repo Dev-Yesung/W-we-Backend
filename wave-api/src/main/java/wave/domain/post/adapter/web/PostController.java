@@ -25,7 +25,7 @@ import wave.domain.post.dto.response.PostCreateResponse;
 import wave.domain.post.dto.response.PostsResponse;
 import wave.global.aop.AuthenticationUser;
 import wave.global.common.WebAdapter;
-import wave.global.utils.UriUtils;
+import wave.global.utils.WebUtils;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/posts")
@@ -46,7 +46,7 @@ public class PostController {
 	) {
 		MyMusicPostDto myMusicPostDto = MyMusicPostDto.of(request, imageFile, musicFile, user);
 		PostCreateResponse response = postService.createMyMusicPost(myMusicPostDto);
-		URI uri = UriUtils.createUri("http",
+		URI uri = WebUtils.createUri("http",
 			"localhost:8080",
 			"/api/posts/" + response.postId());
 

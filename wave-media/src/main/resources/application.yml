@@ -5,3 +5,5 @@ spring:
       - classpath:application-server.yml
       - classpath:application-media.yml
       - classpath:application-consumer.yml
+server:
+  port: 8081

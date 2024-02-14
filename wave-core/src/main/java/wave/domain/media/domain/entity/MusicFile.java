@@ -1,19 +1,39 @@
 package wave.domain.media.domain.entity;
 
+import java.nio.file.Path;
+
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import lombok.Getter;
 import wave.domain.media.domain.vo.FileId;
+import wave.domain.media.domain.vo.MediaMultipartFile;
 import wave.domain.media.domain.vo.Music;
 
-@Getter
-public class MusicFile extends File {
+public class MusicFile extends AbstractMediaFile {
 
 	private final Music music;
 
 	public MusicFile(FileId fileId, Music music) {
 		super(fileId);
 		this.music = music;
+	}
+
+	public StreamingResponseBody createStreamingResponseBody(String rangeHeader) {
+		return music.createStreamingResponseBody(rangeHeader);
+	}
+
+	public MultipartFile convertByteDataToMultipartFile() {
+		Path fileDataByPath = music.createFileDataByPath();
+
+		return new MediaMultipartFile(fileDataByPath);
+	}
+
+	public Path createFileDataByPath() {
+		return music.createFileDataByPath();
+	}
+
+	public long[] extractFileRange(String rangeHeader) {
+		return music.extractFileRange(rangeHeader);
 	}
 
 	public String getMusicFileName() {
@@ -34,14 +54,6 @@ public class MusicFile extends File {
 
 	public String getPath() {
 		return music.getPath();
-	}
-
-	public long[] getFileRange(String rangeHeader) {
-		return music.getFileRange(rangeHeader);
-	}
-
-	public StreamingResponseBody createStreamingResponseBody(String rangeHeader) {
-		return music.createStreamingResponseBody(rangeHeader);
 	}
 
 }

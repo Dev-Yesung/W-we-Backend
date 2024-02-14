@@ -5,7 +5,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.media.domain.entity.MusicFile;
-import wave.domain.media.domain.port.out.LoadMusicPort;
+import wave.domain.media.domain.port.out.LoadMediaPort;
 import wave.domain.media.dto.request.LoadMusicRequest;
 import wave.domain.media.dto.response.LoadMusicResponse;
 import wave.global.common.UseCase;
@@ -15,17 +15,17 @@ import wave.global.common.UseCase;
 @UseCase
 public class StreamingService {
 
-	private final LoadMusicPort loadMusicPort;
+	private final LoadMediaPort loadMediaPort;
 
 	@Transactional(readOnly = true)
 	public LoadMusicResponse loadMusicFile(LoadMusicRequest request) {
-		MusicFile musicFile = loadMusicPort.loadMusicFile(request);
+		MusicFile musicFile = loadMediaPort.loadMusicFile(request);
 		String rangeHeader = request.rangeHeader();
 
 		StreamingResponseBody streamingBody = musicFile.createStreamingResponseBody(rangeHeader);
 		String mimeType = musicFile.getMusicMimeType();
 		long fileSize = musicFile.getMusicFileSize();
-		long[] fileRange = musicFile.getFileRange(rangeHeader);
+		long[] fileRange = musicFile.extractFileRange(rangeHeader);
 
 		return new LoadMusicResponse(streamingBody, mimeType, fileSize, fileRange[0], fileRange[1]);
 	}

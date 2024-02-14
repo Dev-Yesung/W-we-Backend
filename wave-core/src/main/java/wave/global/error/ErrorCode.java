@@ -12,11 +12,12 @@ public enum ErrorCode {
 	INVALID_FILE_NAME("-F001", "유효하지 않은 파일이름 입니다."),
 	INVALID_FILE_EXTENSION("-F002", "유효하지 않은 파일확장자 입니다."),
 	INVALID_FILE_SIZE("-F003", "유효하지 않은 파일의 크기입니다."),
-	INVALID_PATH("-F004", "경로에 공백이나 허용되지 않는 특수문자가 올 수 없습니다."),
+	INVALID_FILE_PATH("-F004", "경로에 공백이나 허용되지 않는 특수문자가 올 수 없습니다."),
 	UNABLE_TO_MAKE_DIRECTORY("-F005", "경로를 생성할 수 없습니다."),
 	UNABLE_TO_UPLOAD_FILE("-F006", "파일을 업로드 중 오류가 발생했습니다."),
 	NOT_FOUND_FILE("-F007", "파일을 찾을 수 없습니다."),
-	NOT_FOUND_DIRECTORY("-F008", "디렉토리를 찾을 수 없습니다."),
+	NOT_FOUND_FILE_DIRECTORY("-F008", "파일의 디렉토리를 찾을 수 없습니다."),
+	UNABLE_TO_GET_FILE_DATA("-F009", "파일의 데이터를 가져올 수 없습니다."),
 
 	NOT_FOUND_USER("-U001", "유저를 찾을 수 없습니다."),
 	NOT_FOUND_USER_EMAIL("-U002", "이메일 정보를 찾을 수 없습니다."),
@@ -36,7 +37,6 @@ public enum ErrorCode {
 	INVALID_MUSIC_FILE_NAME("-MF002", "올바르지 않은 음원 파일 이름입니다."),
 	EXCEED_MAX_MUSIC_FILE_SIZE("-MF004", "음원 파일의 최대 업로드 사이즈를 초과했습니다."),
 	INVALID_MUSIC_FILE_PATH("-MF007", "입력된 음원 파일의 경로가 올바르지 않습니다."),
-	UNABLE_TO_GET_FILE_INFO("-MF009", "음원 파일의 정보를 가져올 수 없습니다."),
 	INVALID_MUSIC_URL("-MF011", "음원의 URL이 올바르지 않습니다."),
 	INVALID_IMAGE_URL("-MF012", "이미지의 URL이 올바르지 않습니다."),
 

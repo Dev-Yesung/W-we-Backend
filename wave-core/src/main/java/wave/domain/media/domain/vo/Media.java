@@ -2,23 +2,23 @@ package wave.domain.media.domain.vo;
 
 import static wave.domain.media.domain.vo.MediaUploadStatus.*;
 
-import java.util.Objects;
-
 import org.springframework.util.StringUtils;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
 
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class MediaUrl {
+public class Media {
 
 	private String imageUrl;
 	private String musicUrl;
@@ -26,7 +26,7 @@ public class MediaUrl {
 	@Enumerated(EnumType.STRING)
 	private MediaUploadStatus uploadStatus;
 
-	public MediaUrl(
+	public Media(
 		String imageUrl,
 		String musicUrl,
 		MediaUploadStatus uploadStatus
@@ -51,21 +51,5 @@ public class MediaUrl {
 		if (!uploadStatus.equals(PROGRESSED) && !StringUtils.hasText(musicUrl)) {
 			throw new BusinessException(ErrorCode.INVALID_MUSIC_URL);
 		}
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		MediaUrl mediaUrl = (MediaUrl)o;
-		return Objects.equals(imageUrl, mediaUrl.imageUrl) && Objects.equals(musicUrl,
-			mediaUrl.musicUrl);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(imageUrl, musicUrl);
 	}
 }

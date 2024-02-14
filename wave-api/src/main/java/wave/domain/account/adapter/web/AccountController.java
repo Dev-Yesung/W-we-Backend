@@ -19,7 +19,7 @@ import wave.domain.account.dto.request.CertificationVerifyRequest;
 import wave.domain.account.dto.request.SignupRequest;
 import wave.domain.account.dto.response.AccountResponse;
 import wave.domain.account.dto.response.CertificationResponse;
-import wave.global.utils.UriUtils;
+import wave.global.utils.WebUtils;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/accounts")
@@ -65,7 +65,7 @@ public class AccountController {
 		@RequestBody SignupRequest request
 	) {
 		AccountResponse response = accountService.signup(request);
-		URI uri = UriUtils.createUri("http", "localhost:8080", "/api/accounts");
+		URI uri = WebUtils.createUri("http", "localhost:8080", "/api/accounts");
 
 		return ResponseEntity
 			.created(uri)

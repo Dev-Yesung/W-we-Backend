@@ -16,4 +16,5 @@ public class ImageConfig {
 	private String fileNameSeparator;
 	private long maxFileSize;
 	private List<String> permittedFileExtensions;
+
 }

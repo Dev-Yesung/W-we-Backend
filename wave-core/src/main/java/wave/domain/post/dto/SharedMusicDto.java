@@ -3,7 +3,7 @@ package wave.domain.post.dto;
 import static wave.domain.media.domain.vo.MediaUploadStatus.*;
 
 import wave.domain.account.domain.entity.User;
-import wave.domain.media.domain.vo.MediaUrl;
+import wave.domain.media.domain.vo.Media;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.vo.PostContent;
 import wave.domain.post.dto.request.SharedMusicPostCreateRequest;
@@ -37,9 +37,9 @@ public record SharedMusicDto(
 		PostContent postContent = new PostContent(artistName, songName, title, descriptions);
 
 		String musicUrl = request.musicUrl();
-		MediaUrl mediaUrl = new MediaUrl(null, musicUrl, SHARED);
+		Media media = new Media(null, musicUrl, SHARED);
 		User user = request.user();
 
-		return new Post(postContent, mediaUrl, user);
+		return new Post(postContent, media, user);
 	}
 }

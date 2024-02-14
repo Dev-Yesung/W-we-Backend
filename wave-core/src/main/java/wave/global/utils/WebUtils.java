@@ -4,7 +4,7 @@ import java.net.URI;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
-public final class UriUtils {
+public final class WebUtils {
 
 	public static URI createUri(String scheme, String host, String path) {
 		return UriComponentsBuilder.newInstance()
@@ -15,4 +15,5 @@ public final class UriUtils {
 			.encode()
 			.toUri();
 	}
+
 }

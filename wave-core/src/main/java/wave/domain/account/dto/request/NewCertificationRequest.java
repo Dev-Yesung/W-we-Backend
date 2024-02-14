@@ -2,7 +2,7 @@ package wave.domain.account.dto.request;
 
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;
-import wave.global.utils.RandomCodeCreator;
+import wave.global.utils.RandomCodeUtils;
 
 public record NewCertificationRequest(
 	String email,
@@ -13,7 +13,7 @@ public record NewCertificationRequest(
 		String typeName = request.typeName();
 		CertificationType certificationType = CertificationType.getCertificationType(typeName);
 		String email = request.email();
-		String randomCode = RandomCodeCreator.createRandomCode();
+		String randomCode = RandomCodeUtils.createRandomCode();
 
 		return new Certification(certificationType, email, randomCode);
 	}

@@ -6,7 +6,8 @@ import wave.domain.media.domain.vo.FileId;
 
 @Getter
 @RequiredArgsConstructor
-public abstract class File {
+public abstract class AbstractMediaFile {
 
 	private final FileId fileId;
+
 }

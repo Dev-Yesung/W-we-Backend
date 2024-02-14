@@ -3,11 +3,6 @@ package wave.domain.streaming.adapter.in;
 import static org.springframework.http.HttpHeaders.*;
 import static org.springframework.http.HttpStatus.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.streaming.application.StreamingService;
 import wave.domain.media.dto.request.LoadMusicRequest;
 import wave.domain.media.dto.response.LoadMusicResponse;
+import wave.domain.streaming.application.StreamingService;
 import wave.global.common.WebAdapter;
-import wave.global.error.ErrorCode;
-import wave.global.error.exception.BusinessException;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/streaming")

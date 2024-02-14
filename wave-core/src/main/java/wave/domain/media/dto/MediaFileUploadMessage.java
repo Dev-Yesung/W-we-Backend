@@ -1,25 +1,13 @@
 package wave.domain.media.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import wave.domain.post.domain.entity.Post;
-import wave.domain.post.dto.MyMusicPostDto;
+import wave.domain.media.domain.vo.FileId;
+import wave.domain.media.domain.vo.Image;
+import wave.domain.media.domain.vo.Music;
 
 public record MediaFileUploadMessage(
-
 	String topic,
-	Long userId,
-	Long postId,
-	MultipartFile imageFile,
-	MultipartFile musicFile
+	FileId fileId,
+	Image image,
+	Music music
 ) {
-
-	public static MediaFileUploadMessage of(Post post, MyMusicPostDto myMusicPostDto) {
-		Long userId = post.getPostUserId();
-		Long postId = post.getId();
-		MultipartFile imageFile = myMusicPostDto.imageFile();
-		MultipartFile musicFile = myMusicPostDto.musicFile();
-
-		return new MediaFileUploadMessage("media_file_upload", userId, postId, imageFile, musicFile);
-	}
 }

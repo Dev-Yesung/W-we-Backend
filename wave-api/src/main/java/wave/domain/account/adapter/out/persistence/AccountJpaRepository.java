@@ -1,4 +1,4 @@
-package wave.domain.account.infra;
+package wave.domain.account.adapter.out.persistence;
 
 import java.util.Optional;
 

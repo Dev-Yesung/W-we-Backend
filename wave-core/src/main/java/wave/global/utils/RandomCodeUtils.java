@@ -4,7 +4,8 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class RandomCodeCreator {
+public final class RandomCodeUtils {
+
 	private static final int RANDOM_CODE_LENGTH = 6;
 	private static final int LOWER_BOUND_UPPER_CASE = 'A';
 	private static final int UPPER_BOUND_UPPER_CASE = 'Z' + 1;
@@ -30,4 +31,5 @@ public final class RandomCodeCreator {
 			.map(String::valueOf)
 			.collect(Collectors.joining());
 	}
+
 }

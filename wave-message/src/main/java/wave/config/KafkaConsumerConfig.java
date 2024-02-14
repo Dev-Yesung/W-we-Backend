@@ -10,6 +10,8 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 
+import wave.domain.account.domain.vo.Certification;
+
 @Configuration
 public class KafkaConsumerConfig {
 
@@ -22,13 +24,13 @@ public class KafkaConsumerConfig {
 	}
 
 	@Bean
-	public ConsumerFactory<String, Object> kafkaConsumerFactory() {
+	public ConsumerFactory<String, Certification> kafkaConsumerFactory() {
 		return new DefaultKafkaConsumerFactory<>(jsonConsumerConfig());
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory
+	public ConcurrentKafkaListenerContainerFactory<String, Certification> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, Certification> kafkaListenerContainerFactory
 			= new ConcurrentKafkaListenerContainerFactory<>();
 		kafkaListenerContainerFactory.setConsumerFactory(kafkaConsumerFactory());
 

@@ -31,9 +31,9 @@ public class PostService {
 	private final PublishPostEventPort publishPostEventPort;
 
 	public PostCreateResponse createMyMusicPost(MyMusicPostDto myMusicPostDto) {
-		Post newPost = MyMusicPostDto.to(myMusicPostDto);
+		Post newPost = MyMusicPostDto.toPost(myMusicPostDto);
 		Post savedPost = updatePostPort.saveNewPost(newPost);
-		publishPostEventPort.publishMusicUploadEvent(savedPost, myMusicPostDto);
+		publishPostEventPort.publishMediaUploadEvent(savedPost, myMusicPostDto);
 
 		return PostCreateResponse.of(savedPost);
 	}

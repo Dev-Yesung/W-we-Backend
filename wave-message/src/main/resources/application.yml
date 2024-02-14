@@ -6,3 +6,5 @@ spring:
       - classpath:application-db.yml
       - classpath:application-producer.yml
       - classpath:application-consumer.yml
+server:
+  port: 8082

@@ -1,6 +1,10 @@
 package wave.domain.media.domain.vo;
 
+import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -11,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
+import wave.global.error.exception.FileException;
+import wave.global.utils.FileUtils;
 
 @Slf4j
 @Getter
@@ -23,9 +29,30 @@ public class Music {
 	private final String mimeType;
 	private final long fileSize;
 	private final String path;
+	private final byte[] fileData;
+
+	public static Music toMusic(Music before, String path) {
+		String fileName = before.getFileName();
+		String fileExtension = before.getFileExtension();
+		String mimeType = before.getMimeType();
+		long fileSize = before.getFileSize();
+		byte[] fileData = before.getFileData();
+
+		return new Music(fileName, fileExtension, mimeType, fileSize, path, fileData);
+	}
+
+	public static Music toMusic(Path realPath, String uri) {
+		String fileName = FileUtils.getFileNameWithoutExtension(realPath);
+		String extension = FileUtils.getFileExtension(realPath);
+		String mimeType = FileUtils.getMimeType(realPath);
+		long fileSize = FileUtils.getFileSize(realPath);
+		byte[] fileData = FileUtils.getFileData(realPath);
+
+		return new Music(fileName, extension, mimeType, fileSize, uri, fileData);
+	}
 
 	public StreamingResponseBody createStreamingResponseBody(String rangeHeader) {
-		long[] fileRange = getFileRange(rangeHeader);
+		long[] fileRange = extractFileRange(rangeHeader);
 		long startRange = fileRange[0];
 		long endRange = fileRange[1];
 
@@ -48,7 +75,7 @@ public class Music {
 		};
 	}
 
-	public long[] getFileRange(String rangeHeader) {
+	public long[] extractFileRange(String rangeHeader) {
 		if (!isValidRangeFormat(rangeHeader)) {
 			return getEntireRange();
 		}
@@ -60,6 +87,15 @@ public class Music {
 
 		log.info("Parsed Range Values: {} - {}", startRange, endRange);
 		return new long[] {startRange, endRange};
+	}
+
+	public Path createFileDataByPath() {
+		Path filePath = Paths.get(path);
+		try {
+			return Files.write(filePath, fileData);
+		} catch (IOException e) {
+			throw new FileException(ErrorCode.UNABLE_TO_GET_FILE_DATA);
+		}
 	}
 
 	private boolean isValidRangeFormat(String rangeHeader) {

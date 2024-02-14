@@ -1,4 +1,4 @@
-package wave.domain.certification.infra;
+package wave.domain.certification.adapter.out.broker;
 
 import static java.nio.charset.StandardCharsets.*;
 

@@ -22,7 +22,7 @@ public class CertificationMailService {
 		groupId = "group_mail",
 		containerFactory = "kafkaListenerContainerFactory"
 	)
-	public void sendCertificationCodeByType(Object message) {
+	public void sendCertificationCodeByType(Certification message) {
 		Certification certification = getCertification(message);
 		sendMailPort.sendCertificationMail(certification);
 		publishSuccessMessage(certification);

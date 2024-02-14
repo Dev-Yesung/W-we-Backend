@@ -17,8 +17,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wave.domain.account.domain.entity.User;
+import wave.domain.media.domain.vo.FileId;
+import wave.domain.media.domain.vo.Media;
 import wave.domain.media.domain.vo.MediaUploadStatus;
-import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.post.domain.vo.PostContent;
 import wave.global.BaseEntity;
 import wave.global.error.ErrorCode;
@@ -29,6 +30,7 @@ import wave.global.error.exception.BusinessException;
 @Table(name = "posts")
 @Entity
 public class Post extends BaseEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -37,7 +39,7 @@ public class Post extends BaseEntity {
 	private PostContent postContent;
 
 	@Embedded
-	private MediaUrl mediaUrl;
+	private Media media;
 
 	@ElementCollection(fetch = FetchType.LAZY)
 	private final Map<String, String> likes = new ConcurrentHashMap<>();
@@ -48,20 +50,20 @@ public class Post extends BaseEntity {
 
 	public Post(
 		PostContent postContent,
-		MediaUrl mediaUrl,
+		Media media,
 		User user
 	) {
-		updateMediaUrl(mediaUrl);
+		updateMediaUrl(media);
 		this.postContent = postContent;
-		this.mediaUrl = mediaUrl;
+		this.media = media;
 		this.user = user;
 	}
 
-	public void updateMediaUrl(MediaUrl mediaUrl) {
-		if (mediaUrl == null) {
+	public void updateMediaUrl(Media media) {
+		if (media == null) {
 			throw new BusinessException(ErrorCode.INVALID_MUSIC_URL);
 		}
-		this.mediaUrl = mediaUrl;
+		this.media = media;
 
 	}
 
@@ -83,6 +85,12 @@ public class Post extends BaseEntity {
 		}
 	}
 
+	public FileId getFileId() {
+		Long userId = user.getId();
+
+		return new FileId(userId, this.id);
+	}
+
 	public int getLikesSize() {
 		return likes.size();
 	}
@@ -96,14 +104,14 @@ public class Post extends BaseEntity {
 	}
 
 	public String getImageUrl() {
-		return mediaUrl.getImageUrl();
+		return media.getImageUrl();
 	}
 
 	public String getMusicUrl() {
-		return mediaUrl.getMusicUrl();
+		return media.getMusicUrl();
 	}
 
 	public MediaUploadStatus getUploadStatus() {
-		return mediaUrl.getUploadStatus();
+		return media.getUploadStatus();
 	}
 }

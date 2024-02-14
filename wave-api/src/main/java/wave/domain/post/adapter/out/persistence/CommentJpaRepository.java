@@ -1,4 +1,4 @@
-package wave.domain.post.infra;
+package wave.domain.post.adapter.out.persistence;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
