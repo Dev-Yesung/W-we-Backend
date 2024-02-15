@@ -14,4 +14,5 @@ public class FileException extends RuntimeException {
 		super(cause);
 		this.errorCode = errorCode;
 	}
+
 }

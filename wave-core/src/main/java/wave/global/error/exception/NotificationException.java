@@ -6,6 +6,13 @@ import wave.global.error.ErrorCode;
 
 @Getter
 @AllArgsConstructor
-public class InvalidValueException extends RuntimeException {
+public class NotificationException extends RuntimeException {
+
 	private final ErrorCode errorCode;
+
+	public NotificationException(ErrorCode errorCode, Throwable cause) {
+		super(cause);
+		this.errorCode = errorCode;
+	}
+
 }

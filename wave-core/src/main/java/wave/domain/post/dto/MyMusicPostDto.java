@@ -2,19 +2,15 @@ package wave.domain.post.dto;
 
 import static wave.domain.media.domain.vo.MediaUploadStatus.*;
 
-import java.nio.file.Path;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import wave.domain.account.domain.entity.User;
 import wave.domain.media.domain.vo.Image;
-import wave.domain.media.domain.vo.Media;
-import wave.domain.media.domain.vo.MediaMultipartFile;
+import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.media.domain.vo.Music;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.vo.PostContent;
 import wave.domain.post.dto.request.MyMusicPostCreateRequest;
-import wave.global.utils.FileUtils;
 import wave.global.utils.MultipartFileUtils;
 
 public record MyMusicPostDto(
@@ -47,10 +43,10 @@ public record MyMusicPostDto(
 		String descriptions = myMusicPostDto.descriptions();
 		PostContent postContent
 			= new PostContent(artistName, songName, title, descriptions);
-		Media media = new Media("", "", PROGRESSED);
+		MediaUrl mediaUrl = new MediaUrl("", "", PROGRESSED);
 		User user = myMusicPostDto.user();
 
-		return new Post(postContent, media, user);
+		return new Post(postContent, mediaUrl, user);
 	}
 
 	public static Image toImage(MyMusicPostDto myMusicPostDto) {

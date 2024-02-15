@@ -1,11 +1,12 @@
 package wave.global.error.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import wave.global.error.ErrorCode;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class EventMessageException extends RuntimeException {
 
 	private final ErrorCode errorCode;
@@ -14,4 +15,5 @@ public class EventMessageException extends RuntimeException {
 		super(cause);
 		this.errorCode = errorCode;
 	}
+
 }

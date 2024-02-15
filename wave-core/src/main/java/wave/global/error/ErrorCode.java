@@ -51,7 +51,11 @@ public enum ErrorCode {
 	NOT_INCLUDED_COMMENT_TO_POST("-C002", "해당 댓글과 일치하지 않는 포스트입니다."),
 	NO_AUTHORITY_TO_COMMENT("-C003", "해당 댓글에 권한이 없습니다."),
 
-	INVALID_MESSAGE_CASTING("-EVT001", "메시지의 객체변환이 잘못되었습니다.");
+	INVALID_MESSAGE_CASTING("-EVT001", "메시지의 객체변환이 잘못되었습니다."),
+
+	UNABLE_TO_SEND_NOTIFICATION("-NM001", "알림 메시지를 보내는데 실패했습니다."),
+	UNABLE_TO_SERIALIZE_NOTIFICATION("-NM002", "알림 메시지를 변환하는데 실패했습니다."),
+	INVALID_CONNECTION_FOR_NOTIFICATION("-NM003", "클라이언트와의 연결에 실패했습니다.");
 
 	private final String code;
 	private final String message;

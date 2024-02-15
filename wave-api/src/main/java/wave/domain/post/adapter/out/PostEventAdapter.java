@@ -6,7 +6,7 @@ import wave.domain.media.domain.vo.Image;
 import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.MediaFileUploadMessage;
 import wave.domain.post.domain.entity.Post;
-import wave.domain.post.domain.port.out.PostEventBroker;
+import wave.domain.post.domain.port.out.broker.PostEventBroker;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
 import wave.domain.post.dto.MyMusicPostDto;
 import wave.global.common.EventAdapter;

@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import wave.config.MusicConfig;
 import wave.domain.media.domain.entity.MusicFile;
-import wave.domain.media.domain.port.out.MusicFileRepository;
+import wave.domain.media.domain.port.out.persistence.MusicFileRepository;
 import wave.domain.media.domain.vo.Music;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.FileException;
@@ -35,7 +35,7 @@ public class MusicFileSystemRepository implements MusicFileRepository {
 	}
 
 	@Override
-	public void saveFile(MusicFile musicFile) {
+	public MusicFile saveFile(MusicFile musicFile) {
 		MultipartFile tmpMultipartFile = musicFile.convertByteDataToMultipartFileByTemp();
 		MultipartFileUtils.isPermittedFileSize(tmpMultipartFile, musicConfig.getMaxFileSize());
 		Path targetFile = musicFile.createFilePath();
@@ -46,6 +46,8 @@ public class MusicFileSystemRepository implements MusicFileRepository {
 		} catch (IOException e) {
 			throw new FileException(ErrorCode.UNABLE_TO_UPLOAD_FILE, e);
 		}
+
+		return musicFile;
 	}
 
 	@Override

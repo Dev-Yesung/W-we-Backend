@@ -38,6 +38,10 @@ public class MusicFile extends AbstractMediaFile {
 		return music.createFilePath();
 	}
 
+	public String createFileUrl(String host, String port) {
+		return host + ":" + port + "/" + music.getPath();
+	}
+
 	public long[] extractFileRange(String rangeHeader) {
 		return music.extractFileRange(rangeHeader);
 	}

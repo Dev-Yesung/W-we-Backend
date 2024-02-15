@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @Configuration
 public class MessageSecurityConfig {
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
@@ -29,4 +30,5 @@ public class MessageSecurityConfig {
 			)
 			.build();
 	}
+
 }

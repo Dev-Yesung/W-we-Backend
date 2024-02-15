@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import wave.config.ImageConfig;
 import wave.domain.media.domain.entity.ImageFile;
-import wave.domain.media.domain.port.out.ImageFileRepository;
+import wave.domain.media.domain.port.out.persistence.ImageFileRepository;
 import wave.domain.media.domain.vo.Image;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.FileException;
@@ -35,7 +35,7 @@ public class ImageFileSystemRepository implements ImageFileRepository {
 	}
 
 	@Override
-	public void saveFile(ImageFile imageFile) {
+	public ImageFile saveFile(ImageFile imageFile) {
 		MultipartFile tmpMultipartFile = imageFile.convertByteDataToMultipartFileByTemp();
 		MultipartFileUtils.isPermittedFileSize(tmpMultipartFile, imageConfig.getMaxFileSize());
 		Path fileDataByPath = imageFile.createFilePath();
@@ -46,6 +46,8 @@ public class ImageFileSystemRepository implements ImageFileRepository {
 		} catch (IOException e) {
 			throw new FileException(ErrorCode.UNABLE_TO_UPLOAD_FILE, e);
 		}
+
+		return imageFile;
 	}
 
 	@Override

@@ -18,8 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wave.domain.account.domain.entity.User;
 import wave.domain.media.domain.vo.FileId;
-import wave.domain.media.domain.vo.Media;
-import wave.domain.media.domain.vo.MediaUploadStatus;
+import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.post.domain.vo.PostContent;
 import wave.global.BaseEntity;
 import wave.global.error.ErrorCode;
@@ -39,7 +38,7 @@ public class Post extends BaseEntity {
 	private PostContent postContent;
 
 	@Embedded
-	private Media media;
+	private MediaUrl mediaUrl;
 
 	@ElementCollection(fetch = FetchType.LAZY)
 	private final Map<String, String> likes = new ConcurrentHashMap<>();
@@ -50,21 +49,21 @@ public class Post extends BaseEntity {
 
 	public Post(
 		PostContent postContent,
-		Media media,
+		MediaUrl mediaUrl,
 		User user
 	) {
-		updateMediaUrl(media);
+		updateMediaUrl(mediaUrl);
 		this.postContent = postContent;
-		this.media = media;
+		this.mediaUrl = mediaUrl;
 		this.user = user;
 	}
 
-	public void updateMediaUrl(Media media) {
-		if (media == null) {
+	public void updateMediaUrl(MediaUrl mediaUrl) {
+		if (mediaUrl == null) {
 			throw new BusinessException(ErrorCode.INVALID_MUSIC_URL);
 		}
-		this.media = media;
 
+		this.mediaUrl = mediaUrl;
 	}
 
 	public void updateLikes(User user) {
@@ -93,25 +92,5 @@ public class Post extends BaseEntity {
 
 	public int getLikesSize() {
 		return likes.size();
-	}
-
-	public Long getPostUserId() {
-		return user.getId();
-	}
-
-	public String getPostUserNickname() {
-		return user.getNickname();
-	}
-
-	public String getImageUrl() {
-		return media.getImageUrl();
-	}
-
-	public String getMusicUrl() {
-		return media.getMusicUrl();
-	}
-
-	public MediaUploadStatus getUploadStatus() {
-		return media.getUploadStatus();
 	}
 }

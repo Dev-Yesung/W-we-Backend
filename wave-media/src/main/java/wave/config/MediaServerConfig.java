@@ -11,5 +11,6 @@ import lombok.Data;
 public class MediaServerConfig {
 
 	private String host;
-	private Integer port;
+	private String port;
+
 }

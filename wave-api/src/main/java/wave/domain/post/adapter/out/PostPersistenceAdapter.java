@@ -5,14 +5,14 @@ import org.springframework.data.domain.Slice;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.adapter.out.persistence.AccountJpaRepository;
-import wave.domain.media.domain.vo.Media;
-import wave.domain.media.dto.response.MediaUploadResponse;
+import wave.domain.media.domain.vo.MediaUrl;
+import wave.domain.media.dto.MediaUrlUpdateMessage;
+import wave.domain.post.adapter.out.persistence.CommentJpaRepository;
+import wave.domain.post.adapter.out.persistence.PostJpaRepository;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.UpdatePostPort;
-import wave.domain.post.adapter.out.persistence.CommentJpaRepository;
-import wave.domain.post.adapter.out.persistence.PostJpaRepository;
-import wave.domain.post.domain.port.out.PostQueryRepository;
+import wave.domain.post.domain.port.out.persistence.PostQueryRepository;
 import wave.global.common.PersistenceAdapter;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;
@@ -33,13 +33,13 @@ public class PostPersistenceAdapter
 	}
 
 	@Override
-	public void updateMusicUploadUrl(MediaUploadResponse response) {
-		Long postId = response.fileId().getPostId();
+	public void updateMusicUploadUrl(MediaUrlUpdateMessage message) {
+		Long postId = message.fileId().getPostId();
 		Post post = postJpaRepository.findById(postId)
 			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_POST));
 
-		Media media = response.media();
-		post.updateMediaUrl(media);
+		MediaUrl mediaUrl = message.mediaUrl();
+		post.updateMediaUrl(mediaUrl);
 	}
 
 	@Override

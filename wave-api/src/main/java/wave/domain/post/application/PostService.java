@@ -10,7 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.media.dto.response.MediaUploadResponse;
+import wave.domain.media.dto.MediaUrlUpdateMessage;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
@@ -38,15 +38,11 @@ public class PostService {
 		return PostCreateResponse.of(savedPost);
 	}
 
-	@KafkaListener(topics = "media_event_result",
-		groupId = "group_media_event_result",
+	@KafkaListener(topics = "media_url_update",
+		groupId = "group_media_url_update",
 		containerFactory = "kafkaListenerContainerFactory")
-	public MediaUploadResponse subscribeMediaFileUploadMessage(Object message) {
-		// 업로드 완료 메시지를 전달해야 하기 때문에, SSE 사용 필요할 듯?
-		MediaUploadResponse response = (MediaUploadResponse)message;
-		updatePostPort.updateMusicUploadUrl(response);
-
-		return response;
+	public void subscribeMediaFileUploadMessage(MediaUrlUpdateMessage message) {
+		updatePostPort.updateMusicUploadUrl(message);
 	}
 
 	public PostCreateResponse createOtherMusicPost(SharedMusicDto sharedMusicDto) {

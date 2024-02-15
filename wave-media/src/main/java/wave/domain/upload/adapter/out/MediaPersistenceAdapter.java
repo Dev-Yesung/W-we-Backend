@@ -1,16 +1,20 @@
 package wave.domain.upload.adapter.out;
 
+import static wave.domain.media.domain.vo.MediaUploadStatus.*;
+
 import lombok.RequiredArgsConstructor;
 import wave.config.ImageConfig;
+import wave.config.MediaServerConfig;
 import wave.config.MusicConfig;
 import wave.domain.media.domain.entity.ImageFile;
 import wave.domain.media.domain.entity.MusicFile;
-import wave.domain.media.domain.port.out.ImageFileRepository;
+import wave.domain.media.domain.port.out.persistence.ImageFileRepository;
 import wave.domain.media.domain.port.out.LoadMediaPort;
-import wave.domain.media.domain.port.out.MusicFileRepository;
+import wave.domain.media.domain.port.out.persistence.MusicFileRepository;
 import wave.domain.media.domain.port.out.UpdateMediaPort;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.Image;
+import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.MediaFileUploadMessage;
@@ -24,8 +28,10 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 
 	private final MusicFileRepository musicFileRepository;
 	private final ImageFileRepository imageFileRepository;
+
 	private final MusicConfig musicConfig;
 	private final ImageConfig imageConfig;
+	private final MediaServerConfig mediaServerConfig;
 
 	@Override
 	public MusicFile loadMusicFile(LoadMusicRequest request) {
@@ -45,16 +51,18 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 	}
 
 	@Override
-	public void saveFile(MediaFileUploadMessage mediaFileUploadMessage) {
+	public MediaUrl saveFile(MediaFileUploadMessage mediaFileUploadMessage) {
 		MusicFile musicFile = getMusicFile(mediaFileUploadMessage);
 		ImageFile imageFile = getImageFile(mediaFileUploadMessage);
 
-		musicFileRepository.saveFile(musicFile);
-		imageFileRepository.saveFile(imageFile);
+		MusicFile savedMusicFile = musicFileRepository.saveFile(musicFile);
+		ImageFile savedImageFile = imageFileRepository.saveFile(imageFile);
+
+		return getMediaUrl(savedMusicFile, savedImageFile);
 	}
 
 	@Override
-	public void deleteFile(FileDeleteDto fileDeleteDto) {
+	public FileId deleteFile(FileDeleteDto fileDeleteDto) {
 		Long userId = fileDeleteDto.userId();
 		Long postId = fileDeleteDto.postId();
 		FileId fileId = new FileId(userId, postId);
@@ -63,6 +71,8 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 
 		musicFileRepository.deleteFileByPath(musicPath);
 		imageFileRepository.deleteFileByPath(imagePath);
+
+		return fileId;
 	}
 
 	private MusicFile getMusicFile(MediaFileUploadMessage mediaFileUploadMessage) {
@@ -88,6 +98,16 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 		Long postId = fileId.getPostId();
 
 		return FileUtils.getNormalizedPath(rootPath + "/" + userId + "/" + postId);
+	}
+
+	private MediaUrl getMediaUrl(MusicFile savedMusicFile, ImageFile savedImageFile) {
+		String host = mediaServerConfig.getHost();
+		String port = mediaServerConfig.getPort();
+
+		String musicUrl = savedMusicFile.createFileUrl(host, port);
+		String imageUrl = savedImageFile.createFileUrl(host, port);
+
+		return new MediaUrl(imageUrl, musicUrl, COMPLETED);
 	}
 
 }

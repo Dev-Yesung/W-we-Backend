@@ -18,7 +18,7 @@ import wave.global.error.exception.BusinessException;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class Media {
+public class MediaUrl {
 
 	private String imageUrl;
 	private String musicUrl;
@@ -26,7 +26,7 @@ public class Media {
 	@Enumerated(EnumType.STRING)
 	private MediaUploadStatus uploadStatus;
 
-	public Media(
+	public MediaUrl(
 		String imageUrl,
 		String musicUrl,
 		MediaUploadStatus uploadStatus

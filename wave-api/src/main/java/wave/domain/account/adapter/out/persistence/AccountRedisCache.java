@@ -3,6 +3,7 @@ package wave.domain.account.adapter.out.persistence;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,10 @@ public class AccountRedisCache implements AccountCache {
 	private final ValueOperations<String, Object> valueOperations;
 	private final CacheConfig cacheConfig;
 
-	public AccountRedisCache(CacheConfig cacheConfig, RedisTemplate<String, Object> redisTemplate) {
+	public AccountRedisCache(
+		CacheConfig cacheConfig,
+		@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate
+	) {
 		this.cacheConfig = cacheConfig;
 		this.valueOperations = redisTemplate.opsForValue();
 	}
