@@ -23,20 +23,29 @@ public class Notification extends BaseEntity {
 	private Long userId;
 	private Long postId;
 
+	private String postTitle;
 	private String message;
+	private boolean isRead;
 
 	public Notification(
 		Long userId,
 		Long postId,
+		String postTitle,
 		String message
 	) {
 		this.userId = userId;
 		this.postId = postId;
+		this.postTitle = postTitle;
 		this.message = message;
+		this.isRead = false;
 	}
 
 	public String getChannelName() {
 		return "NOTIFICATION:" + userId;
+	}
+
+	public void readNotification() {
+		this.isRead = true;
 	}
 
 }

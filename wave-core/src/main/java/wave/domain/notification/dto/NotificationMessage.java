@@ -5,21 +5,20 @@ import wave.domain.post.domain.entity.Post;
 
 public record NotificationMessage(
 	String channelName,
-	Long userId,
-	Long postId,
+	String userId,
+	String postId,
 	String postTitle,
 	String message
 ) {
-	public static NotificationMessage of(
-		Notification notification,
-		Post post
-	) {
-		String channelName = notification.getChannelName();
-		Long userId = notification.getUserId();
-		Long postId = notification.getPostId();
-		String postTitle = post.getPostContent().getTitle();
-		String message = notification.getMessage();
+
+	public static NotificationMessage of(Notification unreadNotification) {
+		String channelName = unreadNotification.getChannelName();
+		String userId = String.valueOf(unreadNotification.getUserId());
+		String postId = String.valueOf(unreadNotification.getPostId());
+		String postTitle = unreadNotification.getPostTitle();
+		String message = unreadNotification.getMessage();
 
 		return new NotificationMessage(channelName, userId, postId, postTitle, message);
 	}
+
 }

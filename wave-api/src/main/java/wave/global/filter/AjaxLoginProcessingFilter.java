@@ -24,6 +24,7 @@ import wave.domain.account.dto.request.LoginRequest;
 
 @Slf4j
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
+
 	private final AuthenticationSuccessHandler authenticationSuccessHandler;
 	private final AuthenticationFailureHandler authenticationFailureHandler;
 	private final ObjectMapper objectMapper;

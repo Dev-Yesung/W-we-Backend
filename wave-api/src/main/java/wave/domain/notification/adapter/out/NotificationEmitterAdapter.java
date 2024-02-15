@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
 import wave.domain.notification.adapter.out.broker.RedisNotificationBroker;
+import wave.domain.notification.dto.ConnectionMessage;
 import wave.domain.notification.dto.NotificationMessage;
 import wave.domain.notification.port.out.UpdateNotificationEmitterPort;
 import wave.domain.notification.port.out.persistence.NotificationEmitterRepository;
@@ -34,27 +35,25 @@ public class NotificationEmitterAdapter implements UpdateNotificationEmitterPort
 		final SseEmitter emitter = new SseEmitter(TIME_OUT_VALUE);
 		notificationEmitterRepository.save(userId, emitter);
 
-		try {
-			emitter.send(SseEmitter.event()
-				.id(userId)
-				.name("notification")
-				.data(userId + " is now success to connect.")
-			);
-		} catch (IOException e) {
-			throw new NotificationException(ErrorCode.UNABLE_TO_SEND_NOTIFICATION, e);
-		}
+		String channelName = getChannelName(userId);
+		sendConnectionMessage(channelName, userId, emitter);
 
 		final MessageListener messageListener = (message, pattern) -> {
 			final NotificationMessage notificationMessage = serializeMessage(message);
 			sendMessageToClient(emitter, userId, notificationMessage);
 		};
 
-		ChannelTopic channelTopic = ChannelTopic.of(getChannelName(userId));
+		ChannelTopic channelTopic = ChannelTopic.of(channelName);
 		redisNotificationBroker.addMessageListener(messageListener, channelTopic);
-
 		redisNotificationBroker.checkEmitterStatus(emitter, messageListener, userId);
 
 		return emitter;
+	}
+
+	private void sendConnectionMessage(String channelName, String userId, SseEmitter emitter) {
+		ConnectionMessage connectionMessage
+			= new ConnectionMessage(channelName, userId, "now connected to notification service.");
+		sendMessageToClient(emitter, userId, connectionMessage);
 	}
 
 	private NotificationMessage serializeMessage(final Message message) {
@@ -68,13 +67,13 @@ public class NotificationEmitterAdapter implements UpdateNotificationEmitterPort
 	private void sendMessageToClient(
 		final SseEmitter emitter,
 		final String userId,
-		final NotificationMessage notificationMessage
+		final Object message
 	) {
 		try {
 			emitter.send(SseEmitter.event()
 				.id(userId)
 				.name("notification")
-				.data(notificationMessage));
+				.data(message));
 		} catch (IOException e) {
 			throw new NotificationException(ErrorCode.INVALID_CONNECTION_FOR_NOTIFICATION, e);
 		} finally {

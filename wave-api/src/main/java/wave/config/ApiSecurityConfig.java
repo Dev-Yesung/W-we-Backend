@@ -34,6 +34,7 @@ import wave.global.filter.JwtAuthenticationProcessingFilter;
 @EnableWebSecurity
 @Configuration
 public class ApiSecurityConfig {
+
 	private static final String SIGN_UP_URL = "/api/accounts/signup";
 	private static final String LOG_IN_URL = "/api/accounts/login";
 	private static final String REFRESH_TOKEN_URL = "/api/accounts/token";
@@ -51,7 +52,8 @@ public class ApiSecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return web -> web.ignoring()
-			.requestMatchers("/api/accounts/**")
+			.requestMatchers("/api/accounts/signup/**")
+			.requestMatchers("/api/accounts/certification/**")
 			.requestMatchers("/h2-console/**");
 	}
 
@@ -74,7 +76,7 @@ public class ApiSecurityConfig {
 			.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
 			.exceptionHandling(configurer -> configurer.authenticationEntryPoint(authenticationEntryPoint))
 			.authorizeHttpRequests(request -> request
-				.requestMatchers("/api/post/**", SIGN_UP_URL, LOG_IN_URL).permitAll()
+				.requestMatchers(SIGN_UP_URL, LOG_IN_URL).permitAll()
 				.anyRequest().authenticated()
 			)
 			.cors(configurer -> configurer.configurationSource(corsConfigurationSource))
