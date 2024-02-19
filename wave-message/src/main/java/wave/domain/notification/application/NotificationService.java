@@ -23,7 +23,7 @@ public class NotificationService {
 		containerFactory = "kafkaListenerContainerFactory")
 	public void subscribeMediaFileUploadMessage(MediaFileUploadStatusMessage message) {
 		Notification notification = updateNotificationPort.saveMessage(message);
-		publishNotificationEventPort.publishUploadMessageToClient(notification);
+		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
 
 }

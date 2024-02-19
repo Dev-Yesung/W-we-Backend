@@ -1,9 +1,5 @@
 package wave.domain.post.domain.entity;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,9 +36,6 @@ public class Post extends BaseEntity {
 	@Embedded
 	private MediaUrl mediaUrl;
 
-	@ElementCollection(fetch = FetchType.LAZY)
-	private final Map<String, String> likes = new ConcurrentHashMap<>();
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -66,18 +59,6 @@ public class Post extends BaseEntity {
 		this.mediaUrl = mediaUrl;
 	}
 
-	public void updateLikes(User user) {
-		String email = user.getEmail();
-		String nickname = user.getNickname();
-
-		boolean isAlreadyExisted = likes.containsKey(email);
-		if (isAlreadyExisted) {
-			likes.remove(email);
-			return;
-		}
-		likes.put(email, nickname);
-	}
-
 	public void validateAuthority(User user) {
 		if (!this.user.equals(user)) {
 			throw new BusinessException(ErrorCode.NO_AUTHORITY_TO_POST);
@@ -90,7 +71,9 @@ public class Post extends BaseEntity {
 		return new FileId(userId, this.id);
 	}
 
-	public int getLikesSize() {
-		return likes.size();
+	public void isAuthor(User user) {
+		if (!this.user.equals(user)) {
+			throw new BusinessException(ErrorCode.NO_AUTHORITY_TO_POST);
+		}
 	}
 }

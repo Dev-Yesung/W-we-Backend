@@ -1,4 +1,4 @@
-package wave.domain.post.dto.request;
+package wave.domain.comment.dto.request;
 
 public record CommentAddRequest(
 	String comment

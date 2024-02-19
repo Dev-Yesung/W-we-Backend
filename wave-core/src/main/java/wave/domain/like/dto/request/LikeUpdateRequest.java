@@ -1,4 +1,4 @@
-package wave.domain.post.dto.request;
+package wave.domain.like.dto.request;
 
 import wave.domain.account.domain.entity.User;
 

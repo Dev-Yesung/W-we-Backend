@@ -5,6 +5,10 @@ import wave.domain.post.dto.MyMusicPostDto;
 
 public interface PublishPostEventPort {
 
-	void publishMediaUploadEvent(Post savedPost, MyMusicPostDto myMusicPostDto);
+	void publishMediaUploadEvent(Post post, MyMusicPostDto myMusicPostDto);
+
+	void publishNewSharedMusicPostEvent(Post post);
+
+	void publishDeletePostEvent(Post post);
 
 }

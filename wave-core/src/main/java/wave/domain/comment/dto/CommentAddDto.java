@@ -1,11 +1,11 @@
-package wave.domain.post.dto;
+package wave.domain.comment.dto;
 
-import wave.domain.post.dto.request.CommentAddRequest;
 import wave.domain.account.domain.entity.User;
+import wave.domain.comment.dto.request.CommentAddRequest;
 
 public record CommentAddDto(
 	long postId,
-	Long userId,
+	User user,
 	String email,
 	String nickname,
 	String comment
@@ -15,11 +15,10 @@ public record CommentAddDto(
 		CommentAddRequest addRequest,
 		User user
 	) {
-		Long userId = user.getId();
 		String email = user.getEmail();
 		String nickname = user.getNickname();
 		String comment = addRequest.comment();
 
-		return new CommentAddDto(postId, userId, email, nickname, comment);
+		return new CommentAddDto(postId, user, email, nickname, comment);
 	}
 }

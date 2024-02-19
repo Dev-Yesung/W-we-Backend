@@ -1,4 +1,4 @@
-package wave.domain.post.dto.response;
+package wave.domain.like.dto.response;
 
 public record LikeUpdateResponse(
 	long postId,

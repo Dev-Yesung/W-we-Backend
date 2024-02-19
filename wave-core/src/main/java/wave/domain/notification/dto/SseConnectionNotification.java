@@ -1,6 +1,6 @@
 package wave.domain.notification.dto;
 
-public record ConnectionMessage(
+public record SseConnectionNotification(
 	String channelName,
 	String userId,
 	String message

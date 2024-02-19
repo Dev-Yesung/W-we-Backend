@@ -33,5 +33,4 @@ public class NotificationEventAdapter implements PublishNotificationEventPort {
 				notificationOperations.convertAndSend(channelName, message);
 			});
 	}
-
 }

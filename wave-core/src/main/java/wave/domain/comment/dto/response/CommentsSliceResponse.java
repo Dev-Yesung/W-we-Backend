@@ -1,10 +1,10 @@
-package wave.domain.post.dto.response;
+package wave.domain.comment.dto.response;
 
 import java.util.List;
 
 import org.springframework.data.domain.Slice;
 
-import wave.domain.post.domain.entity.Comment;
+import wave.domain.comment.entity.Comment;
 
 public record CommentsSliceResponse(
 	List<CommentResponse> comments,

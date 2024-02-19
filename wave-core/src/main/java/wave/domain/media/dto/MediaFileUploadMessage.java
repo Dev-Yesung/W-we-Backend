@@ -5,7 +5,6 @@ import wave.domain.media.domain.vo.Image;
 import wave.domain.media.domain.vo.Music;
 
 public record MediaFileUploadMessage(
-	String topic,
 	FileId fileId,
 	Image image,
 	Music music

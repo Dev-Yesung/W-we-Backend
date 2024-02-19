@@ -1,9 +1,12 @@
 package wave.domain.notification.port.out;
 
-import wave.domain.notification.dto.UnreadMessageSendEvent;
+import java.util.List;
+
+import wave.domain.account.domain.entity.User;
+import wave.domain.notification.entity.Notification;
 
 public interface LoadNotificationPort {
 
-	void sendUnreadMessage(UnreadMessageSendEvent unreadMessageSendEvent);
+	List<Notification> findAllUnreadNotification(User user);
 
 }

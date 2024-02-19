@@ -12,8 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
 import wave.domain.notification.adapter.out.broker.RedisNotificationBroker;
-import wave.domain.notification.dto.ConnectionMessage;
-import wave.domain.notification.dto.NotificationMessage;
+import wave.domain.notification.dto.SseConnectionNotification;
+import wave.domain.notification.dto.PostNotificationMessage;
 import wave.domain.notification.port.out.UpdateNotificationEmitterPort;
 import wave.domain.notification.port.out.persistence.NotificationEmitterRepository;
 import wave.global.common.PersistenceAdapter;
@@ -39,8 +39,8 @@ public class NotificationEmitterAdapter implements UpdateNotificationEmitterPort
 		sendConnectionMessage(channelName, userId, emitter);
 
 		final MessageListener messageListener = (message, pattern) -> {
-			final NotificationMessage notificationMessage = serializeMessage(message);
-			sendMessageToClient(emitter, userId, notificationMessage);
+			final PostNotificationMessage postNotificationMessage = serializeMessage(message);
+			sendMessageToClient(emitter, userId, postNotificationMessage);
 		};
 
 		ChannelTopic channelTopic = ChannelTopic.of(channelName);
@@ -51,14 +51,14 @@ public class NotificationEmitterAdapter implements UpdateNotificationEmitterPort
 	}
 
 	private void sendConnectionMessage(String channelName, String userId, SseEmitter emitter) {
-		ConnectionMessage connectionMessage
-			= new ConnectionMessage(channelName, userId, "now connected to notification service.");
-		sendMessageToClient(emitter, userId, connectionMessage);
+		SseConnectionNotification sseConnectionNotification
+			= new SseConnectionNotification(channelName, userId, "now connected to notification service.");
+		sendMessageToClient(emitter, userId, sseConnectionNotification);
 	}
 
-	private NotificationMessage serializeMessage(final Message message) {
+	private PostNotificationMessage serializeMessage(final Message message) {
 		try {
-			return objectMapper.readValue(message.getBody(), NotificationMessage.class);
+			return objectMapper.readValue(message.getBody(), PostNotificationMessage.class);
 		} catch (IOException e) {
 			throw new NotificationException(ErrorCode.UNABLE_TO_SERIALIZE_NOTIFICATION);
 		}
@@ -84,5 +84,4 @@ public class NotificationEmitterAdapter implements UpdateNotificationEmitterPort
 	private String getChannelName(String userId) {
 		return "NOTIFICATION:" + userId;
 	}
-
 }

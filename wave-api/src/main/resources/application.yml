@@ -6,3 +6,4 @@ spring:
       - classpath:application-jwt.yml
       - classpath:application-producer.yml
       - classpath:application-consumer.yml
+      - classpath:spy.properties

@@ -55,6 +55,9 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+
+        implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
+
     }
 
     def querydslSrcDir = 'src/main/generated'

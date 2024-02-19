@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.media.dto.MediaFileUploadMessage;
+import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.broker.PostEventBroker;
 
 @RequiredArgsConstructor
@@ -17,11 +18,7 @@ public class PostKafkaEventBroker implements PostEventBroker {
 	private final KafkaTemplate<String, Object> kafkaProducerTemplate;
 
 	@Override
-	public CompletableFuture<SendResult<String, Object>> publishMusicUploadEvent(
-		MediaFileUploadMessage mediaFileUploadMessage
-	) {
-		String topic = mediaFileUploadMessage.topic();
-
-		return kafkaProducerTemplate.send(topic, mediaFileUploadMessage);
+	public CompletableFuture<SendResult<String, Object>> publishMessage(String topic, Object message) {
+		return kafkaProducerTemplate.send(topic, message);
 	}
 }

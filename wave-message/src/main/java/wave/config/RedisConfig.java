@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.notification.dto.NotificationMessage;
+import wave.domain.notification.dto.PostNotificationMessage;
 
 @RequiredArgsConstructor
 @Configuration
@@ -33,12 +33,12 @@ public class RedisConfig {
 	}
 
 	@Bean
-	public RedisOperations<String, NotificationMessage> notificationRedisTemplate() {
-		Jackson2JsonRedisSerializer<NotificationMessage> jsonRedisSerializer
-			= new Jackson2JsonRedisSerializer<>(NotificationMessage.class);
+	public RedisOperations<String, PostNotificationMessage> notificationRedisTemplate() {
+		Jackson2JsonRedisSerializer<PostNotificationMessage> jsonRedisSerializer
+			= new Jackson2JsonRedisSerializer<>(PostNotificationMessage.class);
 		jsonRedisSerializer.setObjectMapper(objectMapper);
 
-		RedisTemplate<String, NotificationMessage> notificationRedisTemplate = new RedisTemplate<>();
+		RedisTemplate<String, PostNotificationMessage> notificationRedisTemplate = new RedisTemplate<>();
 		notificationRedisTemplate.setConnectionFactory(redisConnectionFactory());
 
 		notificationRedisTemplate.setKeySerializer(RedisSerializer.string());

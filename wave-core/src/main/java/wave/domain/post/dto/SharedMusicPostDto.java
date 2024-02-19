@@ -8,7 +8,7 @@ import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.vo.PostContent;
 import wave.domain.post.dto.request.SharedMusicPostCreateRequest;
 
-public record SharedMusicDto(
+public record SharedMusicPostDto(
 	String artistName,
 	String songName,
 	String title,
@@ -16,7 +16,7 @@ public record SharedMusicDto(
 	String musicUrl,
 	User user
 ) {
-	public static SharedMusicDto from(
+	public static SharedMusicPostDto from(
 		SharedMusicPostCreateRequest request,
 		User user
 	) {
@@ -26,10 +26,10 @@ public record SharedMusicDto(
 		String content = request.descriptions();
 		String musicUrl = request.musicUrl();
 
-		return new SharedMusicDto(artistName, songName, title, content, musicUrl, user);
+		return new SharedMusicPostDto(artistName, songName, title, content, musicUrl, user);
 	}
 
-	public static Post toEntity(SharedMusicDto request) {
+	public static Post toEntity(SharedMusicPostDto request) {
 		String artistName = request.artistName();
 		String songName = request.songName();
 		String title = request.title();
