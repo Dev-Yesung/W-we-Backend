@@ -8,8 +8,8 @@ import wave.domain.media.dto.MediaUrlUpdateMessage;
 import wave.domain.post.domain.port.out.UpdatePostPort;
 import wave.global.common.UseCase;
 
-@Transactional
 @RequiredArgsConstructor
+@Transactional
 @UseCase
 public class PostEventListenService {
 

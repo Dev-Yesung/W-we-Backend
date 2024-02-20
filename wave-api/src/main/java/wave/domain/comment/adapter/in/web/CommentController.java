@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -36,9 +37,9 @@ public class CommentController {
 
 	private final CommentService commentService;
 
-	@PostMapping("/{postId}/comments")
+	@PostMapping
 	public ResponseEntity<CommentAddResponse> addComment(
-		@PathVariable long postId,
+		@RequestParam long postId,
 		@RequestBody CommentAddRequest addRequest,
 		@AuthenticationUser User user
 	) {
@@ -53,9 +54,9 @@ public class CommentController {
 			.body(response);
 	}
 
-	@GetMapping("/{postId}/comments")
+	@GetMapping
 	public ResponseEntity<CommentsSliceResponse> getAllComments(
-		@PathVariable long postId,
+		@RequestParam long postId,
 		@PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable
 	) {
 		CommentsSliceResponse response = commentService.getAllCommentsByCreatedDateAndOrderByDesc(postId, pageable);
@@ -63,7 +64,7 @@ public class CommentController {
 		return ResponseEntity.ok(response);
 	}
 
-	@DeleteMapping("/comments/{commentId}")
+	@DeleteMapping("/{commentId}")
 	public ResponseEntity<CommentDeleteResponse> deleteComment(
 		@PathVariable long commentId,
 		@AuthenticationUser User user

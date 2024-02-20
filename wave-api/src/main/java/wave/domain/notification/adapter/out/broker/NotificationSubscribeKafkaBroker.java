@@ -8,7 +8,7 @@ import wave.domain.notification.domain.port.out.broker.NotificationSendEventBrok
 
 @RequiredArgsConstructor
 @Component
-public class NotificationSendKafkaBroker implements NotificationSendEventBroker {
+public class NotificationSubscribeKafkaBroker implements NotificationSendEventBroker {
 
 	private final KafkaTemplate<String, Object> kafkaProducerTemplate;
 

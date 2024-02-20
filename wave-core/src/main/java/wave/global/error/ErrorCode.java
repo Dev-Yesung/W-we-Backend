@@ -57,6 +57,7 @@ public enum ErrorCode {
 	UNABLE_TO_SERIALIZE_NOTIFICATION("-NM002", "알림 메시지를 변환하는데 실패했습니다."),
 	INVALID_CONNECTION_FOR_NOTIFICATION("-NM003", "클라이언트와의 연결에 실패했습니다."),
 	NOT_FOUND_NOTIFICATION("-NM004", "알림 메시지를 찾을 수 없습니다."),
+	NO_AUTHORITY_TO_NOTIFICATION("-NM005", "알림 메시지에 권한이 없습니다."),
 
 	NO_AUTHORITY_TO_LIKE("-L001", "해당 좋아요에 권한이 없습니다.");
 

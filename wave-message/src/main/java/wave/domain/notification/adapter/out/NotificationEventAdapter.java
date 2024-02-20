@@ -3,6 +3,8 @@ package wave.domain.notification.adapter.out;
 import java.util.List;
 
 import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.notification.dto.PostNotificationMessage;
@@ -10,6 +12,7 @@ import wave.domain.notification.domain.entity.Notification;
 import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
 import wave.global.common.EventAdapter;
 
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 @RequiredArgsConstructor
 @EventAdapter
 public class NotificationEventAdapter implements PublishNotificationEventPort {

@@ -7,16 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
-import wave.domain.comment.domain.entity.Comment;
-import wave.domain.like.domain.entity.Like;
 import wave.domain.media.dto.MediaFileUploadStatusMessage;
-import wave.domain.media.dto.MediaUrlUpdateMessage;
 import wave.domain.notification.domain.entity.Notification;
 import wave.domain.notification.domain.port.out.LoadNotificationPort;
 import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
 import wave.domain.notification.domain.port.out.UpdateNotificationPort;
 import wave.domain.notification.dto.CommonNotificationMessage;
-import wave.domain.post.domain.entity.Post;
+import wave.domain.notification.dto.NotificationReadMessage;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
@@ -31,23 +28,38 @@ public class NotificationService {
 	@KafkaListener(topics = "media_upload_status_result",
 		groupId = "group_media_upload_status_result",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeMediaFileUploadMessage(MediaFileUploadStatusMessage message) {
+	public void subscribeMediaFileUpload(MediaFileUploadStatusMessage message) {
 		Notification notification = updateNotificationPort.saveMediaFileUploadMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
 
+	@Transactional(readOnly = true)
 	@KafkaListener(topics = "unread_notification_message",
 		groupId = "group_unread_notification_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeUnreadNotificationMessage(User message) {
+	public void subscribeUnreadNotification(User message) {
 		List<Notification> notifications = loadNotificationPort.findAllUnreadNotification(message);
 		publishNotificationEventPort.publishNotificationsToSubscribers(notifications);
+	}
+
+	@KafkaListener(topics = "read_notification_message",
+		groupId = "group_read_notification_message",
+		containerFactory = "kafkaListenerContainerFactory")
+	public void subscribeReadNotification(NotificationReadMessage message) {
+		updateNotificationPort.readNotification(message);
+	}
+
+	@KafkaListener(topics = "read_all_notification_message",
+		groupId = "group_read_all_notification_message",
+		containerFactory = "kafkaListenerContainerFactory")
+	public void subscribeReadAllNotifications(User message) {
+		updateNotificationPort.readAllNotifications(message);
 	}
 
 	@KafkaListener(topics = "new_post_message",
 		groupId = "group_new_post_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeNewSharedPostMusicMessage(CommonNotificationMessage message) {
+	public void subscribeNewSharedPostMusic(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveNewPostMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
@@ -55,7 +67,7 @@ public class NotificationService {
 	@KafkaListener(topics = "delete_post_message",
 		groupId = "group_delete_post_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeDeletedPostMessage(CommonNotificationMessage message) {
+	public void subscribeDeletedPost(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveDeletePostMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
@@ -63,7 +75,7 @@ public class NotificationService {
 	@KafkaListener(topics = "update_like_message",
 		groupId = "group_update_like_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeUpdateLikeMessage(CommonNotificationMessage message) {
+	public void subscribeUpdateLike(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveNewLikeMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
@@ -71,7 +83,7 @@ public class NotificationService {
 	@KafkaListener(topics = "comment_add_message",
 		groupId = "group_comment_add_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeCommentAddMessage(CommonNotificationMessage message) {
+	public void subscribeCommentAdd(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveNewCommentMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}

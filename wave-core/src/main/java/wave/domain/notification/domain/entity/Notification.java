@@ -9,6 +9,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wave.global.BaseEntity;
+import wave.global.error.ErrorCode;
+import wave.global.error.exception.BusinessException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -44,7 +46,10 @@ public class Notification extends BaseEntity {
 		return "NOTIFICATION:" + userId;
 	}
 
-	public void readNotification() {
+	public void readNotification(Long userId) {
+		if (!this.userId.equals(userId)) {
+			throw new BusinessException(ErrorCode.NO_AUTHORITY_TO_NOTIFICATION);
+		}
 		this.isRead = true;
 	}
 
