@@ -1,9 +1,9 @@
 package wave.domain.like.adapter.in.web;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class LikeController {
 
 	private final LikeService likeService;
 
-	@PutMapping("/{likeId}")
+	@PutMapping
 	public ResponseEntity<LikeUpdateResponse> updateLikes(
-		@PathVariable long likeId,
+		@RequestParam long postId,
 		@AuthenticationUser User user
 	) {
-		LikeUpdateRequest likeUpdateRequest = new LikeUpdateRequest(likeId, user);
+		LikeUpdateRequest likeUpdateRequest = new LikeUpdateRequest(postId, user);
 		LikeUpdateResponse response = likeService.updateLikes(likeUpdateRequest);
 
 		return ResponseEntity.ok(response);

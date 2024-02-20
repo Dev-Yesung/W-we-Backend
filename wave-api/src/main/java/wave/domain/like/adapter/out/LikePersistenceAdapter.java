@@ -19,16 +19,14 @@ public class LikePersistenceAdapter implements UpdateLikePort {
 
 	@Override
 	public Like updateLikes(final LikeUpdateRequest likeUpdateRequest) {
-		final long likeId = likeUpdateRequest.likeId();
+		final long postId = likeUpdateRequest.postId();
 		final User user = likeUpdateRequest.user();
+		final Long userId = user.getId();
 
-		Optional<Like> optionalLike = likeJpaRepository.findById(likeId);
-		optionalLike.ifPresent(like -> {
-			like.isSameUser(user);
-			like.changeStatus();
-		});
+		Optional<Like> optionalLike = likeJpaRepository.findByPostIdAndUserId(postId, userId);
+		optionalLike.ifPresent(Like::changeStatus);
 
-		return optionalLike.orElseGet(() -> likeJpaRepository.save(new Like(likeId, user)));
+		return optionalLike.orElseGet(() -> likeJpaRepository.save(new Like(postId, user)));
 	}
 
 	@Override

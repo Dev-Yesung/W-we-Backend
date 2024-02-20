@@ -12,10 +12,10 @@ import wave.domain.comment.domain.entity.Comment;
 public interface CommentJpaRepository extends JpaRepository<Comment, Long> {
 
 	@Query("SELECT c FROM Comment AS c WHERE c.postId = :postId")
-	Slice<Comment> findAllByPostIdOrderBy(@Param("likeId") long postId, Pageable pageable);
+	Slice<Comment> findAllByPostIdOrderBy(@Param("postId") long postId, Pageable pageable);
 
 	@Modifying(clearAutomatically = true)
 	@Query("DELETE FROM Comment AS c WHERE c.postId = :postId")
-	void deleteAllByPostId(@Param("likeId") Long postId);
+	void deleteAllByPostId(@Param("postId") Long postId);
 
 }

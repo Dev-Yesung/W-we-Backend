@@ -1,7 +1,5 @@
 package wave.domain.comment.application;
 
-import static wave.domain.account.domain.entity.QUser.*;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.scheduling.annotation.Async;
@@ -56,4 +54,5 @@ public class CommentService {
 	public void deleteAllComment(PostDeleteResponse message) {
 		updateCommentPort.deleteAllByPostId(message);
 	}
+
 }
