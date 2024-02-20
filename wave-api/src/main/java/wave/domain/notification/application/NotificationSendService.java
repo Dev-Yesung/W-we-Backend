@@ -1,31 +1,25 @@
 package wave.domain.notification.application;
 
-import java.util.List;
-
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
-import wave.domain.notification.domain.entity.Notification;
-import wave.domain.notification.domain.port.out.LoadNotificationPort;
-import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
+import wave.domain.notification.domain.port.out.PublishNotificationSendEventPort;
 import wave.domain.notification.domain.port.out.UpdateNotificationEmitterPort;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
 @Transactional
 @UseCase
-public class NotificationService {
+public class NotificationSendService {
 
-	private final LoadNotificationPort loadNotificationPort;
 	private final UpdateNotificationEmitterPort updateNotificationEmitterPort;
-	private final PublishNotificationEventPort publishNotificationEventPort;
+	private final PublishNotificationSendEventPort publishNotificationSendEventPort;
 
 	public SseEmitter subscribe(final User user) {
 		SseEmitter emitter = updateNotificationEmitterPort.createNewSubscriber(user);
-		List<Notification> notifications = loadNotificationPort.findAllUnreadNotification(user);
-		publishNotificationEventPort.publishNotificationsToSubscribers(notifications);
+		publishNotificationSendEventPort.publishUnreadNotifications(user);
 
 		return emitter;
 	}

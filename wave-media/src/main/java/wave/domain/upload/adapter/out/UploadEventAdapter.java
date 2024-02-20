@@ -8,6 +8,7 @@ import wave.domain.media.domain.vo.MediaUploadStatus;
 import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.media.dto.MediaFileUploadStatusMessage;
 import wave.domain.media.dto.MediaUrlUpdateMessage;
+import wave.domain.post.domain.entity.Post;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor

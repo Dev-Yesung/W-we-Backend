@@ -20,6 +20,7 @@ public class MediaFileUploadService {
 	private final UpdateMediaPort updateMediaPort;
 	private final PublishUploadEventPort publishUploadEventPort;
 
+	// todo: 이 부분 리팩토링 필요 -> 미디어 서버에서 데이터를 업데이트하는 방식으로 변경하기
 	@KafkaListener(topics = "media_file_upload",
 		groupId = "group_media_file_upload",
 		containerFactory = "kafkaListenerContainerFactory")
