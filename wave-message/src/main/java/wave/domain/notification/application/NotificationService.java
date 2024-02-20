@@ -10,10 +10,12 @@ import wave.domain.account.domain.entity.User;
 import wave.domain.comment.domain.entity.Comment;
 import wave.domain.like.domain.entity.Like;
 import wave.domain.media.dto.MediaFileUploadStatusMessage;
+import wave.domain.media.dto.MediaUrlUpdateMessage;
 import wave.domain.notification.domain.entity.Notification;
 import wave.domain.notification.domain.port.out.LoadNotificationPort;
 import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
 import wave.domain.notification.domain.port.out.UpdateNotificationPort;
+import wave.domain.notification.dto.CommonNotificationMessage;
 import wave.domain.post.domain.entity.Post;
 import wave.global.common.UseCase;
 
@@ -45,7 +47,7 @@ public class NotificationService {
 	@KafkaListener(topics = "new_post_message",
 		groupId = "group_new_post_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeNewSharedPostMusicMessage(Post message) {
+	public void subscribeNewSharedPostMusicMessage(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveNewPostMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
@@ -53,7 +55,7 @@ public class NotificationService {
 	@KafkaListener(topics = "delete_post_message",
 		groupId = "group_delete_post_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeDeletedPostMessage(Post message) {
+	public void subscribeDeletedPostMessage(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveDeletePostMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
@@ -61,7 +63,7 @@ public class NotificationService {
 	@KafkaListener(topics = "update_like_message",
 		groupId = "group_update_like_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeDeletedPostMessage(Like message) {
+	public void subscribeUpdateLikeMessage(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveNewLikeMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}
@@ -69,7 +71,7 @@ public class NotificationService {
 	@KafkaListener(topics = "comment_add_message",
 		groupId = "group_comment_add_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeCommentAddMessage(Comment message) {
+	public void subscribeCommentAddMessage(CommonNotificationMessage message) {
 		Notification notification = updateNotificationPort.saveNewCommentMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}

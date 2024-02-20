@@ -4,7 +4,7 @@ import static wave.domain.media.domain.vo.MediaUploadStatus.*;
 
 import lombok.RequiredArgsConstructor;
 import wave.config.ImageConfig;
-import wave.config.MediaServerConfig;
+import wave.config.ServerConfig;
 import wave.config.MusicConfig;
 import wave.domain.media.domain.entity.ImageFile;
 import wave.domain.media.domain.entity.MusicFile;
@@ -31,7 +31,7 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 
 	private final MusicConfig musicConfig;
 	private final ImageConfig imageConfig;
-	private final MediaServerConfig mediaServerConfig;
+	private final ServerConfig serverConfig;
 
 	@Override
 	public MusicFile loadMusicFile(LoadMusicRequest request) {
@@ -101,8 +101,8 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 	}
 
 	private MediaUrl getMediaUrl(MusicFile savedMusicFile, ImageFile savedImageFile) {
-		String host = mediaServerConfig.getHost();
-		String port = mediaServerConfig.getPort();
+		String host = serverConfig.getHost();
+		String port = serverConfig.getPort();
 
 		String musicUrl = savedMusicFile.createFileUrl(host, port);
 		String imageUrl = savedImageFile.createFileUrl(host, port);

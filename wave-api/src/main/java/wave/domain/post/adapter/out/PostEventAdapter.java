@@ -7,6 +7,7 @@ import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.Image;
 import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.MediaFileUploadMessage;
+import wave.domain.notification.dto.CommonNotificationMessage;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
 import wave.domain.post.domain.port.out.broker.PostEventBroker;
@@ -34,14 +35,21 @@ public class PostEventAdapter implements PublishPostEventPort {
 
 	@Override
 	public void publishNewSharedMusicPostEvent(Post post) {
-		postEventBroker.publishMessage("new_post_message", post);
+		Long userId = post.getUser().getId();
+		Long postId = post.getId();
+		CommonNotificationMessage message = new CommonNotificationMessage(userId, postId);
+		postEventBroker.publishMessage("new_post_message", message);
 	}
 
 	@Override
 	public void publishDeletePostEvent(Post post) {
 		PostDeleteResponse postDeleteResponse = PostDeleteResponse.of(post);
 		applicationEventPublisher.publishEvent(postDeleteResponse);
-		postEventBroker.publishMessage("delete_post_message", post);
+
+		Long userId = post.getUser().getId();
+		Long postId = post.getId();
+		CommonNotificationMessage message = new CommonNotificationMessage(userId, postId);
+		postEventBroker.publishMessage("delete_post_message", message);
 	}
 
 }

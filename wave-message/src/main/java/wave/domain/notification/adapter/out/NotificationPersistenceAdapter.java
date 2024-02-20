@@ -4,17 +4,15 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
-import wave.domain.comment.domain.entity.Comment;
-import wave.domain.like.domain.entity.Like;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.dto.MediaFileUploadStatusMessage;
+import wave.domain.notification.adapter.out.persistence.AccountJpaRepository;
 import wave.domain.notification.adapter.out.persistence.NotificationJpaRepository;
 import wave.domain.notification.adapter.out.persistence.PostJpaRepository;
 import wave.domain.notification.domain.entity.Notification;
 import wave.domain.notification.domain.port.out.LoadNotificationPort;
 import wave.domain.notification.domain.port.out.UpdateNotificationPort;
-import wave.domain.post.domain.entity.Post;
-import wave.domain.post.domain.vo.PostContent;
+import wave.domain.notification.dto.CommonNotificationMessage;
 import wave.global.common.PersistenceAdapter;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;
@@ -23,8 +21,9 @@ import wave.global.error.exception.EntityException;
 @PersistenceAdapter
 public class NotificationPersistenceAdapter implements UpdateNotificationPort, LoadNotificationPort {
 
-	private final NotificationJpaRepository notificationJpaRepository;
+	private final AccountJpaRepository accountJpaRepository;
 	private final PostJpaRepository postJpaRepository;
+	private final NotificationJpaRepository notificationJpaRepository;
 
 	@Override
 	public Notification saveMediaFileUploadMessage(MediaFileUploadStatusMessage message) {
@@ -39,36 +38,42 @@ public class NotificationPersistenceAdapter implements UpdateNotificationPort, L
 	}
 
 	@Override
-	public Notification saveNewPostMessage(Post post) {
-		Notification notification = getNotification(post, "포스트 등록을 완료했습니다.");
-
-		return notificationJpaRepository.save(notification);
-	}
-
-	@Override
-	public Notification saveDeletePostMessage(Post post) {
-		Notification notification = getNotification(post, "포스트 삭제를 완료했습니다.");
-
-		return notificationJpaRepository.save(notification);
-	}
-
-	@Override
-	public Notification saveNewLikeMessage(Like like) {
-		Long userId = like.getUser().getId();
-		Long postId = like.getPostId();
+	public Notification saveNewPostMessage(CommonNotificationMessage message) {
+		Long userId = message.userId();
+		Long postId = message.postId();
 		String postTitle = getPostTitle(postId);
-		String nickname = like.getUser().getNickname();
+		Notification notification = new Notification(userId, postId, postTitle, "포스트 등록을 완료했습니다.");
+
+		return notificationJpaRepository.save(notification);
+	}
+
+	@Override
+	public Notification saveDeletePostMessage(CommonNotificationMessage message) {
+		Long userId = message.userId();
+		Long postId = message.postId();
+		String postTitle = getPostTitle(postId);
+		Notification notification = new Notification(userId, postId, postTitle, "포스트 삭제를 완료했습니다.");
+
+		return notificationJpaRepository.save(notification);
+	}
+
+	@Override
+	public Notification saveNewLikeMessage(CommonNotificationMessage message) {
+		Long userId = message.userId();
+		Long postId = message.postId();
+		String postTitle = getPostTitle(postId);
+		String nickname = getUserNickname(userId);
 		Notification notification = new Notification(userId, postId, postTitle, nickname + "님이 이 음악을 추천합니다.");
 
 		return notificationJpaRepository.save(notification);
 	}
 
 	@Override
-	public Notification saveNewCommentMessage(Comment comment) {
-		Long userId = comment.getUser().getId();
-		Long postId = comment.getPostId();
+	public Notification saveNewCommentMessage(CommonNotificationMessage message) {
+		Long userId = message.userId();
+		Long postId = message.postId();
 		String postTitle = getPostTitle(postId);
-		String nickname = comment.getUser().getNickname();
+		String nickname = getUserNickname(userId);
 		Notification notification = new Notification(userId, postId, postTitle, nickname + "님이 댓글을 달았습니다.");
 
 		return notificationJpaRepository.save(notification);
@@ -88,12 +93,9 @@ public class NotificationPersistenceAdapter implements UpdateNotificationPort, L
 			.getTitle();
 	}
 
-	private Notification getNotification(Post post, String message) {
-		Long userId = post.getUser().getId();
-		Long postId = post.getId();
-		PostContent postContent = post.getPostContent();
-		String postTitle = postContent.getTitle();
-
-		return new Notification(userId, postId, postTitle, message);
+	private String getUserNickname(Long userId) {
+		return accountJpaRepository.findById(userId)
+			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_USER))
+			.getNickname();
 	}
 }
