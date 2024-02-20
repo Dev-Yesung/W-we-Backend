@@ -7,10 +7,10 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
-import wave.domain.notification.entity.Notification;
-import wave.domain.notification.port.out.LoadNotificationPort;
-import wave.domain.notification.port.out.PublishNotificationEventPort;
-import wave.domain.notification.port.out.UpdateNotificationEmitterPort;
+import wave.domain.notification.domain.entity.Notification;
+import wave.domain.notification.domain.port.out.LoadNotificationPort;
+import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
+import wave.domain.notification.domain.port.out.UpdateNotificationEmitterPort;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.notification.port.out.persistence.NotificationEmitterRepository;
+import wave.domain.notification.domain.port.out.persistence.NotificationEmitterRepository;
 
 @RequiredArgsConstructor
 @Component

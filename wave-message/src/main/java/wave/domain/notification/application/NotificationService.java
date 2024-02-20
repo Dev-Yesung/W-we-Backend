@@ -5,9 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.media.dto.MediaFileUploadStatusMessage;
-import wave.domain.notification.entity.Notification;
-import wave.domain.notification.port.out.PublishNotificationEventPort;
-import wave.domain.notification.port.out.UpdateNotificationPort;
+import wave.domain.notification.domain.entity.Notification;
+import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
+import wave.domain.notification.domain.port.out.UpdateNotificationPort;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor

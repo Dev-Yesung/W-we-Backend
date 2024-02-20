@@ -5,14 +5,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import wave.domain.comment.dto.CommentAddDto;
-import wave.domain.comment.dto.CommentDeleteDto;
-import wave.domain.comment.dto.response.CommentAddResponse;
-import wave.domain.comment.dto.response.CommentsSliceResponse;
-import wave.domain.comment.entity.Comment;
-import wave.domain.like.dto.request.LikeUpdateRequest;
-import wave.domain.like.dto.response.LikeUpdateResponse;
-import wave.domain.like.entity.Like;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
@@ -71,28 +63,4 @@ public class PostService {
 		return PostDeleteResponse.of(deletePost);
 	}
 
-	public LikeUpdateResponse updateLikes(LikeUpdateRequest likeUpdateRequest) {
-		Like updatedLike = updatePostPort.updateLikes(likeUpdateRequest);
-		// todo: Like 반환하는거 반환 안하도록 바꾸기
-		// todo: 알림 메시지 이벤트
-
-		return null;
-	}
-
-	public CommentAddResponse addComment(CommentAddDto commentAddDto) {
-		CommentAddResponse commentAddResponse = updatePostPort.addComment(commentAddDto);
-		// todo: 알림 메시지 이벤트
-		return commentAddResponse;
-	}
-
-	@Transactional(readOnly = true)
-	public CommentsSliceResponse getAllCommentsByCreatedDateAndOrderByDesc(long postId, Pageable pageable) {
-		Slice<Comment> comments = loadPostPort.getAllComments(postId, pageable);
-
-		return CommentsSliceResponse.of(comments);
-	}
-
-	public void deleteComment(CommentDeleteDto request) {
-		updatePostPort.deleteComment(request);
-	}
 }

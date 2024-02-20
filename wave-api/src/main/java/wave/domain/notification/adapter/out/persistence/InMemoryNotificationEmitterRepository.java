@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import wave.domain.notification.port.out.persistence.NotificationEmitterRepository;
+import wave.domain.notification.domain.port.out.persistence.NotificationEmitterRepository;
 
 @Repository
 public class InMemoryNotificationEmitterRepository implements NotificationEmitterRepository {

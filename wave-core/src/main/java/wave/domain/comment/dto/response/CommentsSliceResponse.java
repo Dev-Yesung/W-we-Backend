@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Slice;
 
-import wave.domain.comment.entity.Comment;
+import wave.domain.comment.domain.entity.Comment;
 
 public record CommentsSliceResponse(
 	List<CommentResponse> comments,

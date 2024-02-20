@@ -5,8 +5,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
 import wave.domain.notification.adapter.out.persistence.NotificationJpaRepository;
-import wave.domain.notification.entity.Notification;
-import wave.domain.notification.port.out.LoadNotificationPort;
+import wave.domain.notification.domain.entity.Notification;
+import wave.domain.notification.domain.port.out.LoadNotificationPort;
 import wave.global.common.PersistenceAdapter;
 
 @RequiredArgsConstructor

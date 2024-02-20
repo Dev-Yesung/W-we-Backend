@@ -6,8 +6,8 @@ import org.springframework.data.redis.core.RedisOperations;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.notification.dto.PostNotificationMessage;
-import wave.domain.notification.entity.Notification;
-import wave.domain.notification.port.out.PublishNotificationEventPort;
+import wave.domain.notification.domain.entity.Notification;
+import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor

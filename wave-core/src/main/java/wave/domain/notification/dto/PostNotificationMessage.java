@@ -1,6 +1,6 @@
 package wave.domain.notification.dto;
 
-import wave.domain.notification.entity.Notification;
+import wave.domain.notification.domain.entity.Notification;
 
 public record PostNotificationMessage(
 	String channelName,

@@ -1,5 +1,7 @@
 package wave.domain.post.adapter.out;
 
+import org.springframework.context.ApplicationEventPublisher;
+
 import lombok.RequiredArgsConstructor;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.Image;
@@ -9,6 +11,8 @@ import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
 import wave.domain.post.domain.port.out.broker.PostEventBroker;
 import wave.domain.post.dto.MyMusicPostDto;
+import wave.domain.post.dto.PostDeleteDto;
+import wave.domain.post.dto.response.PostDeleteResponse;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ import wave.global.common.EventAdapter;
 public class PostEventAdapter implements PublishPostEventPort {
 
 	private final PostEventBroker postEventBroker;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
 	@Override
 	public void publishMediaUploadEvent(Post post, MyMusicPostDto myMusicPostDto) {
@@ -34,6 +39,8 @@ public class PostEventAdapter implements PublishPostEventPort {
 
 	@Override
 	public void publishDeletePostEvent(Post post) {
+		PostDeleteResponse postDeleteResponse = PostDeleteResponse.of(post);
+		applicationEventPublisher.publishEvent(postDeleteResponse);
 		postEventBroker.publishMessage("delete_post_message", post);
 	}
 
