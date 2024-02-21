@@ -1,4 +1,4 @@
-package wave.domain.account.domain.port.out;
+package wave.domain.account.domain.port.out.persistence;
 
 import java.util.Optional;
 

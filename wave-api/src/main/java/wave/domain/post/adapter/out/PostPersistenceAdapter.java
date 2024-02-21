@@ -1,27 +1,22 @@
 package wave.domain.post.adapter.out;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
-import wave.domain.comment.dto.CommentAddDto;
-import wave.domain.comment.dto.CommentDeleteDto;
-import wave.domain.comment.domain.entity.Comment;
-import wave.domain.like.dto.request.LikeUpdateRequest;
-import wave.domain.like.domain.entity.Like;
 import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.media.dto.MediaUrlUpdateMessage;
-import wave.domain.comment.adapter.out.persistence.CommentJpaRepository;
-import wave.domain.like.adapter.out.persistence.LikeJpaRepository;
 import wave.domain.post.adapter.out.persistence.PostJpaRepository;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.LoadPostPort;
 import wave.domain.post.domain.port.out.UpdatePostPort;
 import wave.domain.post.domain.port.out.persistence.PostQueryRepository;
 import wave.domain.post.dto.PostDeleteDto;
+import wave.domain.post.dto.response.PostResponse;
 import wave.global.common.PersistenceAdapter;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;
@@ -63,13 +58,34 @@ public class PostPersistenceAdapter implements UpdatePostPort, LoadPostPort {
 	}
 
 	@Override
-	public Slice<Post> getAllPostsByCreatedDateAndOrderByDesc(Pageable pageable) {
-		return postQueryRepository.getPostByCreatedDateDesc(pageable);
+	public Slice<Post> findAllByCreatedDateOrderByDesc(Pageable pageable) {
+		return postQueryRepository.findAllOrderByCreatedDateDesc(pageable);
 	}
 
 	@Override
-	public Slice<Post> getAllPostsByEmailAndCreatedDateDesc(String email, Pageable pageable) {
-		return postQueryRepository.getAllPostsByEmailAndCreatedDateDesc(email, pageable);
+	public Slice<Post> findAllByEmailOrderByCreatedDateDesc(String email, Pageable pageable) {
+		return postQueryRepository.findAllByEmailAndCreatedDateDesc(email, pageable);
+	}
+
+	@Override
+	public Slice<PostResponse> findAllByArtistNameOrderByLikeSizeDesc(String artistName, Pageable pageable) {
+		Slice<Post> posts = postQueryRepository
+			.findAllByArtistNameOrderByLikeSizeDesc(artistName, pageable);
+		List<PostResponse> postResponses = posts.stream()
+			.map(PostResponse::of)
+			.toList();
+
+		return new SliceImpl<>(postResponses, posts.getPageable(), posts.hasNext());
+	}
+
+	@Override
+	public Slice<PostResponse> findAllBySongTitle(String title, Pageable pageable) {
+		Slice<Post> posts = postQueryRepository.findAllBySongTitle(title, pageable);
+		List<PostResponse> postResponses = posts.stream()
+			.map(PostResponse::of)
+			.toList();
+
+		return new SliceImpl<>(postResponses, posts.getPageable(), posts.hasNext());
 	}
 
 }

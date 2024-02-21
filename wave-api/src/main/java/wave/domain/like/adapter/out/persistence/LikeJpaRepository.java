@@ -11,11 +11,11 @@ import wave.domain.like.domain.entity.Like;
 
 public interface LikeJpaRepository extends JpaRepository<Like, Long> {
 
-	@Query("SELECT l FROM Like AS l WHERE l.postId = :postId AND l.user.id = :userId")
+	@Query("SELECT l FROM Like AS l WHERE l.post.id = :postId AND l.user.id = :userId")
 	Optional<Like> findByPostIdAndUserId(@Param("postId") long postId, @Param("userId") long userId);
 
 	@Modifying(clearAutomatically = true)
-	@Query("DELETE FROM Like l WHERE l.postId = :postId")
+	@Query("DELETE FROM Like l WHERE l.post.id = :postId")
 	void deleteAllByPostId(@Param("postId") Long postId);
 
 }

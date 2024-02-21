@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 import wave.config.CacheConfig;
-import wave.domain.account.domain.port.out.AccountCache;
+import wave.domain.account.domain.port.out.persistence.AccountCache;
 import wave.domain.account.domain.vo.Certification;
 import wave.domain.account.domain.vo.CertificationType;
 

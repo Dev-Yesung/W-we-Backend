@@ -2,6 +2,8 @@ HELP.md
 .gradle
 application-*.yml
 Q*.java
+*.mp3
+*.db
 .env
 build/
 !gradle/wrapper/gradle-wrapper.jar

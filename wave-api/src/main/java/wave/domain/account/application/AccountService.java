@@ -3,14 +3,13 @@ package wave.domain.account.application;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import wave.global.common.UseCase;
 import wave.domain.account.application.jwt.JwtUtils;
+import wave.domain.account.domain.entity.User;
 import wave.domain.account.domain.port.out.LoadAccountPort;
 import wave.domain.account.domain.port.out.PublishAccountEventPort;
-import wave.domain.account.domain.port.out.SubscribeAccountEventPort;
 import wave.domain.account.domain.port.out.UpdateAccountPort;
-import wave.domain.account.domain.entity.User;
 import wave.domain.account.domain.vo.Certification;
+import wave.domain.account.domain.vo.CertificationType;
 import wave.domain.account.domain.vo.jwt.AccessToken;
 import wave.domain.account.domain.vo.jwt.RefreshToken;
 import wave.domain.account.dto.request.CertificationVerifyRequest;
@@ -18,7 +17,7 @@ import wave.domain.account.dto.request.NewCertificationRequest;
 import wave.domain.account.dto.request.SignupRequest;
 import wave.domain.account.dto.response.AccountResponse;
 import wave.domain.account.dto.response.CertificationResponse;
-import wave.domain.account.domain.vo.CertificationType;
+import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
 @Transactional
@@ -28,7 +27,6 @@ public class AccountService {
 	private final UpdateAccountPort updateAccountPort;
 	private final LoadAccountPort loadAccountPort;
 	private final PublishAccountEventPort publishAccountEventPort;
-	private final SubscribeAccountEventPort subscribeAccountEventPort;
 
 	private final JwtUtils jwtUtils;
 

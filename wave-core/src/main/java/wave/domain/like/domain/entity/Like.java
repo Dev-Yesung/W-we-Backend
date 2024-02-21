@@ -1,5 +1,7 @@
 package wave.domain.like.domain.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wave.domain.account.domain.entity.User;
+import wave.domain.post.domain.entity.Post;
 import wave.global.BaseEntity;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.BusinessException;
@@ -26,27 +29,37 @@ public class Like extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Long postId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id")
+	private Post post;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	private boolean status;
-
-	public Like(Long postId, User user) {
-		this.postId = postId;
+	public Like(Post post, User user) {
+		this.post = post;
+		addToPost(user);
 		this.user = user;
-		this.status = true;
 	}
 
-	public void changeStatus() {
-		this.status = !this.status;
+	public void addToPost(User user) {
+		isSameUser(user);
+		List<Like> likes = post.getLikes();
+		if (!likes.contains(this)) {
+			likes.add(this);
+		}
 	}
 
-	public void isSameUser(User user) {
+	public void remove(User user) {
+		isSameUser(user);
+		post.getLikes().remove(this);
+	}
+
+	private void isSameUser(User user) {
 		if (!this.user.equals(user)) {
 			throw new BusinessException(ErrorCode.NO_AUTHORITY_TO_LIKE);
 		}
 	}
+
 }

@@ -16,7 +16,7 @@ public class PublishLikeEventAdapter implements PublishLikeEventPort {
 	@Override
 	public void publishLikeUpdateEvent(Like like) {
 		Long userId = like.getUser().getId();
-		Long postId = like.getPostId();
+		Long postId = like.getPost().getId();
 		CommonNotificationMessage message = new CommonNotificationMessage(userId , postId);
 		likeEventBroker.publishMessage("update_like_message", message);
 	}

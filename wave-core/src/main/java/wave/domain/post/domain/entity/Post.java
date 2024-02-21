@@ -1,5 +1,9 @@
 package wave.domain.post.domain.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,11 +12,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wave.domain.account.domain.entity.User;
+import wave.domain.like.domain.entity.Like;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.post.domain.vo.PostContent;
@@ -40,6 +46,13 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@OneToMany(
+		mappedBy = "post",
+		fetch = FetchType.LAZY,
+		cascade = CascadeType.ALL,
+		orphanRemoval = true)
+	private List<Like> likes = new ArrayList<>();
+
 	public Post(
 		PostContent postContent,
 		MediaUrl mediaUrl,
@@ -59,12 +72,6 @@ public class Post extends BaseEntity {
 		this.mediaUrl = mediaUrl;
 	}
 
-	public void validateAuthority(User user) {
-		if (!this.user.equals(user)) {
-			throw new BusinessException(ErrorCode.NO_AUTHORITY_TO_POST);
-		}
-	}
-
 	public FileId getFileId() {
 		Long userId = user.getId();
 
@@ -75,5 +82,9 @@ public class Post extends BaseEntity {
 		if (!this.user.equals(user)) {
 			throw new BusinessException(ErrorCode.NO_AUTHORITY_TO_POST);
 		}
+	}
+
+	public int getLikeSize() {
+		return likes.size();
 	}
 }

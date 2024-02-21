@@ -44,14 +44,14 @@ public class PostService {
 
 	@Transactional(readOnly = true)
 	public PostsResponse getAllPostsByCreatedDateAndOrderByDesc(Pageable pageable) {
-		Slice<Post> allPosts = loadPostPort.getAllPostsByCreatedDateAndOrderByDesc(pageable);
+		Slice<Post> allPosts = loadPostPort.findAllByCreatedDateOrderByDesc(pageable);
 
 		return PostsResponse.of(allPosts);
 	}
 
 	@Transactional(readOnly = true)
 	public PostsResponse getPostsByUserEmail(Pageable pageable, String email) {
-		Slice<Post> allPosts = loadPostPort.getAllPostsByEmailAndCreatedDateDesc(email, pageable);
+		Slice<Post> allPosts = loadPostPort.findAllByEmailOrderByCreatedDateDesc(email, pageable);
 
 		return PostsResponse.of(allPosts);
 	}
