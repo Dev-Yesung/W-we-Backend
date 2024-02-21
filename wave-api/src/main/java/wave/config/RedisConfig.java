@@ -36,15 +36,15 @@ public class RedisConfig {
 	}
 
 	@Bean
-	@Qualifier("redisTemplate")
-	public RedisTemplate<String, Object> redisTemplate() {
-		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-		redisTemplate.setConnectionFactory(redisConnectionFactory());
+	@Qualifier("redisCacheTemplate")
+	public RedisTemplate<String, String> redisCacheTemplate() {
+		RedisTemplate<String, String> redisCacheTemplate = new RedisTemplate<>();
+		redisCacheTemplate.setConnectionFactory(redisConnectionFactory());
 
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new StringRedisSerializer());
+		redisCacheTemplate.setKeySerializer(new StringRedisSerializer());
+		redisCacheTemplate.setValueSerializer(new StringRedisSerializer());
 
-		return redisTemplate;
+		return redisCacheTemplate;
 	}
 
 	@Bean

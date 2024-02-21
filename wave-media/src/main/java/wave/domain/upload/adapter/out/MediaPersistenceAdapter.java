@@ -2,32 +2,44 @@ package wave.domain.upload.adapter.out;
 
 import static wave.domain.media.domain.vo.MediaUploadStatus.*;
 
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import wave.config.ImageConfig;
-import wave.config.ServerConfig;
 import wave.config.MusicConfig;
+import wave.config.ServerConfig;
+import wave.domain.account.domain.entity.User;
 import wave.domain.media.domain.entity.ImageFile;
 import wave.domain.media.domain.entity.MusicFile;
-import wave.domain.media.domain.port.out.persistence.ImageFileRepository;
+import wave.domain.media.domain.entity.StreamingSession;
 import wave.domain.media.domain.port.out.LoadMediaPort;
-import wave.domain.media.domain.port.out.persistence.MusicFileRepository;
 import wave.domain.media.domain.port.out.UpdateMediaPort;
+import wave.domain.media.domain.port.out.persistence.ImageFileRepository;
+import wave.domain.media.domain.port.out.persistence.MusicFileRepository;
+import wave.domain.media.domain.port.out.persistence.StreamingCacheRepository;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.Image;
 import wave.domain.media.domain.vo.MediaUrl;
 import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.MediaFileUploadMessage;
+import wave.domain.media.dto.StreamingSessionInfo;
 import wave.domain.media.dto.request.LoadMusicRequest;
+import wave.domain.streaming.adapter.out.persistence.StreamingSessionJpaRepository;
 import wave.global.common.PersistenceAdapter;
+import wave.global.error.exception.EntityException;
 import wave.global.utils.FileUtils;
 
+@Slf4j
 @RequiredArgsConstructor
 @PersistenceAdapter
 public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 
 	private final MusicFileRepository musicFileRepository;
 	private final ImageFileRepository imageFileRepository;
+	private final StreamingCacheRepository streamingCacheRepository;
+	private final StreamingSessionJpaRepository streamingSessionJpaRepository;
 
 	private final MusicConfig musicConfig;
 	private final ImageConfig imageConfig;
@@ -35,9 +47,9 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 
 	@Override
 	public MusicFile loadMusicFile(LoadMusicRequest request) {
-		Long userId = request.userId();
+		Long authorId = request.authorId();
 		Long postId = request.postId();
-		FileId fileId = new FileId(userId, postId);
+		FileId fileId = new FileId(authorId, postId);
 
 		String path = getPath(fileId, musicConfig.getRootPath());
 		Music music = musicFileRepository.findFileByPath(path);
@@ -47,7 +59,15 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 
 	@Override
 	public ImageFile loadImageFile() {
+		// todo: 안했잖아;
 		return null;
+	}
+
+	@Override
+	public Optional<String> loadStreamingCacheValue(String ipAddress) {
+		String key = "STREAMING" + ":" + ipAddress;
+
+		return streamingCacheRepository.getAndDelete(key);
 	}
 
 	@Override
@@ -73,6 +93,25 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 		imageFileRepository.deleteFileByPath(imagePath);
 
 		return fileId;
+	}
+
+	@Override
+	public void cacheStreamingStartValue(Long postId, User user, String ipAddress) {
+		String key = "STREAMING" + ":" + ipAddress;
+		String value = postId + ":" + user.getEmail() + ":" + System.currentTimeMillis();
+		log.info("Streaming Start - key:{}, value:{}", key, value);
+		streamingCacheRepository.setValueAndTimeout(key, value);
+	}
+
+	@Override
+	public void saveStreamingSession(StreamingSessionInfo sessionInfo) {
+		Long postId = sessionInfo.postId();
+		Long userId = sessionInfo.userId();
+		long startMilliSec = sessionInfo.startMilliSec();
+		long endMilliSec = sessionInfo.endMilliSec();
+		String ipAddress = sessionInfo.ipAddress();
+		StreamingSession newSession = new StreamingSession(postId, userId, startMilliSec, endMilliSec, ipAddress);
+		streamingSessionJpaRepository.save(newSession);
 	}
 
 	private MusicFile getMusicFile(MediaFileUploadMessage mediaFileUploadMessage) {

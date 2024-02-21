@@ -16,12 +16,12 @@ import wave.domain.account.domain.vo.CertificationType;
 @Repository
 public class AccountRedisCache implements AccountCache {
 
-	private final ValueOperations<String, Object> valueOperations;
+	private final ValueOperations<String, String> valueOperations;
 	private final CacheConfig cacheConfig;
 
 	public AccountRedisCache(
 		CacheConfig cacheConfig,
-		@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate
+		@Qualifier("redisCacheTemplate") RedisTemplate<String, String> redisTemplate
 	) {
 		this.cacheConfig = cacheConfig;
 		this.valueOperations = redisTemplate.opsForValue();

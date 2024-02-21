@@ -1,8 +1,12 @@
 package wave.domain.media.dto.request;
 
+import wave.domain.account.domain.entity.User;
+
 public record LoadMusicRequest(
-	Long userId,
+	Long authorId,
 	Long postId,
-	String rangeHeader
+	String rangeHeader,
+	User user,
+	String ipAddress
 ) {
 }
