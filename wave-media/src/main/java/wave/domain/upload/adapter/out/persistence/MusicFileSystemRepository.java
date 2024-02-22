@@ -30,8 +30,9 @@ public class MusicFileSystemRepository implements MusicFileRepository {
 	public Music findFileByPath(String uri) {
 		Path realPath = Paths.get(uri);
 		FileUtils.isPathExist(realPath);
+		Path filePath = FileUtils.findFileInPath(realPath);
 
-		return Music.toMusic(realPath, uri);
+		return Music.toMusic(filePath, uri);
 	}
 
 	@Override

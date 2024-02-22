@@ -66,4 +66,8 @@ public class MusicFile extends AbstractMediaFile {
 		return music.getPath();
 	}
 
+	public Music getMusic() {
+		return this.music;
+	}
+
 }

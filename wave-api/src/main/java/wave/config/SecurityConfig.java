@@ -22,11 +22,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
+import wave.domain.account.adapter.web.RestAuthenticationEntryPoint;
 import wave.domain.account.application.authentication.AjaxAuthenticationProvider;
+import wave.domain.account.application.authentication.SkipPathRequestMatcher;
 import wave.domain.account.application.jwt.JwtAuthenticationProvider;
 import wave.domain.account.application.jwt.JwtExtractor;
-import wave.domain.account.application.authentication.SkipPathRequestMatcher;
-import wave.domain.account.adapter.web.RestAuthenticationEntryPoint;
 import wave.global.filter.AjaxLoginProcessingFilter;
 import wave.global.filter.JwtAuthenticationProcessingFilter;
 

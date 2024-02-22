@@ -11,7 +11,7 @@ import wave.domain.like.domain.entity.Like;
 
 public interface LikeJpaRepository extends JpaRepository<Like, Long> {
 
-	@Query("SELECT l FROM Like AS l WHERE l.post.id = :postId AND l.user.id = :userId")
+	@Query("SELECT l FROM Like AS l WHERE l.post.id = :postId AND l.user.id = :authorId")
 	Optional<Like> findByPostIdAndUserId(@Param("postId") long postId, @Param("authorId") long userId);
 
 	@Modifying(clearAutomatically = true)

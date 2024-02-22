@@ -6,5 +6,6 @@ public record StreamingSessionInfo(
 	Long userId,
 	long startMilliSec,
 	long endMilliSec,
-	String ipAddress) {
+	String ipAddress
+) {
 }

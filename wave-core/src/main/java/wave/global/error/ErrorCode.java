@@ -44,8 +44,9 @@ public enum ErrorCode {
 	NOT_FOUND_POST("-P002", "포스트를 찾을 수 없습니다."),
 	NO_AUTHORITY_TO_POST("-P003", "포스트에 권한이 없습니다."),
 
-	INVALID_PARTIAL_RANGE("-SM001", "스트리밍 요청범위가 올바르지 않습니다."),
-	UNABLE_TO_OUTPUT("-SM002", "스트리밍할 파일을 가져올 수 없습니다."),
+	INVALID_PARTIAL_RANGE_STREAMING("-SM001", "스트리밍 요청범위가 올바르지 않습니다."),
+	UNABLE_TO_OUTPUT_STREAMING_FILE("-SM002", "스트리밍할 파일을 가져올 수 없습니다."),
+	UNABLE_TO_REQUEST_STREAMING("-SM003", "스트리밍 요청을 할 수 없습니다."),
 
 	NOT_FOUND_COMMENT("-C001", "댓글을 찾을 수 없습니다."),
 	NOT_INCLUDED_COMMENT_TO_POST("-C002", "해당 댓글과 일치하지 않는 포스트입니다."),

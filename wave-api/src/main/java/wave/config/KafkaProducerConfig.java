@@ -2,6 +2,7 @@ package wave.config;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,4 +30,5 @@ public class KafkaProducerConfig {
 	public KafkaTemplate<String, Object> kafkaTemplate() {
 		return new KafkaTemplate<>(kafkaProducerFactory());
 	}
+
 }

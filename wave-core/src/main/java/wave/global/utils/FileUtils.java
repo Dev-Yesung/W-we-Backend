@@ -2,6 +2,7 @@ package wave.global.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -17,6 +18,20 @@ import wave.global.error.exception.FileException;
 public final class FileUtils {
 
 	private static final String DIRECTORY_PATH_REGEX = "^(?:[a-zA-Z]:)?[\\\\/]?([a-zA-Z0-9]+[\\\\/]?)*$";
+
+	public static Path findFileInPath(Path path) {
+		try (DirectoryStream<Path> files = Files.newDirectoryStream(path)) {
+			Path target = null;
+			for (Path file : files) {
+				target = file;
+				break;
+			}
+
+			return target;
+		} catch (IOException e) {
+			throw new FileException(ErrorCode.NOT_FOUND_FILE);
+		}
+	}
 
 	public static String appendFileNameWithExtension(String name, String extension) {
 		return convertWhiteSpaceToDash(name) + "." + extension;

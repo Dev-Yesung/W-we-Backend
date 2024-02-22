@@ -11,7 +11,7 @@ import wave.domain.notification.domain.entity.Notification;
 
 public interface NotificationJpaRepository extends JpaRepository<Notification, Long> {
 
-	@Query("SELECT n FROM Notification n WHERE n.userId = :userId AND n.isRead = :isRead")
+	@Query("SELECT n FROM Notification n WHERE n.userId = :authorId AND n.isRead = :isRead")
 	List<Notification> findAllByUserIdAndIsRead(@Param("authorId") Long userId, @Param("isRead") boolean isRead);
 
 	Optional<Notification> findByPostId(Long postId);

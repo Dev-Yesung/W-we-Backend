@@ -8,7 +8,7 @@ import wave.domain.mail.domain.port.out.SendMailEventPort;
 import wave.domain.mail.domain.port.out.SendMailPort;
 import wave.global.common.UseCase;
 import wave.global.error.ErrorCode;
-import wave.global.error.exception.EventMessageException;
+import wave.global.error.exception.EventException;
 
 @RequiredArgsConstructor
 @UseCase
@@ -33,7 +33,7 @@ public class CertificationMailService {
 			return certification;
 		}
 
-		throw new EventMessageException(ErrorCode.INVALID_MESSAGE_CASTING);
+		throw new EventException(ErrorCode.INVALID_MESSAGE_CASTING);
 	}
 
 	private void publishSuccessMessage(Certification certification) {

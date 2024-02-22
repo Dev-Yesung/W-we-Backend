@@ -24,13 +24,13 @@ public class KafkaConsumerConfig {
 	}
 
 	@Bean
-	public ConsumerFactory<String, Certification> kafkaConsumerFactory() {
+	public ConsumerFactory<String, Object> kafkaConsumerFactory() {
 		return new DefaultKafkaConsumerFactory<>(jsonConsumerConfig());
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, Certification> kafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, Certification> kafkaListenerContainerFactory
+	public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory
 			= new ConcurrentKafkaListenerContainerFactory<>();
 		kafkaListenerContainerFactory.setConsumerFactory(kafkaConsumerFactory());
 

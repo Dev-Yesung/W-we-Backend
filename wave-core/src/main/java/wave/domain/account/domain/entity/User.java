@@ -12,12 +12,10 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import wave.domain.account.domain.vo.Profile;
 import wave.domain.account.domain.vo.Role;
 import wave.global.BaseEntity;
 
-@Slf4j
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "Users")

@@ -45,12 +45,12 @@ public class Music {
 		return new Music(fileName, fileExtension, mimeType, fileSize, path, fileData);
 	}
 
-	public static Music toMusic(Path realPath, String uri) {
-		String fileName = FileUtils.getFileNameWithoutExtension(realPath);
-		String extension = FileUtils.getFileExtension(realPath);
-		String mimeType = FileUtils.getMimeType(realPath);
-		long fileSize = FileUtils.getFileSize(realPath);
-		byte[] fileData = FileUtils.getFileData(realPath);
+	public static Music toMusic(Path filePath, String uri) {
+		String fileName = FileUtils.getFileNameWithoutExtension(filePath);
+		String extension = FileUtils.getFileExtension(filePath);
+		String mimeType = FileUtils.getMimeType(filePath);
+		long fileSize = FileUtils.getFileSize(filePath);
+		byte[] fileData = FileUtils.getFileData(filePath);
 
 		return new Music(fileName, extension, mimeType, fileSize, uri, fileData);
 	}
@@ -59,9 +59,11 @@ public class Music {
 		long[] fileRange = extractFileRange(rangeHeader);
 		long startRange = fileRange[0];
 		long endRange = fileRange[1];
+		String tmpPath = createFileDataByTemporary()
+			.toString();
 
 		return outputStream -> {
-			try (RandomAccessFile file = new RandomAccessFile(path, "r")) {
+			try (RandomAccessFile file = new RandomAccessFile(tmpPath, "r")) {
 				byte[] fileBuffer = new byte[1024];
 				long currentPosition = startRange;
 
@@ -74,7 +76,7 @@ public class Music {
 
 				outputStream.flush();
 			} catch (Exception e) {
-				throw new BusinessException(ErrorCode.UNABLE_TO_OUTPUT);
+				throw new BusinessException(ErrorCode.UNABLE_TO_OUTPUT_STREAMING_FILE);
 			}
 		};
 	}
@@ -111,12 +113,14 @@ public class Music {
 	}
 
 	private boolean isValidRangeFormat(String rangeHeader) {
+		if (!StringUtils.hasText(rangeHeader)) {
+			return false;
+		}
+
 		int dashIndex = rangeHeader.indexOf("-");
 		int endOfIndex = rangeHeader.length() - 1;
 
-		return StringUtils.hasText(rangeHeader)
-			   && dashIndex > 0
-			   && dashIndex <= endOfIndex;
+		return dashIndex > 0 && dashIndex <= endOfIndex;
 	}
 
 	private long[] getEntireRange() {

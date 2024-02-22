@@ -1,4 +1,4 @@
-package wave.domain.streaming.adapter.in.web;
+package wave.domain.streaming;
 
 import static org.springframework.http.HttpHeaders.*;
 import static org.springframework.http.HttpStatus.*;
@@ -18,11 +18,11 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
-import wave.domain.media.dto.request.StreamingSessionRequest;
-import wave.domain.media.dto.request.StreamingRecord;
 import wave.domain.media.dto.request.LoadMusicRequest;
+import wave.domain.media.dto.request.StreamingRecord;
+import wave.domain.media.dto.request.StreamingSessionRequest;
 import wave.domain.media.dto.response.LoadMusicResponse;
-import wave.domain.streaming.application.StreamingService;
+import wave.global.aop.AuthenticationUser;
 import wave.global.common.WebAdapter;
 
 @RequiredArgsConstructor
@@ -31,27 +31,24 @@ import wave.global.common.WebAdapter;
 @WebAdapter
 public class StreamingController {
 
-	// todo: api서버로 이동하고 이벤트 드리븐으로 변경하기
-	private final StreamingService streamingService;
+	private final StreamingEventService streamingEventService;
 
-	@GetMapping("/{authorId}/{postId}")
+	@GetMapping("/posts/{postId}")
 	public ResponseEntity<StreamingResponseBody> loadMusicByUserIdAndPostId(
-		@PathVariable Long authorId,
 		@PathVariable Long postId,
 		@RequestHeader(value = "Range", required = false) String rangeHeader,
 		HttpServletRequest httpServletRequest,
 		@AuthenticationUser User user
 	) {
-		LoadMusicRequest request
-			= new LoadMusicRequest(authorId, postId, rangeHeader, user, httpServletRequest.getRemoteAddr());
-		LoadMusicResponse response = streamingService.loadMusicFile(request);
+		String ipAddress = httpServletRequest.getRemoteAddr();
+		LoadMusicRequest request = new LoadMusicRequest(postId, rangeHeader, user, ipAddress);
+		LoadMusicResponse response = streamingEventService.loadMusicFile(request);
 
 		return getStreamingResponseEntity(response);
 	}
 
-	@PostMapping("/{authorId}/{postId}/sessions")
+	@PostMapping("/posts/{postId}/sessions")
 	public ResponseEntity<Void> recordStreamingCount(
-		@PathVariable Long authorId,
 		@PathVariable Long postId,
 		@RequestBody StreamingRecord request,
 		HttpServletRequest httpServletRequest,
@@ -61,7 +58,7 @@ public class StreamingController {
 		String remoteAddress = httpServletRequest.getRemoteAddr();
 		StreamingSessionRequest sessionInfo
 			= new StreamingSessionRequest(request, postId, user, remoteAddress, endMilliSec);
-		streamingService.recordStreamingSession(sessionInfo);
+		streamingEventService.recordStreamingSession(sessionInfo);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)

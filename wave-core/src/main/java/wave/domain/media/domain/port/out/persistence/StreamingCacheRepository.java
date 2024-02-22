@@ -7,4 +7,5 @@ public interface StreamingCacheRepository {
 	void setValueAndTimeout(String key, String value);
 
 	Optional<String> getAndDelete(String key);
+
 }
