@@ -7,5 +7,6 @@ public record StreamingSessionInfo(
 	long startMilliSec,
 	long endMilliSec,
 	String ipAddress
+
 ) {
 }

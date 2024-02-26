@@ -40,6 +40,7 @@ subprojects {
 
         // Spring Kafka Dependencies
         implementation 'org.springframework.kafka:spring-kafka'
+        testImplementation 'org.springframework.kafka:spring-kafka-test'
 
         // QueryDsl Dependencies
         implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -56,6 +57,12 @@ subprojects {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
+        // Database Dependencies
+        runtimeOnly 'com.h2database:h2'
+        runtimeOnly 'com.mysql:mysql-connector-j'
+
+        // monitor tools
+        implementation 'org.springframework.boot:spring-boot-actuator'
         implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
 
     }
@@ -80,8 +87,6 @@ project(':wave-core') {
     jar { enabled = true }
 
     dependencies {
-        runtimeOnly 'com.h2database:h2'
-        runtimeOnly 'com.mysql:mysql-connector-j'
     }
 }
 
@@ -109,6 +114,14 @@ project(':wave-message') {
 }
 
 project(':wave-media') {
+    bootJar { enabled = true }
+    jar { enabled = false }
+
+    dependencies {
+        implementation project(':wave-core')
+    }
+}
+project(':wave-batch') {
     bootJar { enabled = true }
     jar { enabled = false }
 
