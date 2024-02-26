@@ -55,7 +55,7 @@ public class RankService {
 		PopularChart saveChart = updateRankPort.saveChart(newChart);
 		PriorityQueue<PopularPost> popularPosts
 			= calculatePostsRank(likeInfos, streamingInfos, saveChart);
-		saveChart.addAllPopularPosts(popularPosts);
+		saveChart.addPopularPostsByTop50(popularPosts);
 
 		updateRankPort.saveChartOnCache(saveChart);
 	}

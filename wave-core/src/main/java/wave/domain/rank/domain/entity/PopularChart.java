@@ -3,6 +3,8 @@ package wave.domain.rank.domain.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.stream.Stream;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -43,7 +45,9 @@ public class PopularChart extends BaseEntity {
 		this.chartType = chartType;
 	}
 
-	public void addAllPopularPosts(Collection<PopularPost> popularPosts) {
-		this.popularPosts.addAll(popularPosts);
+	public void addPopularPostsByTop50(PriorityQueue<PopularPost> popularPosts) {
+		Stream.generate(popularPosts::poll)
+			.limit(50)
+			.forEach(this.popularPosts::add);
 	}
 }
