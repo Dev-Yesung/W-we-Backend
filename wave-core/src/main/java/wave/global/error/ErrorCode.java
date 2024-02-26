@@ -48,9 +48,9 @@ public enum ErrorCode {
 	UNABLE_TO_OUTPUT_STREAMING_FILE("-SM002", "스트리밍할 파일을 가져올 수 없습니다."),
 	UNABLE_TO_REQUEST_STREAMING("-SM003", "스트리밍 요청을 할 수 없습니다."),
 
-	NOT_FOUND_COMMENT("-C001", "댓글을 찾을 수 없습니다."),
-	NOT_INCLUDED_COMMENT_TO_POST("-C002", "해당 댓글과 일치하지 않는 포스트입니다."),
-	NO_AUTHORITY_TO_COMMENT("-C003", "해당 댓글에 권한이 없습니다."),
+	NOT_FOUND_COMMENT("-CMT001", "댓글을 찾을 수 없습니다."),
+	NOT_INCLUDED_COMMENT_TO_POST("-CMT002", "해당 댓글과 일치하지 않는 포스트입니다."),
+	NO_AUTHORITY_TO_COMMENT("-CMT003", "해당 댓글에 권한이 없습니다."),
 
 	INVALID_MESSAGE_CASTING("-EVT001", "메시지의 객체변환이 잘못되었습니다."),
 
@@ -60,7 +60,10 @@ public enum ErrorCode {
 	NOT_FOUND_NOTIFICATION("-NM004", "알림 메시지를 찾을 수 없습니다."),
 	NO_AUTHORITY_TO_NOTIFICATION("-NM005", "알림 메시지에 권한이 없습니다."),
 
-	NO_AUTHORITY_TO_LIKE("-L001", "해당 좋아요에 권한이 없습니다.");
+	NO_AUTHORITY_TO_LIKE("-L001", "해당 좋아요에 권한이 없습니다."),
+
+	INVALID_TREND_CHART("-TC001", "올바르지 않은 트랜드 차트입니다."),
+	NOT_FOUND_TREND_CHART("-TC002", "트랜드 차트를 찾을 수 없습니다.");
 
 	private final String code;
 	private final String message;

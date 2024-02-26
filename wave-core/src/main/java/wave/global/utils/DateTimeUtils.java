@@ -2,7 +2,7 @@ package wave.global.utils;
 
 import java.time.LocalDateTime;
 
-import wave.domain.rank.domain.vo.ChartType;
+import wave.domain.chart.domain.vo.ChartType;
 
 public final class DateTimeUtils {
 

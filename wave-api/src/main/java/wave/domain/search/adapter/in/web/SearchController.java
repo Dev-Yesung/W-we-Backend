@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import wave.domain.account.domain.entity.User;
 import wave.domain.account.dto.response.AccountSearchResponse;
+import wave.domain.chart.dto.TrendChartDto;
 import wave.domain.search.application.SearchService;
 import wave.domain.search.dto.PostSearchResponse;
+import wave.domain.search.dto.request.TrendChartRequest;
 import wave.global.aop.AuthenticationUser;
 import wave.global.common.WebAdapter;
 
@@ -55,4 +57,18 @@ public class SearchController {
 
 		return ResponseEntity.ok(response);
 	}
+
+	@GetMapping("/charts/trend")
+	public ResponseEntity<TrendChartDto> findTrendChartByDayMonthYear(
+		@RequestParam Integer year,
+		@RequestParam Integer month,
+		@RequestParam Integer day,
+		@RequestParam String type
+	) {
+		TrendChartRequest request = TrendChartRequest.of(year, month, day, type);
+		TrendChartDto response = searchService.findTrendChart(request);
+
+		return ResponseEntity.ok(response);
+	}
+
 }
