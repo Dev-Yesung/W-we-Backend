@@ -48,11 +48,7 @@ public class PostEventAdapter implements PublishPostEventPort {
 	public void publishDeletePostEvent(Post post) {
 		PostDeleteResponse postDeleteResponse = PostDeleteResponse.of(post);
 		applicationEventPublisher.publishEvent(postDeleteResponse);
-
-		Long userId = post.getUser().getId();
-		Long postId = post.getId();
-		CommonNotificationMessage message = new CommonNotificationMessage(userId, postId);
-		postEventBroker.publishMessage("delete_post_message", message);
+		postEventBroker.publishMessage("media_file_delete", postDeleteResponse);
 	}
 
 }

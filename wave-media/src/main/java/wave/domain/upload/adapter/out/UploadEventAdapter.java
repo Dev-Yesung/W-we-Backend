@@ -6,9 +6,9 @@ import wave.domain.media.domain.port.out.broker.UploadEventBroker;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.MediaUploadStatus;
 import wave.domain.media.domain.vo.MediaUrl;
+import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.MediaFileUploadStatusMessage;
 import wave.domain.media.dto.MediaUrlUpdateMessage;
-import wave.domain.post.domain.entity.Post;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor
@@ -20,13 +20,18 @@ public class UploadEventAdapter implements PublishUploadEventPort {
 	@Override
 	public void publishUpdateUrlEvent(FileId fileId, MediaUrl mediaUrl) {
 		MediaUrlUpdateMessage message = new MediaUrlUpdateMessage(fileId, mediaUrl);
-		uploadEventBroker.publishUrlUpdateEvent(message);
+		uploadEventBroker.publishMessageToTopic("media_url_update", message);
 	}
 
 	@Override
 	public void publishUploadStatusEvent(FileId fileId, MediaUploadStatus uploadStatus) {
 		MediaFileUploadStatusMessage message = new MediaFileUploadStatusMessage(fileId, uploadStatus);
-		uploadEventBroker.publishUploadStatusEvent(message);
+		uploadEventBroker.publishMessageToTopic("media_upload_status_result", message);
+	}
+
+	@Override
+	public void publishUploadFileDeleteEvent(FileDeleteDto message) {
+		uploadEventBroker.publishMessageToTopic("delete_post_message", message);
 	}
 
 }

@@ -9,7 +9,9 @@ import wave.domain.media.domain.port.out.UpdateMediaPort;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.MediaUploadStatus;
 import wave.domain.media.domain.vo.MediaUrl;
+import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.MediaFileUploadMessage;
+import wave.domain.post.dto.response.PostDeleteResponse;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
@@ -35,8 +37,9 @@ public class MediaFileUploadService {
 	@KafkaListener(topics = "media_file_delete",
 		groupId = "group_media_file_delete",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void deletePostFiles(Object message) {
-
+	public void deletePostFiles(FileDeleteDto message) {
+		updateMediaPort.deleteFile(message);
+		publishUploadEventPort.publishUploadFileDeleteEvent(message);
 	}
 
 }

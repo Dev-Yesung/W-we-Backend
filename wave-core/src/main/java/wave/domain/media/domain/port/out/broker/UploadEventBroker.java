@@ -1,11 +1,11 @@
 package wave.domain.media.domain.port.out.broker;
 
-import wave.domain.media.dto.MediaFileUploadStatusMessage;
-import wave.domain.media.dto.MediaUrlUpdateMessage;
+import java.util.concurrent.CompletableFuture;
+
+import org.springframework.kafka.support.SendResult;
 
 public interface UploadEventBroker {
 
-	void publishUploadStatusEvent(MediaFileUploadStatusMessage message);
+	CompletableFuture<SendResult<String, Object>> publishMessageToTopic(String topic, Object message);
 
-	void publishUrlUpdateEvent(MediaUrlUpdateMessage message);
 }

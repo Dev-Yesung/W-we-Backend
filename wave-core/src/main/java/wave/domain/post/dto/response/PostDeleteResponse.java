@@ -3,7 +3,7 @@ package wave.domain.post.dto.response;
 import wave.domain.post.domain.entity.Post;
 
 public record PostDeleteResponse(
-	long postId,
+	Long postId,
 	Long userId
 ) {
 
