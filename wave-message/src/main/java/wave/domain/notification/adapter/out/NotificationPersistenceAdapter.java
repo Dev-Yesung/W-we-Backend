@@ -14,6 +14,7 @@ import wave.domain.notification.domain.port.out.LoadNotificationPort;
 import wave.domain.notification.domain.port.out.UpdateNotificationPort;
 import wave.domain.notification.dto.CommonNotificationMessage;
 import wave.domain.notification.dto.NotificationReadMessage;
+import wave.domain.notification.dto.PostDeleteMessage;
 import wave.global.common.PersistenceAdapter;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.EntityException;
@@ -49,10 +50,10 @@ public class NotificationPersistenceAdapter implements UpdateNotificationPort, L
 	}
 
 	@Override
-	public Notification saveDeletePostMessage(CommonNotificationMessage message) {
+	public Notification saveDeletePostMessage(PostDeleteMessage message) {
 		Long userId = message.userId();
 		Long postId = message.postId();
-		String postTitle = getPostTitle(postId);
+		String postTitle = message.postTitle();
 		Notification notification = new Notification(userId, postId, postTitle, "포스트 삭제를 완료했습니다.");
 
 		return notificationJpaRepository.save(notification);

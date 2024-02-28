@@ -2,26 +2,31 @@ package wave.domain.notification.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import wave.domain.notification.domain.entity.Notification;
 
 public record PostNotificationMessage(
+	Long id,
 	String channelName,
-	String userId,
-	String postId,
+	Long userId,
+	Long postId,
 	String postTitle,
 	String message,
+	@JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
 	LocalDateTime createdAt
 ) {
 
 	public static PostNotificationMessage of(Notification notification) {
+		Long id = notification.getId();
 		String channelName = notification.getChannelName();
-		String userId = String.valueOf(notification.getUserId());
-		String postId = String.valueOf(notification.getPostId());
+		Long userId = notification.getUserId();
+		Long postId = notification.getPostId();
 		String postTitle = notification.getPostTitle();
 		String message = notification.getMessage();
 		LocalDateTime createdAt = notification.getUpdatedAt();
 
-		return new PostNotificationMessage(channelName, userId, postId, postTitle, message, createdAt);
+		return new PostNotificationMessage(id, channelName, userId, postId, postTitle, message, createdAt);
 	}
 
 }

@@ -1,6 +1,5 @@
 package wave.domain.notification.application;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import wave.domain.notification.domain.port.out.UpdateNotificationEmitterPort;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
-@Transactional
 @UseCase
 public class NotificationSenderService {
 
@@ -24,13 +22,11 @@ public class NotificationSenderService {
 		return emitter;
 	}
 
-	@Transactional(readOnly = true)
 	public void read(Long notificationId, User user) {
 		Long userId = user.getId();
 		publishNotificationSendEventPort.publishReadNotification(notificationId, userId);
 	}
 
-	@Transactional(readOnly = true)
 	public void readAll(User user) {
 		publishNotificationSendEventPort.publishReadAllNotifications(user);
 	}

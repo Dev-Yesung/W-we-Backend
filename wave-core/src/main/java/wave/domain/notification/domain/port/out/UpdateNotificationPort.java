@@ -5,6 +5,7 @@ import wave.domain.media.dto.MediaFileUploadStatusMessage;
 import wave.domain.notification.domain.entity.Notification;
 import wave.domain.notification.dto.CommonNotificationMessage;
 import wave.domain.notification.dto.NotificationReadMessage;
+import wave.domain.notification.dto.PostDeleteMessage;
 
 public interface UpdateNotificationPort {
 
@@ -12,7 +13,7 @@ public interface UpdateNotificationPort {
 
 	Notification saveNewPostMessage(CommonNotificationMessage message);
 
-	Notification saveDeletePostMessage(CommonNotificationMessage message);
+	Notification saveDeletePostMessage(PostDeleteMessage message);
 
 	Notification saveNewLikeMessage(CommonNotificationMessage message);
 

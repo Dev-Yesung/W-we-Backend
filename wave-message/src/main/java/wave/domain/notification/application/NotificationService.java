@@ -14,6 +14,7 @@ import wave.domain.notification.domain.port.out.PublishNotificationEventPort;
 import wave.domain.notification.domain.port.out.UpdateNotificationPort;
 import wave.domain.notification.dto.CommonNotificationMessage;
 import wave.domain.notification.dto.NotificationReadMessage;
+import wave.domain.notification.dto.PostDeleteMessage;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
@@ -67,7 +68,7 @@ public class NotificationService {
 	@KafkaListener(topics = "delete_post_message",
 		groupId = "group_delete_post_message",
 		containerFactory = "kafkaListenerContainerFactory")
-	public void subscribeDeletedPost(CommonNotificationMessage message) {
+	public void subscribeDeletedPost(PostDeleteMessage message) {
 		Notification notification = updateNotificationPort.saveDeletePostMessage(message);
 		publishNotificationEventPort.publishNotificationToSubscribers(notification);
 	}

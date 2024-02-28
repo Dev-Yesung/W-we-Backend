@@ -8,8 +8,11 @@ import lombok.RequiredArgsConstructor;
 import wave.domain.media.domain.vo.FileId;
 import wave.domain.media.domain.vo.Image;
 import wave.domain.media.domain.vo.Music;
+import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.MediaFileUploadMessage;
+import wave.domain.notification.domain.entity.Notification;
 import wave.domain.notification.dto.CommonNotificationMessage;
+import wave.domain.notification.dto.PostDeleteMessage;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.post.domain.port.out.PublishPostEventPort;
 import wave.domain.post.domain.port.out.broker.PostEventBroker;
@@ -18,13 +21,13 @@ import wave.domain.post.dto.response.PostDeleteResponse;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 @EventAdapter
 public class PostEventAdapter implements PublishPostEventPort {
 
 	private final PostEventBroker postEventBroker;
 	private final ApplicationEventPublisher applicationEventPublisher;
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void publishMediaUploadEvent(Post post, MyMusicPostDto myMusicPostDto) {
 		FileId fileId = post.getFileId();
@@ -35,7 +38,6 @@ public class PostEventAdapter implements PublishPostEventPort {
 		postEventBroker.publishMessage("media_file_upload", mediaFileUploadMessage);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void publishNewSharedMusicPostEvent(Post post) {
 		Long userId = post.getUser().getId();
@@ -48,7 +50,12 @@ public class PostEventAdapter implements PublishPostEventPort {
 	public void publishDeletePostEvent(Post post) {
 		PostDeleteResponse postDeleteResponse = PostDeleteResponse.of(post);
 		applicationEventPublisher.publishEvent(postDeleteResponse);
-		postEventBroker.publishMessage("media_file_delete", postDeleteResponse);
+
+		FileDeleteDto fileDeleteDto = FileDeleteDto.of(post);
+		postEventBroker.publishMessage("media_file_delete", fileDeleteDto);
+
+		PostDeleteMessage message = PostDeleteMessage.of(post);
+		postEventBroker.publishMessage("delete_post_message", message);
 	}
 
 }

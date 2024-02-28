@@ -39,7 +39,6 @@ public class MediaFileUploadService {
 		containerFactory = "kafkaListenerContainerFactory")
 	public void deletePostFiles(FileDeleteDto message) {
 		updateMediaPort.deleteFile(message);
-		publishUploadEventPort.publishUploadFileDeleteEvent(message);
 	}
 
 }

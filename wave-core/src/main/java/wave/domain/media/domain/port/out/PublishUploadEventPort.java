@@ -11,6 +11,4 @@ public interface PublishUploadEventPort {
 
 	void publishUploadStatusEvent(FileId fileId, MediaUploadStatus uploadStatus);
 
-	void publishUploadFileDeleteEvent(FileDeleteDto message);
-
 }

@@ -16,7 +16,7 @@ public record PostResponse(
 	MediaUrl mediaUrl,
 	String nickname,
 	int likeSize,
-	@JsonFormat(pattern="yyyy-MM-dd-ss")
+	@JsonFormat(pattern="yyyy-MM-dd kk:mm:ss")
 	LocalDateTime createdAt
 ) {
 	public static PostResponse of(Post post) {

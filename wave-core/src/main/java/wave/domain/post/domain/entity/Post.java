@@ -79,7 +79,7 @@ public class Post extends BaseEntity {
 	}
 
 	public void isAuthor(User user) {
-		if (!this.user.equals(user)) {
+		if (!this.user.getId().equals(user.getId())) {
 			throw new BusinessException(ErrorCode.NO_AUTHORITY_TO_POST);
 		}
 	}
