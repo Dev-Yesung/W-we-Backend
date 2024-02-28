@@ -1,4 +1,4 @@
-package wave.domain.streaming;
+package wave.domain.streaming.application;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
 @UseCase
-public class StreamingEventService {
+public class StreamingService {
 
 	private final UpdateStreamingPort updateStreamingPort;
 	private final PublishStreamingEventPort publishStreamingEventPort;

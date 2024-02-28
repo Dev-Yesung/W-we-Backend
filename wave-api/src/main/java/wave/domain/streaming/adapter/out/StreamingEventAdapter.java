@@ -1,4 +1,4 @@
-package wave.domain.streaming;
+package wave.domain.streaming.adapter.out;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.media.domain.port.out.PublishStreamingEventPort;
@@ -17,7 +17,7 @@ public class StreamingEventAdapter implements PublishStreamingEventPort {
 	@Override
 	public Music publishLoadMusicFileEvent(LoadMusicRequest request) {
 		return (Music)streamingEventBroker.publishAndReplyStreamingEvent(
-			"load_music_requests", request, "load_music_replies");
+			"load_image_requests", request, "load_image_replies");
 	}
 
 	@Override

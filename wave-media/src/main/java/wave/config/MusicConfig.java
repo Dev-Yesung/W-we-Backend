@@ -13,6 +13,7 @@ import lombok.Data;
 public class MusicConfig {
 
 	private String rootPath;
+	private String urlPath;
 	private String fileNameSeparator;
 	private long maxFileSize;
 	private List<String> permittedFileExtensions;

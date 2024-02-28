@@ -52,6 +52,7 @@ public class Image {
 		String uuid = UUID.randomUUID().toString();
 		try {
 			Path filePath = Files.createTempFile(uuid, ".tmp");
+
 			return Files.write(filePath, fileData);
 		} catch (IOException e) {
 			throw new FileException(ErrorCode.UNABLE_TO_GET_FILE_DATA, e);
@@ -64,4 +65,5 @@ public class Image {
 
 		return Paths.get(path + "/" + fileNameWithExtension);
 	}
+
 }

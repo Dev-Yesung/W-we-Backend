@@ -1,9 +1,10 @@
-package wave.domain.streaming;
+package wave.domain.streaming.adapter.out.broker;
 
 import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
@@ -16,11 +17,17 @@ import wave.global.error.ErrorCode;
 import wave.global.error.exception.EventException;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
 public class StreamingKafkaEventBroker implements StreamingEventBroker {
 
 	private final ReplyingKafkaTemplate<String, Object, Object> replyingKafkaTemplate;
+
+	public StreamingKafkaEventBroker(
+		@Qualifier("replyingMusicFileKafkaTemplate")
+		ReplyingKafkaTemplate<String, Object, Object> replyingKafkaTemplate
+	) {
+		this.replyingKafkaTemplate = replyingKafkaTemplate;
+	}
 
 	@Override
 	public Object publishAndReplyStreamingEvent(String requestTopic, Object message, String replyTopic) {

@@ -1,4 +1,4 @@
-package wave.domain.streaming;
+package wave.domain.streaming.adapter.out.persistence;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;

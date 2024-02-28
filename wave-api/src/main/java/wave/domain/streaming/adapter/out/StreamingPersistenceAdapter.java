@@ -1,4 +1,4 @@
-package wave.domain.streaming;
+package wave.domain.streaming.adapter.out;
 
 import java.util.Optional;
 

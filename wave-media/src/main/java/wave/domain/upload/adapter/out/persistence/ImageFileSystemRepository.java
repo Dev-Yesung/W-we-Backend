@@ -30,8 +30,9 @@ public class ImageFileSystemRepository implements ImageFileRepository {
 	public Image findFileByPath(String uri) {
 		Path realPath = Paths.get(uri);
 		FileUtils.isPathExist(realPath);
+		Path filePath = FileUtils.findFileInPath(realPath);
 
-		return Image.toImage(realPath, uri);
+		return Image.toImage(filePath, uri);
 	}
 
 	@Override

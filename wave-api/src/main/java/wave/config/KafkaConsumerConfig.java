@@ -40,20 +40,39 @@ public class KafkaConsumerConfig {
 	}
 
 	@Bean
-	public ReplyingKafkaTemplate<String, Object, Object> replyingKafkaTemplate(
-		ProducerFactory<String, Object> pf,
-		@Qualifier("replyContainer") KafkaMessageListenerContainer<String, Object> container
-	) {
-		return new ReplyingKafkaTemplate<>(pf, container);
-	}
-
-	@Bean
-	public KafkaMessageListenerContainer<String, Object> replyContainer(
+	public KafkaMessageListenerContainer<String, Object> replyMusicFileContainer(
 		ConsumerFactory<String, Object> cf
 	) {
 		ContainerProperties containerProperties = new ContainerProperties("load_music_replies");
 
 		return new KafkaMessageListenerContainer<>(cf, containerProperties);
+	}
+
+	@Qualifier("replyingMusicFileKafkaTemplate")
+	@Bean
+	public ReplyingKafkaTemplate<String, Object, Object> replyingMusicFileKafkaTemplate(
+		ProducerFactory<String, Object> pf,
+		@Qualifier("replyMusicFileContainer") KafkaMessageListenerContainer<String, Object> container
+	) {
+		return new ReplyingKafkaTemplate<>(pf, container);
+	}
+
+	@Bean
+	public KafkaMessageListenerContainer<String, Object> replyImageFileContainer(
+		ConsumerFactory<String, Object> cf
+	) {
+		ContainerProperties containerProperties = new ContainerProperties("load_Image_replies");
+
+		return new KafkaMessageListenerContainer<>(cf, containerProperties);
+	}
+
+	@Qualifier("replyingImageFileKafkaTemplate")
+	@Bean
+	public ReplyingKafkaTemplate<String, Object, Object> replyingImageFileKafkaTemplate(
+		ProducerFactory<String, Object> pf,
+		@Qualifier("replyImageFileContainer") KafkaMessageListenerContainer<String, Object> container
+	) {
+		return new ReplyingKafkaTemplate<>(pf, container);
 	}
 
 	@Bean

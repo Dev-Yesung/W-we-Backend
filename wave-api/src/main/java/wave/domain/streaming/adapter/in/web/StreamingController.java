@@ -1,4 +1,4 @@
-package wave.domain.streaming;
+package wave.domain.streaming.adapter.in.web;
 
 import static org.springframework.http.HttpHeaders.*;
 import static org.springframework.http.HttpStatus.*;
@@ -22,6 +22,7 @@ import wave.domain.media.dto.request.LoadMusicRequest;
 import wave.domain.media.dto.request.StreamingRecord;
 import wave.domain.media.dto.request.StreamingSessionRequest;
 import wave.domain.media.dto.response.LoadMusicResponse;
+import wave.domain.streaming.application.StreamingService;
 import wave.global.aop.AuthenticationUser;
 import wave.global.common.WebAdapter;
 
@@ -31,10 +32,10 @@ import wave.global.common.WebAdapter;
 @WebAdapter
 public class StreamingController {
 
-	private final StreamingEventService streamingEventService;
+	private final StreamingService streamingService;
 
-	@GetMapping("/posts/{postId}")
-	public ResponseEntity<StreamingResponseBody> loadMusicByUserIdAndPostId(
+	@GetMapping("/music/posts/{postId}")
+	public ResponseEntity<StreamingResponseBody> loadMusicByPostIdAndUserId(
 		@PathVariable Long postId,
 		@RequestHeader(value = "Range", required = false) String rangeHeader,
 		HttpServletRequest httpServletRequest,
@@ -42,7 +43,7 @@ public class StreamingController {
 	) {
 		String ipAddress = httpServletRequest.getRemoteAddr();
 		LoadMusicRequest request = new LoadMusicRequest(postId, rangeHeader, user, ipAddress);
-		LoadMusicResponse response = streamingEventService.loadMusicFile(request);
+		LoadMusicResponse response = streamingService.loadMusicFile(request);
 
 		return getStreamingResponseEntity(response);
 	}
@@ -58,7 +59,7 @@ public class StreamingController {
 		String remoteAddress = httpServletRequest.getRemoteAddr();
 		StreamingSessionRequest sessionInfo
 			= new StreamingSessionRequest(request, postId, user, remoteAddress, endMilliSec);
-		streamingEventService.recordStreamingSession(sessionInfo);
+		streamingService.recordStreamingSession(sessionInfo);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)

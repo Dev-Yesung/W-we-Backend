@@ -4,11 +4,14 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 
 import lombok.RequiredArgsConstructor;
+import wave.domain.media.domain.entity.ImageFile;
 import wave.domain.media.domain.entity.MusicFile;
 import wave.domain.media.domain.port.out.LoadMediaPort;
 import wave.domain.media.domain.port.out.UpdateMediaPort;
+import wave.domain.media.domain.vo.Image;
 import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.StreamingSessionInfo;
+import wave.domain.media.dto.request.LoadImageRequest;
 import wave.domain.media.dto.request.LoadMusicRequest;
 import wave.global.common.UseCase;
 

@@ -29,7 +29,11 @@ public class ImageFile extends AbstractMediaFile {
 		return image.createFilePath();
 	}
 
-	public String createFileUrl(String host, String port) {
-		return host + ":" + port + "/" + image.getPath();
+	public String createUrl(String host, String port, String urlPath) {
+		FileId fileId = getFileId();
+
+		return host + ":" + port
+			   + "/" + urlPath
+			   + "/" + fileId.getPostId();
 	}
 }

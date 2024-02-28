@@ -21,6 +21,7 @@ import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.MediaFileUploadMessage;
 import wave.domain.media.dto.StreamingSessionInfo;
+import wave.domain.media.dto.request.LoadImageRequest;
 import wave.domain.media.dto.request.LoadMusicRequest;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.streaming.adapter.out.persistence.StreamingSessionJpaRepository;
@@ -60,9 +61,18 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 	}
 
 	@Override
-	public ImageFile loadImageFile() {
-		// todo: 안했잖아;
-		return null;
+	public ImageFile loadImageFile(LoadImageRequest request) {
+		Long postId = request.postId();
+		Post post = postJpaRepository.findById(postId)
+			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_POST));
+
+		Long authorId = post.getUser().getId();
+		FileId fileId = new FileId(authorId, postId);
+
+		String path = getPath(fileId, imageConfig.getRootPath());
+		Image image = imageFileRepository.findFileByPath(path);
+
+		return new ImageFile(fileId, image);
 	}
 
 	@Override
@@ -103,18 +113,18 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 
 	private MusicFile getMusicFile(MediaFileUploadMessage mediaFileUploadMessage) {
 		FileId fileId = mediaFileUploadMessage.fileId();
-		Music before = mediaFileUploadMessage.music();
+		Music requestMusic = mediaFileUploadMessage.music();
 		String path = getPath(fileId, musicConfig.getRootPath());
-		Music newMusic = Music.toMusic(before, path);
+		Music newMusic = Music.toMusic(requestMusic, path);
 
 		return new MusicFile(fileId, newMusic);
 	}
 
 	private ImageFile getImageFile(MediaFileUploadMessage mediaFileUploadMessage) {
 		FileId fileId = mediaFileUploadMessage.fileId();
-		Image before = mediaFileUploadMessage.image();
+		Image requestImage = mediaFileUploadMessage.image();
 		String path = getPath(fileId, imageConfig.getRootPath());
-		Image newImage = Image.toImage(before, path);
+		Image newImage = Image.toImage(requestImage, path);
 
 		return new ImageFile(fileId, newImage);
 	}
@@ -129,9 +139,12 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 	private MediaUrl getMediaUrl(MusicFile savedMusicFile, ImageFile savedImageFile) {
 		String host = serverConfig.getHost();
 		String port = serverConfig.getPort();
+		String imageUrlPath = imageConfig.getUrlPath();
+		String musicUrlPath = musicConfig.getUrlPath();
 
-		String musicUrl = savedMusicFile.createFileUrl(host, port);
-		String imageUrl = savedImageFile.createFileUrl(host, port);
+		String imageUrl = savedImageFile.createUrl(host, port, imageUrlPath);
+		String musicUrl = savedMusicFile.createUrl(host, port, musicUrlPath);
+
 
 		return new MediaUrl(imageUrl, musicUrl, COMPLETED);
 	}
