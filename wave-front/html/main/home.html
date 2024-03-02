@@ -5,39 +5,39 @@
     <link
       rel="apple-touch-icon"
       sizes="114x114"
-      href="/apple-icon-114x114.png"
+      href="/image/favicon/apple-icon-114x114.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="120x120"
-      href="/apple-icon-120x120.png"
+      href="/image/favicon/apple-icon-120x120.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="144x144"
-      href="/apple-icon-144x144.png"
+      href="/image/favicon/apple-icon-144x144.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="152x152"
-      href="/apple-icon-152x152.png"
+      href="/image/favicon/apple-icon-152x152.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/apple-icon-180x180.png"
+      href="/image/favicon/apple-icon-180x180.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="192x192"
-      href="/android-icon-192x192.png"
+      href="v/android-icon-192x192.png"
     />
 
     <link
       rel="apple-touch-icon"
       sizes="57x57"
-      href="/image/favicon/apple-icon-57x57.png"
+      href="/image/favicon/image/favicon/apple-icon-57x57.png"
     />
     <link
       rel="apple-touch-icon"
@@ -123,6 +123,7 @@
     <script src="/script/home.js" defer></script>
     <script src="/script/alarm.js" defer></script>
     <script src="/script/newPost.js" defer></script>
+    <script src="/script/homePost.js" defer></script>
   </head>
 
   <body class="wave water">
@@ -132,12 +133,10 @@
       <div class="mx-2 flex-shrink-0">
         <a href="home.html">
           <img
-            src="/image/logo-btn-icon.png"
+            src="/image/logo-btn-icon.png.png"
             alt="로고"
             id="logo-btn"
             class="btn"
-            onmouseover="changeImage()"
-            onmouseout="restoreImage()"
           />
           <div id="logo-title">Wvv</div>
         </a>
@@ -219,10 +218,10 @@
             <div class="new-post-modal-container"></div>
           </div>
           <div class="new-post-modal-footer">
-            <button type="button" class="btn">
+            <button type="button" class="btn" id="newPostUploadBtn">
               <img
                 id="new-post-upload-btn"
-                src="/image/new-post-upload-btn.gif"
+                src="/image/new-post-upload-btn.svg"
               />
               <div>게시하기</div>
             </button>

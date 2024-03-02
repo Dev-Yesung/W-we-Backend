@@ -246,7 +246,8 @@ footer {
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: opacity 0.3s, visibility 0.3s; /* 부드러운 나타나고 사라짐 효과 */
+  transition: opacity 0.3s, visibility 0.3s;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 16px 32px rgba(0, 0, 0, 0.3);
 }
 
 #goToTopBtn.show {
@@ -284,4 +285,35 @@ footer {
   margin-top: 3px;
   font-size: 13px;
   font-weight: 400;
+}
+
+.musicImage {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 380px;
+  height: 300px;
+  border: 5px solid white; /* 흰색 테두리 적용 */
+  border-radius: 35px; /* 둥근 테두리 적용 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 박스 쉐도우 추가 */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* 배경색을 흰색 반투명으로 변경 */
+}
+
+.musicPlayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  width: 370px;
+  border-radius: 30px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

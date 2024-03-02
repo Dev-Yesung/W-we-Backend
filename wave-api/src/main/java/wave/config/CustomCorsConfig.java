@@ -14,7 +14,7 @@ public class CustomCorsConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedOrigins(List.of("http:localhost:3000"));
+		corsConfiguration.setAllowedOrigins(List.of("http:localhost:3000", "http:localhost:5500", "http://127.0.0.1:5500"));
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 		corsConfiguration.setAllowedHeaders(List.of("*"));

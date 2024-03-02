@@ -21,7 +21,6 @@ import wave.domain.post.dto.response.PostDeleteResponse;
 import wave.global.common.EventAdapter;
 
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.REQUIRES_NEW)
 @EventAdapter
 public class PostEventAdapter implements PublishPostEventPort {
 
