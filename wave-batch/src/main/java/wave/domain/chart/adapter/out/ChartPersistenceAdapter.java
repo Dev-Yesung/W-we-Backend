@@ -1,4 +1,4 @@
-package com.wave.batch.domain.chart.adapter.out;
+package wave.domain.chart.adapter.out;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,20 +6,20 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wave.batch.domain.chart.adapter.out.persistence.PopularChartJpaRepository;
+import wave.domain.chart.adapter.out.persistence.TrendChartJpaRepository;
 
 import lombok.RequiredArgsConstructor;
 import wave.domain.chart.domain.entity.TrendChart;
 import wave.domain.chart.domain.port.out.LoadChartPort;
 import wave.domain.chart.domain.port.out.UpdateChartPort;
 import wave.domain.chart.domain.port.out.persistence.LikeQueryRepository;
-import wave.domain.chart.domain.port.out.persistence.TrendChartCacheRepository;
 import wave.domain.chart.domain.port.out.persistence.StreamingSessionQueryRepository;
+import wave.domain.chart.domain.port.out.persistence.TrendChartCacheRepository;
 import wave.domain.chart.domain.vo.ChartType;
 import wave.domain.chart.dto.LikeRankInfo;
+import wave.domain.chart.dto.StreamingSessionRankInfo;
 import wave.domain.chart.dto.TrendChartDto;
 import wave.domain.chart.dto.TrendPostDto;
-import wave.domain.chart.dto.StreamingSessionRankInfo;
 import wave.global.common.PersistenceAdapter;
 import wave.global.error.ErrorCode;
 import wave.global.error.exception.FileException;
@@ -28,7 +28,7 @@ import wave.global.error.exception.FileException;
 @PersistenceAdapter
 public class ChartPersistenceAdapter implements LoadChartPort, UpdateChartPort {
 
-	private final PopularChartJpaRepository popularChartJpaRepository;
+	private final TrendChartJpaRepository trendChartJpaRepository;
 	private final TrendChartCacheRepository trendChartCacheRepository;
 	private final LikeQueryRepository likeQueryRepository;
 	private final StreamingSessionQueryRepository streamingSessionQueryRepository;
@@ -51,7 +51,7 @@ public class ChartPersistenceAdapter implements LoadChartPort, UpdateChartPort {
 
 	@Override
 	public TrendChart saveChart(TrendChart trendChart) {
-		return popularChartJpaRepository.save(trendChart);
+		return trendChartJpaRepository.save(trendChart);
 	}
 
 	@Override

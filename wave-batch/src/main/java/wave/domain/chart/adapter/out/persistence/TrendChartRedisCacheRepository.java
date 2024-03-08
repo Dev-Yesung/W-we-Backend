@@ -1,7 +1,8 @@
-package com.wave.batch.domain.chart.adapter.out.persistence;
+package wave.domain.chart.adapter.out.persistence;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,9 @@ public class TrendChartRedisCacheRepository implements TrendChartCacheRepository
 
 	private final ValueOperations<String, String> stringValueOperations;
 
-	public TrendChartRedisCacheRepository(RedisTemplate<String, String> redisTemplate) {
+	public TrendChartRedisCacheRepository(
+		@Qualifier("redisCacheTemplate") RedisTemplate<String, String> redisTemplate
+	) {
 		this.stringValueOperations = redisTemplate.opsForValue();
 	}
 

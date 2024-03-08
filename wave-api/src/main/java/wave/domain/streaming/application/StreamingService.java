@@ -2,6 +2,7 @@ package wave.domain.streaming.application;
 
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import wave.domain.media.dto.response.LoadMusicResponse;
 import wave.global.common.UseCase;
 
 @RequiredArgsConstructor
+@Transactional
 @UseCase
 public class StreamingService {
 

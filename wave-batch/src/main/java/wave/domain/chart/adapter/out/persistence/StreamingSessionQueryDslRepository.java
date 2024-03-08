@@ -1,4 +1,4 @@
-package com.wave.batch.domain.chart.adapter.out.persistence;
+package wave.domain.chart.adapter.out.persistence;
 
 import static wave.domain.media.domain.entity.QStreamingSession.*;
 

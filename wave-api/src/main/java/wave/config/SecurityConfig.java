@@ -54,7 +54,9 @@ public class SecurityConfig {
 		return web -> web.ignoring()
 			.requestMatchers("/api/accounts/signup/**")
 			.requestMatchers("/api/accounts/certification/**")
+			.requestMatchers("/actuator/**")
 			.requestMatchers("/h2-console/**");
+
 	}
 
 	@Bean

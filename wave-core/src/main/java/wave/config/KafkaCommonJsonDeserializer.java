@@ -24,6 +24,10 @@ public class KafkaCommonJsonDeserializer {
 		// Consumer Max Fetch Size : 50MB
 		configurations.put(FETCH_MAX_BYTES_CONFIG, 100_428_800);
 
+		// Transaction
+		configurations.put(ENABLE_AUTO_COMMIT_CONFIG, false);
+		configurations.put(ISOLATION_LEVEL_CONFIG, "read_committed");
+
 		return configurations;
 	}
 

@@ -14,6 +14,7 @@ public class StreamingEventAdapter implements PublishStreamingEventPort {
 
 	private final StreamingEventBroker streamingEventBroker;
 
+
 	@Override
 	public Music publishLoadMusicFileEvent(LoadMusicRequest request) {
 		return (Music)streamingEventBroker.publishAndReplyStreamingEvent(

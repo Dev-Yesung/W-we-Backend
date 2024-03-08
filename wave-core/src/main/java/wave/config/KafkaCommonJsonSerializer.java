@@ -4,6 +4,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;

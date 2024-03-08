@@ -1,4 +1,4 @@
-package com.wave.batch.domain.chart.application;
+package wave.domain.chart.application;
 
 import static wave.domain.chart.domain.vo.ChartType.*;
 

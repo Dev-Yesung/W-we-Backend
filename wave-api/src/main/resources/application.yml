@@ -7,5 +7,6 @@ spring:
       - classpath:application-producer.yml
       - classpath:application-consumer.yml
       - classpath:spy.properties
+      - classpath:application-actuator.yml
   jpa:
     open-in-view: false

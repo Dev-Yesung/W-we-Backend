@@ -2,6 +2,8 @@ package wave.domain.streaming.adapter.out;
 
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wave.domain.account.domain.entity.User;

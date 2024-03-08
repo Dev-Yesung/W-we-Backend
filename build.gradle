@@ -62,7 +62,7 @@ subprojects {
         runtimeOnly 'com.mysql:mysql-connector-j'
 
         // monitor tools
-        implementation 'org.springframework.boot:spring-boot-actuator'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
 
     }
@@ -121,6 +121,7 @@ project(':wave-media') {
         implementation project(':wave-core')
     }
 }
+
 project(':wave-batch') {
     bootJar { enabled = true }
     jar { enabled = false }
