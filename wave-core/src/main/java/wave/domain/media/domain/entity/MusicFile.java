@@ -18,16 +18,6 @@ public class MusicFile extends AbstractMediaFile {
 		this.music = music;
 	}
 
-	public StreamingResponseBody createStreamingResponseBody(String rangeHeader) {
-		return music.createStreamingResponseBody(rangeHeader);
-	}
-
-	public MultipartFile convertByteDataToMultipartFile() {
-		Path fileDataByPath = music.createFilePath();
-
-		return new MediaMultipartFile(fileDataByPath);
-	}
-
 	public MultipartFile convertByteDataToMultipartFileByTemp() {
 		Path fileDataByPath = music.createFileDataByTemporary();
 
@@ -44,26 +34,6 @@ public class MusicFile extends AbstractMediaFile {
 		return host + ":" + port
 			   + "/" + urlPath
 			   + "/" + fileId.getPostId();
-	}
-
-	public long[] extractFileRange(String rangeHeader) {
-		return music.extractFileRange(rangeHeader);
-	}
-
-	public String getMusicFileName() {
-		return music.getFileName();
-	}
-
-	public String getMusicFileExtension() {
-		return music.getFileExtension();
-	}
-
-	public String getMusicMimeType() {
-		return music.getMimeType();
-	}
-
-	public long getMusicFileSize() {
-		return music.getFileSize();
 	}
 
 	public String getPath() {

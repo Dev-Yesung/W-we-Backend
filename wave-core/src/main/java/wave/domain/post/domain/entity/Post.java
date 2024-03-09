@@ -46,8 +46,7 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(
-		mappedBy = "post",
+	@OneToMany(mappedBy = "post",
 		fetch = FetchType.LAZY,
 		cascade = CascadeType.ALL,
 		orphanRemoval = true)
@@ -87,4 +86,5 @@ public class Post extends BaseEntity {
 	public int getLikeSize() {
 		return likes.size();
 	}
+
 }

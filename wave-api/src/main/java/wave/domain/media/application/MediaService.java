@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import lombok.RequiredArgsConstructor;
 import wave.domain.media.domain.port.out.PublishImageEventPort;
 import wave.domain.media.domain.vo.Image;
-import wave.domain.media.dto.request.LoadImageRequest;
+import wave.domain.media.dto.request.LoadPostImageRequest;
 import wave.domain.media.dto.response.LoadImageResponse;
 import wave.global.common.UseCase;
 
@@ -18,7 +18,7 @@ public class MediaService {
 
 	private final PublishImageEventPort publishImageEventPort;
 
-	public LoadImageResponse loadImageFile(LoadImageRequest request) {
+	public LoadImageResponse loadPostImageFile(LoadPostImageRequest request) {
 		Image image = publishImageEventPort.publishLoadImageFileEvent(request);
 		String mimeType = image.getMimeType();
 		MediaType mediaType = MediaType.parseMediaType(mimeType);
@@ -26,5 +26,11 @@ public class MediaService {
 		InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(fileData));
 
 		return new LoadImageResponse(mediaType, resource);
+	}
+
+	public LoadImageResponse loadUserProfileImageByUserId(Long userId) {
+
+
+		return null;
 	}
 }

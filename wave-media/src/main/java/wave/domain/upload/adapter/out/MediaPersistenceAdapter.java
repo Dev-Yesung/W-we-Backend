@@ -21,7 +21,7 @@ import wave.domain.media.domain.vo.Music;
 import wave.domain.media.dto.FileDeleteDto;
 import wave.domain.media.dto.MediaFileUploadMessage;
 import wave.domain.media.dto.StreamingSessionInfo;
-import wave.domain.media.dto.request.LoadImageRequest;
+import wave.domain.media.dto.request.LoadPostImageRequest;
 import wave.domain.media.dto.request.LoadMusicRequest;
 import wave.domain.post.domain.entity.Post;
 import wave.domain.streaming.adapter.out.persistence.StreamingSessionJpaRepository;
@@ -61,7 +61,7 @@ public class MediaPersistenceAdapter implements UpdateMediaPort, LoadMediaPort {
 	}
 
 	@Override
-	public ImageFile loadImageFile(LoadImageRequest request) {
+	public ImageFile loadImageFile(LoadPostImageRequest request) {
 		Long postId = request.postId();
 		Post post = postJpaRepository.findById(postId)
 			.orElseThrow(() -> new EntityException(ErrorCode.NOT_FOUND_POST));
