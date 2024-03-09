@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,13 +22,11 @@ import wave.global.utils.FileUtils;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MusicTest {
 
-	@TempDir
-	Path testDirectory;
 	Path testFilePath;
 	Music music;
 
-	@BeforeEach
-	void setUp() throws IOException {
+	@BeforeAll
+	void setUp(@TempDir Path testDirectory) throws IOException {
 		testFilePath = Files.createFile(testDirectory.resolve("tmp.mp3"));
 		byte[] data = new byte[1024];
 		Files.write(testFilePath, data);
@@ -44,7 +42,7 @@ class MusicTest {
 			fileData);
 	}
 
-	@AfterEach
+	@AfterAll
 	void tearDown() throws IOException {
 		Files.delete(testFilePath);
 	}
