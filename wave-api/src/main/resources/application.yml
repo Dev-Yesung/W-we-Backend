@@ -10,3 +10,6 @@ spring:
       - classpath:application-actuator.yml
   jpa:
     open-in-view: false
+    properties:
+      hibernate:
+        generate_statistics: true
